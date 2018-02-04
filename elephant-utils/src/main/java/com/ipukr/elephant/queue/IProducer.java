@@ -12,7 +12,7 @@ import java.util.concurrent.Callable;
 public interface IProducer<T> extends Callable {
     /**
      * 生产
-     * @param element
+     * @param element 压栈袁术
      */
     void produce(T element);
 }

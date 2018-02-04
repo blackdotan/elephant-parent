@@ -12,7 +12,7 @@ import java.util.concurrent.Callable;
 public interface IConsumer<T> extends Callable {
     /**
      * 消费
-     * @return
+     * @return 队列元素
      */
     T consume();
 }

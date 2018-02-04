@@ -1,6 +1,6 @@
 package com.ipukr.elephant.kv;
 
-import com.ipukr.elephant.application.factory.Factory;
+import com.ipukr.elephant.architecture.factory.Factory;
 import com.ipukr.elephant.kv.entity.Client;
 import com.ipukr.elephant.utils.JsonUtils;
 import com.ipukr.elephant.utils.StringUtils;

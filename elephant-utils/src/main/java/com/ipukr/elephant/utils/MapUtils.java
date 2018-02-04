@@ -21,7 +21,7 @@ public class MapUtils {
      * @param lng1Str 用户纬度
      * @param lat2Str 商家经度
      * @param lng2Str 商家纬度
-     * @return
+     * @return 距离
      */
     public static String getDistance(String lat1Str, String lng1Str, String lat2Str, String lng2Str) {
         Double lat1 = Double.parseDouble(lat1Str);
@@ -40,50 +40,6 @@ public class MapUtils {
         String distanceStr = String.valueOf(distance);
         return distanceStr;
     }
-
-    /**
-     * 获取当前用户一定距离以内的经纬度值
-     * 单位米 return minLat
-     * 最小经度 minLng
-     * 最小纬度 maxLat
-     * 最大经度 maxLng
-     * 最大纬度 minLat
-     */
-    public static String getAround(String latStr, String lngStr, String raidus) {
-        Map map = new HashMap();
-
-        Double latitude = Double.parseDouble(latStr);// 传值给经度
-        Double longitude = Double.parseDouble(lngStr);// 传值给纬度
-
-        Double degree = (24901 * 1609) / 360.0; // 获取每度
-        double raidusMile = Double.parseDouble(raidus);
-
-        Double mpdLng = Double.parseDouble((degree * Math.cos(latitude * (Math.PI / 180))+"").replace("-", ""));
-        Double dpmLng = 1 / mpdLng;
-        Double radiusLng = dpmLng * raidusMile;
-        //获取最小经度
-        Double minLat = longitude - radiusLng;
-        // 获取最大经度
-        Double maxLat = longitude + radiusLng;
-
-        Double dpmLat = 1 / degree;
-        Double radiusLat = dpmLat * raidusMile;
-        // 获取最小纬度
-        Double minLng = latitude - radiusLat;
-        // 获取最大纬度
-        Double maxLng = latitude + radiusLat;
-
-        map.put("minLat", minLat+"");
-        map.put("maxLat", maxLat+"");
-        map.put("minLng", minLng+"");
-        map.put("maxLng", maxLng+"");
-
-        String result = "{\"maxLat\":\"" + maxLat + "\","
-                        + "\"minLat\":\"" + minLat + "\","
-                        + "\"minLng\":\"" + minLng + "\","
-                        + "\"maxLng\":\"" + maxLng + "\"}";
-
-        return result;
-    }
+    
 
 }

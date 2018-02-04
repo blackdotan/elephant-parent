@@ -14,26 +14,22 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 请描述类 <br>
+ * 中文转拼音
  *
  * @author ryan.
- *         <p/>
- *         Created by ryan on 2017/10/31.
+ *
+ * Created by ryan on 2017/10/31.
  */
 public class PinyinUtils {
 
     private static Map<String, List<String>> polyphone = null;
 
-
     /**
-     * text内容 转拼音 <br>
+     * text内容 转拼音
      *
-     *
-     * <p>
-     *    参考: http://blog.csdn.net/top_code/article/details/8531483
-     * </p>
-     * @param text
-     * @return
+     * @param text 待转字符串
+     * @return 拼音结果
+     * @throws Exception 异常
      */
     public static String pinyin(String text) throws Exception {
         if(polyphone == null) {
@@ -41,8 +37,6 @@ public class PinyinUtils {
             synchronized(PinyinUtils.class){
                 if (polyphone == null) {
                     polyphone = new HashMap<String, List<String>>();
-//                    String resource = PinyinUtils.class.getResourceAsStream("polyphone.txt");
-//                    InputStream ins = new FileInputStream(resource);
                     InputStream ins = PinyinUtils.class.getResourceAsStream("/polyphone.txt");
 
                     BufferedReader br = new BufferedReader(new InputStreamReader(ins));
@@ -191,8 +185,8 @@ public class PinyinUtils {
     /**
      * 将某个字符串的首字母 大写
      *
-     * @param text
-     * @return
+     * @param text 待转字符串
+     * @return 首字母转大写后字符串
      */
     private static String convertInitialToUpperCase(String text){
         char[] chs = text.toCharArray();

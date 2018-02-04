@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * 请描述类 <br>
+ * 整型枚举对象Handler
  *
  * @author ryan.
  * <p>

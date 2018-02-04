@@ -1,6 +1,6 @@
 package com.ipukr.elephant.cloud.storage;
 
-import com.ipukr.elephant.application.factory.Factory;
+import com.ipukr.elephant.architecture.factory.Factory;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;

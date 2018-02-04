@@ -2,7 +2,6 @@ package com.ipukr.elephant.http.third;
 
 import com.ipukr.elephant.architecture.AbstractAPI;
 import com.ipukr.elephant.architecture.context.Context;
-import com.sun.istack.internal.NotNull;
 import org.apache.http.Consts;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
@@ -23,7 +22,7 @@ import javax.net.ssl.SSLContext;
 import java.net.Inet4Address;
 
 /**
- * 请描述类 <br>
+ * HttpClient线程池 <br>
  *
  * @author ryan.
  *         <p>
@@ -63,7 +62,7 @@ public class HttpClientPool extends AbstractAPI {
     private String dns;
     private Integer connections;
 
-    public HttpClientPool(@NotNull Context context) throws Exception {
+    public HttpClientPool(Context context) throws Exception {
         super(context);
         this.schema = this.context.findStringAccordingKey(SCHEMA, "http");
         this.hostname = this.context.findStringAccordingKey(HOSTNAME);
@@ -80,7 +79,7 @@ public class HttpClientPool extends AbstractAPI {
         this.init();
     }
 
-    private HttpClientPool(@NotNull Builder builder) throws Exception {
+    private HttpClientPool(Builder builder) throws Exception {
         super(null);
         schema = builder.schema !=null ? builder.schema : "http";
         hostname = builder.hostname;

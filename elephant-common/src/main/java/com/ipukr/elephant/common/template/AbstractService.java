@@ -19,9 +19,9 @@ public abstract class AbstractService<T, K extends java.io.Serializable> impleme
     /**
      * 判断对象是否存在
      *
-     * @param instance
-     * @return
-     * @throws Exception
+     * @param instance Domain对象
+     * @return 是否存在
+     * @throws Exception 异常
      */
     @Override
     public boolean exist(T instance) throws Exception {
@@ -32,8 +32,8 @@ public abstract class AbstractService<T, K extends java.io.Serializable> impleme
      * 根据主键, 获取数据
      *
      * @param primaryKey 主键
-     * @return
-     * @throws Exception
+     * @return Domain对象
+     * @throws Exception 异常
      */
     @Override
     public T find(K primaryKey) throws Exception {
@@ -42,9 +42,9 @@ public abstract class AbstractService<T, K extends java.io.Serializable> impleme
 
     /**
      * 分页, 获取数据
-     * @param bounds
-     * @return
-     * @throws Exception
+     * @param bounds 分页对象
+     * @return Domain对象列表
+     * @throws Exception 异常
      */
     @Override
     public List<T> find(PageBounds bounds) throws Exception {
@@ -53,8 +53,8 @@ public abstract class AbstractService<T, K extends java.io.Serializable> impleme
 
     /**
      * 获取所有数据
-     * @return
-     * @throws Exception
+     * @return Domain对象 列表
+     * @throws Exception 异常
      */
     @Override
     public List<T> findAll() throws Exception {
@@ -63,9 +63,9 @@ public abstract class AbstractService<T, K extends java.io.Serializable> impleme
 
     /**
      * 新增数据
-     * @param instance
-     * @return
-     * @throws Exception
+     * @param instance Domain对象
+     * @return 是否插入成功
+     * @throws Exception 异常
      */
     @Override
     public boolean insert(T instance) throws Exception {
@@ -74,9 +74,9 @@ public abstract class AbstractService<T, K extends java.io.Serializable> impleme
 
     /**
      * 根据主键, 修改数据
-     * @param instance
-     * @return
-     * @throws Exception
+     * @param instance Domain对象
+     * @return 是否更新成功
+     * @throws Exception 异常
      */
     @Override
     public boolean update(T instance) throws Exception {
@@ -85,9 +85,9 @@ public abstract class AbstractService<T, K extends java.io.Serializable> impleme
 
     /**
      * 匹配查询
-     * @param instance
-     * @return
-     * @throws Exception
+     * @param instance Domain对象
+     * @return Domain对象匹配列表
+     * @throws Exception 异常
      */
     @Override
     public List<T> query(T instance) throws Exception {
@@ -96,10 +96,10 @@ public abstract class AbstractService<T, K extends java.io.Serializable> impleme
 
     /**
      * 分页, 匹配查询
-     * @param instance
-     * @param bounds
-     * @return
-     * @throws Exception
+     * @param instance Domain对象
+     * @param bounds 分页参数
+     * @return Domain对象匹配列表
+     * @throws Exception 异常
      */
     @Override
     public List<T> query(T instance, PageBounds bounds) throws Exception {
@@ -108,9 +108,9 @@ public abstract class AbstractService<T, K extends java.io.Serializable> impleme
 
     /**
      * 模糊查询
-     * @param instance
-     * @return
-     * @throws Exception
+     * @param instance Domain对象
+     * @return Domain对象搜索匹配列表
+     * @throws Exception 异常
      */
     @Override
     public List<T> search(T instance) throws Exception  {
@@ -119,10 +119,10 @@ public abstract class AbstractService<T, K extends java.io.Serializable> impleme
 
     /**
      * 分页, 模糊查询
-     * @param instance
-     * @param bounds
-     * @return
-     * @throws Exception
+     * @param instance Domain对象
+     * @param bounds 分页对象
+     * @return Domain对象搜索匹配列表
+     * @throws Exception 异常
      */
     @Override
     public List<T> search(T instance, PageBounds bounds) throws Exception {
@@ -131,9 +131,9 @@ public abstract class AbstractService<T, K extends java.io.Serializable> impleme
 
     /**
      * 根据主键, 删除数据
-     * @param primaryKey
-     * @return
-     * @throws Exception
+     * @param primaryKey 主键
+     * @return 是否删除成功
+     * @throws Exception 异常
      */
     @Override
     public boolean delete(K primaryKey) throws Exception {
@@ -142,13 +142,17 @@ public abstract class AbstractService<T, K extends java.io.Serializable> impleme
 
     /**
      * 数据抽样
-     * @return
+     * @return 随机Domain对象
      */
     @Override
     public T example() {
         return getMapper().example();
     }
 
+    /**
+     * @param n 随机数目
+     * @return Domain对象列表
+     */
     @Override
     public List<T> nexample(int n) {
         return getMapper().nexample(n);
@@ -157,9 +161,9 @@ public abstract class AbstractService<T, K extends java.io.Serializable> impleme
     /**
      * 获取实体Mapper对象 <br>
      *
-     * <p>此方法需要重写, 返回Mybatis Mapper接口绑定类型(eg:返回@Resource: UserMapper iUserMapper)</p>
+     * 此方法需要重写, 返回Mybatis Mapper接口绑定类型(eg:返回@Resource: UserMapper iUserMapper)
      *
-     * @return
+     * @return Mybatis Mapper 接口对象
      */
     public abstract AbstractMapper<T, K> getMapper();
 

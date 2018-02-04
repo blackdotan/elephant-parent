@@ -27,11 +27,8 @@ public class PayTest {
 
     @Test
     public void create() throws Exception {
-
         String token = StringUtils.uuid();
-        System.out.println(token);
         String no = StringUtils.uuid();
-        System.out.println(no);
         List<Good> goods = new ArrayList<Good>();
         Good good = new Good.Builder()
                 .no("20170912312312123")

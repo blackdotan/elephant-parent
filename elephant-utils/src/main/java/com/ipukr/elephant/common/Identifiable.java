@@ -11,7 +11,7 @@ public interface Identifiable<K> {
     /**
      * 获取枚举对象值
      *
-     * @return
+     * @return 枚举主键
      */
     K getId();
 }

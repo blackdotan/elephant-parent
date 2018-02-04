@@ -16,6 +16,7 @@ import java.util.List;
  * Created by Administrator on 2017/9/15.
  */
 public class LocalStorage extends AbstractAPI implements Storage{
+
     private static final Logger logger = LoggerFactory.getLogger(LocalStorage.class);
 
     public static final String File_Absolute_Address = "file_absolute_address";

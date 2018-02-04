@@ -12,13 +12,13 @@ import java.util.Collection;
 public interface IQueue<T> {
     /**
      * 进栈
-     * @param element
+     * @param element 泛型T实例
      */
     void push(T element);
 
     /**
      * 出栈
-     * @return
+     * @return 泛型T实例
      */
     T pop();
 
@@ -29,7 +29,7 @@ public interface IQueue<T> {
 
     /**
      * 判断栈是否为空
-     * @return
+     * @return bool
      */
     boolean isEmpty();
 

@@ -26,13 +26,18 @@ public class BufferDataRandom <T> {
         this.buffer = buffer;
     }
 
+    /**
+     * 设置实例列表
+     *
+     * @param buffer 设置随机数组
+     */
     public void setBuffer(List<T> buffer) {
         buffer = buffer;
     }
 
     /**
-     *
-     * @param instance
+     * 新增实例
+     * @param instance 新增实例
      */
     public void add(T instance) {
         buffer.add(instance);
@@ -41,7 +46,7 @@ public class BufferDataRandom <T> {
     /**
      * 随机一条记录
      *
-     * @return
+     * @return 泛型实例
      */
     public T random() {
         if(!buffer.isEmpty()) {
@@ -55,8 +60,8 @@ public class BufferDataRandom <T> {
      *
      * 不重复, 重复判断方式为是否equals
      *
-     * @param n
-     * @return
+     * @param n 随机条数
+     * @return 数组
      */
     public List<T> random(int n) {
         List<T> array = new ArrayList<>();

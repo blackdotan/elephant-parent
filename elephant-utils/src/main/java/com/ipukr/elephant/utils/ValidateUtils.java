@@ -49,7 +49,7 @@ public class ValidateUtils {
     /**
      * 校验用户名
      *
-     * @param username
+     * @param username 用户名
      * @return 校验通过返回true，否则返回false
      */
     public static boolean isUsername(String username) {
@@ -59,7 +59,7 @@ public class ValidateUtils {
     /**
      * 校验密码
      *
-     * @param password
+     * @param password 密码
      * @return 校验通过返回true，否则返回false
      */
     public static boolean isPassword(String password) {
@@ -69,7 +69,7 @@ public class ValidateUtils {
     /**
      * 校验手机号
      *
-     * @param mobile
+     * @param mobile 手机号
      * @return 校验通过返回true，否则返回false
      */
     public static boolean isMobile(String mobile) {
@@ -79,7 +79,7 @@ public class ValidateUtils {
     /**
      * 校验邮箱
      *
-     * @param email
+     * @param email 邮件
      * @return 校验通过返回true，否则返回false
      */
     public static boolean isEmail(String email) {
@@ -89,7 +89,7 @@ public class ValidateUtils {
     /**
      * 校验汉字
      *
-     * @param chinese
+     * @param chinese 中文
      * @return 校验通过返回true，否则返回false
      */
     public static boolean isChinese(String chinese) {
@@ -99,7 +99,7 @@ public class ValidateUtils {
     /**
      * 校验身份证
      *
-     * @param idCard
+     * @param idCard 身份证
      * @return 校验通过返回true，否则返回false
      */
     public static boolean isIDCard(String idCard) {
@@ -109,7 +109,7 @@ public class ValidateUtils {
     /**
      * 校验URL
      *
-     * @param url
+     * @param url url地址
      * @return 校验通过返回true，否则返回false
      */
     public static boolean isUrl(String url) {
@@ -119,8 +119,8 @@ public class ValidateUtils {
     /**
      * 校验IP地址
      *
-     * @param ipAddr
-     * @return
+     * @param ipAddr IP地址
+     * @return 校验通过返回true，否则返回false
      */
     public static boolean isIPAddr(String ipAddr) {
         return Pattern.matches(REGEX_IP_ADDR, ipAddr);

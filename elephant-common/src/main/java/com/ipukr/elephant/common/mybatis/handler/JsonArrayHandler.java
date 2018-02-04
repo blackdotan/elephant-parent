@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 请描述类 <br>
+ * Json数组对象Handler
  *
  * @author ryan.
  * <p>

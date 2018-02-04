@@ -1,6 +1,6 @@
 package com.ipukr.elephant.push.backend;
 
-import com.ipukr.elephant.application.factory.Factory;
+import com.ipukr.elephant.architecture.factory.Factory;
 import com.ipukr.elephant.push.IPush;
 import org.junit.Before;
 import org.junit.Test;

@@ -147,7 +147,7 @@ public class HttpClientPoolTest {
         HttpClientPool pool = Factory.getInstance().build("config.properties");
         HttpClient client = pool.getConnection();
 
-        HttpEntity entity  = new StringEntity("汉堡包一个多少钱", "UTF-8");;
+        HttpEntity entity = new StringEntity("汉堡包一个多少钱", "UTF-8");;
 
         URI URI = new URIBuilder()
                 .setScheme("https")

@@ -1,7 +1,7 @@
 package com.pukr.cattle.mail;
 
 import com.google.common.collect.Lists;
-import com.pukr.artchetype.application.factory.Factory;
+import com.ipukr.elephant.architecture.factory.Factory;
 import com.pukr.cattle.mail.third.SMTPMailSender;
 import org.apache.commons.configuration.ConfigurationException;
 import org.junit.Test;
@@ -17,7 +17,7 @@ import java.util.List;
 public class MailSenderTest {
     private MailSender sender;
     @Test
-    public void tst() throws ConfigurationException, MessagingException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    public void tst() throws Exception {
         sender = Factory.getInstance().build("mail.properties");
         sender.sender("wmw@ipukr.cn","主题:测试邮件发送","测试邮件发送");
     }

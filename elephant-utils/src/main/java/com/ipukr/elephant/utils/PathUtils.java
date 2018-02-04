@@ -11,17 +11,29 @@ public class PathUtils {
 
     private static final String FILE_SCHEME = "file:";
 
+    /**
+     * 路径格式兼容处理
+     * @param path window格式或Linux格式 路径
+     * @param sep 分隔符
+     * @return 当前路径格式
+     */
     public static String compatible(String path, String sep) {
         return path.replace(sep, File.separator);
     }
 
+    /**
+     * 路径格式兼容处理
+     * @param path window格式或Linux格式 路径
+     * @return 当前路径格式
+     */
     public static String compatible(String path) {
         return path.replace("/", File.separator);
     }
 
     /**
-     * @param paths
-     * @return
+     * 路径格式兼容处理
+     * @param paths window格式或Linux格式 路径 列表
+     * @return 当前路径格式
      */
     public static String[] compatible(String[] paths) {
         String[] arr = new String[paths.length];

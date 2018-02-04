@@ -9,6 +9,9 @@ import java.io.StringWriter;
 public class ExceptionUtils {
     /**
      * 异常类型 转成 字符串
+     *
+     * @param e 异常
+     * @return 异常日志
      * */
     public static String castEx2Str(Exception e){
         StringWriter sw = new StringWriter();

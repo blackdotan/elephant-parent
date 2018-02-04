@@ -21,7 +21,13 @@ import java.util.stream.Collectors;
 public class DataUtils {
 
     /**
-     * 拷贝K 到 新T
+     * 拷贝K类型 到 新T乐行
+     *
+     * @param k 泛型K实例
+     * @param clazz 目标类型K.class
+     * @param <T> 泛型T
+     * @param <K> 泛型K
+     * @return 目标类型T实例
      * */
     public static <T, K> T copyProperties(K k, Class<T> clazz){
         try {
@@ -34,9 +40,16 @@ public class DataUtils {
     }
     /**
      *
-     * 拷贝List<K> 到 新List<T>
+     * 拷贝List 到 新List
+     *
+     * @param ks 泛型K实例列表
+     * @param clazz 目标类型K.class
+     * @return 目标类型T实例列表
+     * @param <T> 泛型T
+     * @param <K> 泛型K
+     * @throws Exception 反射实例异常
      * */
-    public static <T,K> List<T> copyProperties(List<K> ks, Class<T> clazz) throws IllegalAccessException, InstantiationException {
+    public static <T,K> List<T> copyProperties(List<K> ks, Class<T> clazz) throws Exception {
         List<T> ts = ks instanceof PageList ?new PageList<T>( ((PageList)ks).getPaginator() ): new ArrayList<T>();
         for(K k : ks){
             T instance = clazz.newInstance();
@@ -46,6 +59,15 @@ public class DataUtils {
         return ts;
     }
 
+    /**
+     * 拷贝K 到 新T 忽略空
+     *
+     * @param k 泛型K实例
+     * @param clazz 目标类型K.class
+     * @param <T> 泛型T
+     * @param <K> 泛型K
+     * @return 目标泛型T实例
+     */
     public static <T,K> T copyPropertiesIgnoreNull(K k, Class<T> clazz){
         try {
             T instance = clazz.newInstance();
@@ -56,6 +78,15 @@ public class DataUtils {
         }
     }
 
+    /**
+     * 拷贝List 到 新List 忽略空
+     *
+     * @param ks 泛型K实例列表
+     * @param clazz 目标类型K.class
+     * @param <T> 泛型T
+     * @param <K> 泛型K
+     * @return 目标泛型T实例列表
+     */
     public static <T,K> List<T> copyPropertiesIgnoreNull(List<K> ks, Class<T> clazz) {
         List<T> ts = ks instanceof PageList ?new PageList<T>( ((PageList)ks).getPaginator() ): new ArrayList<T>(ks.size());
         for(K k :ks){
@@ -64,10 +95,23 @@ public class DataUtils {
         return ts;
     }
 
+    /**
+     * 拷贝K 到 T
+     *
+     * @param k 泛型K实例
+     * @param t 泛型T实例
+     * @param <T> 泛型K
+     * @param <K> 泛型T
+     */
     public static <T,K> void copyPropertiesIgnoreNull(K k, T t){
         BeanUtils.copyProperties(k, t, getNullPropertyNames(k));
     }
 
+    /**
+     * 获取所有 null 属性名
+     * @param source 处理对象
+     * @return 空属性名数组
+     */
     public static String[] getNullPropertyNames (Object source) {
         final BeanWrapper src = new BeanWrapperImpl(source);
         java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();
@@ -82,6 +126,17 @@ public class DataUtils {
     }
 
 
+    /**
+     * 拷贝map 到 新T
+     * @param map 待拷贝Map
+     * @param clazz T.class
+     * @param <T> 泛型T
+     * @return T实例
+     * @throws IllegalAccessException T实例化异常
+     * @throws InstantiationException T实例化异常
+     * @throws IntrospectionException T实例化异常
+     * @throws InvocationTargetException T实例化异常
+     */
     public static <T> T copyProperties(Map<String,Object> map, Class<T> clazz) throws IllegalAccessException, InstantiationException, IntrospectionException, InvocationTargetException {
         T instance = clazz.newInstance();
         BeanInfo info = Introspector.getBeanInfo(clazz);
@@ -98,10 +153,5 @@ public class DataUtils {
         }
         return instance;
     }
-
-    public static <T, K> List<K> stream(List<T> ts, Function<T, K> f){
-        return (List<K>) ts.stream().map(f).collect(Collectors.toList());
-    }
-
 
 }

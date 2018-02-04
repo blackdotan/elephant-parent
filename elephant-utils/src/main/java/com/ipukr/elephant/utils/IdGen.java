@@ -69,6 +69,7 @@ public class IdGen {
         return ((timestamp - twepoch) << timestampLeftShift) | (datacenterId << datacenterIdShift)
                 | (workerId << workerIdShift) | sequence;
     }
+
     protected long tilNextMillis(long lastTimestamp) {
         long timestamp = timeGen();
         while (timestamp <= lastTimestamp) {
@@ -76,6 +77,7 @@ public class IdGen {
         }
         return timestamp;
     }
+
     protected long timeGen() {
         return System.currentTimeMillis();
     }

@@ -6,10 +6,13 @@ import com.ipukr.elephant.payment.domain.Account;
 import com.ipukr.elephant.payment.domain.PayOrder;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Consts;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.FileEntity;
+import org.apache.http.entity.StringEntity;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,7 +38,7 @@ public class WeixinPay implements Pay {
     private void init() throws Exception {
          pool = HttpClientPool.custome()
                 .schema("https")
-                .hostname("dictation.nuancemobility.net")
+                .hostname("api.mch.weixin.qq.com")
                 .port((short) 443)
                 .protocol("TLSv1,TLSv1.1,TLSv1.2")
                 .timeout(60000)
@@ -48,7 +51,7 @@ public class WeixinPay implements Pay {
     public PayOrder create(PayOrder order) throws Exception {
         File file = new File(this.getClass().getResource("/").getPath().concat("/weixin/weixin_create_template.xml"));
         String template = IOUtils.toString(new FileInputStream(file), "UTF-8");
-        template.replace("${appid}", "");
+        template.replace("${appid}", "wx7c044c92ffbee262");
         template.replace("${attach}", "");
         template.replace("${body}", "");
         template.replace("${mch_id}", "");
@@ -60,27 +63,16 @@ public class WeixinPay implements Pay {
         template.replace("${trade_type}", "");
         template.replace("${sign}", "");
 
-
         URI URI = new URIBuilder()
-                .setScheme("https")
-                .setHost("dictation.nuancemobility.net")
-                .setPort(443)
-                .setPath("/NMDPAsrCmdServlet/dictation")
-                .addParameter("appId", "HTTP_NMDPPRODUCTION_Le_Trans_Letransi_20170731035035")
-                .addParameter("appKey","2f7ae4a6da8735d80ea6d18c679bbcec3df6b7067af30ad9f700558da20e96d1897a776301ac3c0f520d9bbaa958a6e64e5decc851f7a248f7f7d599066b6a8f")
-                .addParameter("id","00000000000000000000000000000001")
+                .setPath("/pay/unifiedorder")
                 .setCharset(Consts.UTF_8)
                 .build();
+
+        HttpEntity entity = new StringEntity(template);
 
         HttpUriRequest request = RequestBuilder.post(URI)
-                .setCharset(Consts.UTF_8)
-                .addHeader("Accept-Language", "cmn-CHN")
-                .addHeader("Accept-Topic", "WebSearch")
-                .addHeader("Accept", "text/plain;charset=utf-8")
-                .addHeader("Content-Type", "audio/x-wav;codec=pcm;bit=16;rate=16000")
-                .setEntity(template)
+                .setEntity(entity)
                 .build();
-
 
         HttpResponse response = pool.getConnection().execute(request);
 
