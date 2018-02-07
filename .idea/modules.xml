@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/elephant-architecture/elephant-architecture.iml" filepath="$PROJECT_DIR$/elephant-architecture/elephant-architecture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-cloud-storage/elephant-cloud-storage.iml" filepath="$PROJECT_DIR$/elephant-cloud-storage/elephant-cloud-storage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-common/elephant-common.iml" filepath="$PROJECT_DIR$/elephant-common/elephant-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-httpclient/elephant-httpclient.iml" filepath="$PROJECT_DIR$/elephant-httpclient/elephant-httpclient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-kv/elephant-kv.iml" filepath="$PROJECT_DIR$/elephant-kv/elephant-kv.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-mail/elephant-mail.iml" filepath="$PROJECT_DIR$/elephant-mail/elephant-mail.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/elephant-parent.iml" filepath="$PROJECT_DIR$/.idea/elephant-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-payment/elephant-payment.iml" filepath="$PROJECT_DIR$/elephant-payment/elephant-payment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-push/elephant-push.iml" filepath="$PROJECT_DIR$/elephant-push/elephant-push.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-utils/elephant-utils.iml" filepath="$PROJECT_DIR$/elephant-utils/elephant-utils.iml" />
+    </modules>
+  </component>
+</project>

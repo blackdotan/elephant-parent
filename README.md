@@ -88,6 +88,7 @@ com.ipukr.elephant.cloud.storage.Storage
 ## 支付服务
 配置
 ```
+# 支付宝
 architecture.alipay.class=com.ipukr.elephant.payment.third.AliPay
 architecture.alipay.url=https://openapi.alipay.com/gateway.do
 architecture.alipay.notify.url=https://tst.ipukr.cn/kong-appint/account/bill/notify
@@ -97,6 +98,19 @@ architecture.alipay.public.key=
 architecture.alipay.format=json
 architecture.alipay.charset=UTF-8
 architecture.alipay.sign_type=RSA2
+
+# 微信
+architecture.weixin.class=com.ipukr.elephant.payment.third.WeixinPay
+architecture.weixin.http.schema=https
+architecture.weixin.http.hostname=api.mch.weixin.qq.com
+architecture.weixin.http.port=443
+architecture.weixin.http.protocol=TLSv1,TLSv1.1,TLSv1.2
+architecture.weixin.http.timeout=5000
+architecture.weixin.http.connections=20
+architecture.weixin.appid=wx7c044c92ffbee262
+architecture.weixin.mchid=1497977952
+architecture.weixin.notify.url=https://tst.ipukr.cn/kong-appint/account/bill/notify
+architecture.weixin.sign.key=hHJhYD6iDBvRHAzHLZ7kC9GsrWpuUmB9
 ```
 代码
 ```Java
