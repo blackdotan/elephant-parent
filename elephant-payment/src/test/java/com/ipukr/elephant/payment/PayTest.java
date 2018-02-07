@@ -39,7 +39,7 @@ public class PayTest {
         PayOrder order = new SimplePayOrder.Builder()
                 .amount(0.01F)
                 .no(no)
-                .subject("支付测试")
+                .subject("云扬健身-会员充值")
                 .secret(token)
                 .build();
         PayOrder pOrder = pay.create(order);
@@ -87,7 +87,8 @@ public class PayTest {
         params.put("buyer_logon_id","wmw***@gmail.com");
         params.put("point_amount","0.00");
 
-
         Assert.assertEquals(true, pay.verify(params));
     }
+
+
 }

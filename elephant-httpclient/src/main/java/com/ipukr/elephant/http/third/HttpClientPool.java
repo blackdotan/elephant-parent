@@ -174,7 +174,7 @@ public class HttpClientPool extends AbstractAPI {
         return builder.build();
     }
 
-    public static Builder custome() {
+    public final static Builder custome() {
         return new Builder();
     }
 

@@ -40,6 +40,25 @@
 
 
     <build>
+        <resources>
+            <!-- 正式资源文件扫描-->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <!-- 正式资源文件扫描-->
+            <testResource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+            <!-- 测试资源文件扫描-->
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
