@@ -213,4 +213,9 @@ public class AliPay extends AbstractAPI implements Pay {
     public boolean verify(Map params) throws Exception {
         return AlipaySignature.rsaCheckV1(params, alipayPublicKey, charset, signType);
     }
+
+    @Override
+    public Map signature(Map params) throws Exception {
+        return params;
+    }
 }

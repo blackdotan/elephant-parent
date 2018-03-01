@@ -7,6 +7,7 @@
     <notify_url>${notify_url}</notify_url>
     <out_trade_no>${out_trade_no}</out_trade_no>
     <total_fee>${total_fee}</total_fee>
+    <time_start>${time_start}</time_start>
     <trade_type>${trade_type}</trade_type>
     <sign>${sign}</sign>
 </xml>

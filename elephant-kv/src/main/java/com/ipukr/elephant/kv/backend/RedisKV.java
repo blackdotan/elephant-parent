@@ -75,7 +75,6 @@ public class RedisKV<T> extends AbstractAPI<T> implements KV<T> {
         }else{
             pool = new JedisPool(config, addresses, port, timeout, password, db);
         }
-
     }
 
 

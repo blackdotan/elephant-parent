@@ -104,4 +104,13 @@ public interface Pay {
      */
     boolean verify(Map params) throws Exception;
 
+
+    /**
+     * 参数签名[微信]
+     * @param params 待签名参数
+     * @return 带签名结果
+     * @throws Exception 异常信息
+     */
+    Map signature(Map params) throws Exception;
+
 }

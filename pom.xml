@@ -19,6 +19,7 @@
         <module>elephant-architecture</module>
         <module>elephant-httpclient</module>
         <module>elephant-payment</module>
+        <module>elephant-sms</module>
     </modules>
 
     <dependencyManagement>
@@ -52,6 +53,18 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>1.7.7</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.7.7</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.17</version>
+                <scope>test</scope>
             </dependency>
             <!-- Guava -->
             <dependency>
@@ -150,6 +163,20 @@
                 <artifactId>proguard</artifactId>
                 <version>4.4</version>
             </dependency>
+
+            <!--Excel文件处理-->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>3.17</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>3.17</version>
+            </dependency>
+
+
         </dependencies>
 
 

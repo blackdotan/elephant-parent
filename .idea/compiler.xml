@@ -14,6 +14,7 @@
         <module name="elephant-mail" />
         <module name="elephant-payment" />
         <module name="elephant-push" />
+        <module name="elephant-sms" />
         <module name="elephant-utils" />
       </profile>
     </annotationProcessing>
@@ -27,6 +28,9 @@
       <module name="elephant-parent" target="1.8" />
       <module name="elephant-payment" target="1.8" />
       <module name="elephant-push" target="1.8" />
+      <module name="elephant-sms" target="1.8" />
+      <module name="elephant-sms_main" target="1.8" />
+      <module name="elephant-sms_test" target="1.8" />
       <module name="elephant-utils" target="1.8" />
     </bytecodeTargetLevel>
   </component>

@@ -38,7 +38,6 @@ public class PinyinUtils {
                 if (polyphone == null) {
                     polyphone = new HashMap<String, List<String>>();
                     InputStream ins = PinyinUtils.class.getResourceAsStream("/polyphone.txt");
-
                     BufferedReader br = new BufferedReader(new InputStreamReader(ins));
                     String s = null;
                     try {

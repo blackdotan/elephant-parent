@@ -1,6 +1,7 @@
 package com.ipukr.elephant.payment.domain;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 请描述类 <br>
@@ -52,6 +53,12 @@ public abstract class PayOrder {
      * 第三方请求结果
      * */
     private String reponse;
+    /**
+     * 第三方请求结果
+     *
+     * 微信返回结果兼容
+     */
+    private Map resmap;
     /**
      * 第三方回调地址
      * */
@@ -145,6 +152,15 @@ public abstract class PayOrder {
         this.notifyUrl = notifyUrl;
     }
 
+    public Map getResmap() {
+        return resmap;
+    }
+
+    public void setResmap(Map resmap) {
+        this.resmap = resmap;
+    }
+
+
     @Override
     public String toString() {
         return "PayOrder{" +
@@ -158,10 +174,8 @@ public abstract class PayOrder {
                 ", goods=" + goods +
                 ", secret='" + secret + '\'' +
                 ", reponse='" + reponse + '\'' +
+                ", resmap=" + resmap +
                 ", notifyUrl='" + notifyUrl + '\'' +
                 '}';
     }
-
-
-
 }

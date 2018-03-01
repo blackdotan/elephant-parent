@@ -1,5 +1,8 @@
 package com.ipukr.elephant.payment.third;
 
+import com.github.wxpay.sdk.WXPay;
+import com.github.wxpay.sdk.WXPayConfig;
+import com.github.wxpay.sdk.WXPayUtil;
 import com.ipukr.elephant.architecture.AbstractAPI;
 import com.ipukr.elephant.architecture.context.Context;
 import com.ipukr.elephant.http.third.HttpClientPool;
@@ -7,9 +10,7 @@ import com.ipukr.elephant.payment.Pay;
 import com.ipukr.elephant.payment.domain.Account;
 import com.ipukr.elephant.payment.domain.PayOrder;
 import com.ipukr.elephant.payment.utils.MD5Tools;
-import com.ipukr.elephant.utils.IdGen;
-import com.ipukr.elephant.utils.SecurityUtils;
-import com.ipukr.elephant.utils.StringUtils;
+import com.ipukr.elephant.utils.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.apache.http.Consts;
@@ -24,12 +25,16 @@ import org.apache.http.entity.StringEntity;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.*;
 
 /**
- * 请描述类 <br>
+ * 微信支付 <br>
+ *
+ *
+ * SDK详见：https://github.com/wxpay/WXPay-SDK-Java
  *
  * @author ryan.
  *         <p>
@@ -50,6 +55,7 @@ public class WeixinPay extends AbstractAPI implements Pay {
     private static final String MCHID      = "mchid";
     private static final String NOTIFY_URL = "notify.url";
     private static final String SIGNATURE  = "sign.key";
+    private static final String CERT_PATH  = "cert.path";
 
 
     private String schema;
@@ -62,6 +68,11 @@ public class WeixinPay extends AbstractAPI implements Pay {
     private String mchid;
     private String notify;
     private String signature;
+    private InputStream cert;
+    private byte[] certBytes;
+
+    private WXPayConfig config;
+    private WXPay wxpay;
 
     public WeixinPay(Context context) throws Exception {
         super(context);
@@ -69,84 +80,70 @@ public class WeixinPay extends AbstractAPI implements Pay {
     }
 
     private void init() throws Exception {
-        this.schema = context.findStringAccordingKey(HTTP_SCHEMA);
-        this.hostname = context.findStringAccordingKey(HTTP_HOSTNAME);
-        this.port = context.findNumberAccordingKey(HTTP_PORT).shortValue();
-        this.protocol = context.findStringAccordingKey(HTTP_PROTOCOL);
-        this.timeout = context.findNumberAccordingKey(HTTP_TIMEOUT).intValue();
-        this.connections = context.findNumberAccordingKey(HTTP_CONNECTIONS).intValue();
 
         this.appid = context.findStringAccordingKey(APPID);
         this.mchid = context.findStringAccordingKey(MCHID);
         this.notify = context.findStringAccordingKey(NOTIFY_URL);
         this.signature = context.findStringAccordingKey(SIGNATURE);
 
-         pool = HttpClientPool.custome()
-                .schema(schema)
-                .hostname(hostname)
-                .port(port)
-                .protocol(protocol)
-                .timeout(timeout)
-                .connections(connections)
-                .routeMax(50)
-                .build();
+        InputStream cert = WeixinPay.class.getResourceAsStream(context.findStringAccordingKey(CERT_PATH));
+
+        config = new WXPayConfig() {
+
+            @Override
+            public String getAppID() {
+                return appid;
+            }
+
+            @Override
+            public String getMchID() {
+                return mchid;
+            }
+
+            @Override
+            public String getKey() {
+                return signature;
+            }
+
+            @Override
+            public InputStream getCertStream() {
+                return cert;
+            }
+
+            @Override
+            public int getHttpConnectTimeoutMs() {
+                return 6000;
+            }
+
+            @Override
+            public int getHttpReadTimeoutMs() {
+                return 6000;
+            }
+        };
+
+
+        wxpay = new WXPay(config);
+
     }
 
     @Override
     public PayOrder create(PayOrder order) throws Exception {
-        File file = new File(this.getClass().getResource("/").getPath().concat("/weixin/weixin_create_template.xml"));
-        String template = IOUtils.toString(new FileInputStream(file), "UTF-8");
-
-        String deviceInfo = "WEB";
-        String nonceStr = StringUtils.uuid().substring(0, 15);
-        String tradeType = "APP";
 
         String fee = String.valueOf(((Number) Math.max(order.getAmount() * 100, 0)).intValue());
+        Long start = DateUtils.now().getTime();
+        Map<String, String> data = new HashMap<String, String>();
+        data.put("body", order.getSubject());
+        data.put("out_trade_no", order.getNo());
+        data.put("fee_type", "CNY");
+        data.put("total_fee", fee);
+        data.put("time_start", start.toString());
+        data.put("notify_url", notify);
+        data.put("trade_type", "APP");  // 此处指定为扫码支付
 
-        SortedMap<Object,Object> parameters = new TreeMap<Object,Object>();
-        parameters.put("appid", appid);
-        parameters.put("attach", order.getRemark());
-        parameters.put("body", order.getSubject());
-        parameters.put("mch_id", mchid);
-        parameters.put("nonce_str", nonceStr);
-        parameters.put("notify_url", notify);
-        parameters.put("out_trade_no", order.getNo());
-        parameters.put("total_fee", fee);
-        parameters.put("trade_type", tradeType);
+        Map<String, String> resp = wxpay.unifiedOrder(data);
+        order.setResmap(resp);
+        order.setReponse(JsonUtils.parserObj2String(resp));
 
-        String sign = signature(parameters, signature, "UTF-8");
-        template = template
-                .replace("${appid}", appid)
-                .replace("${attach}", order.getRemark())
-                .replace("${body}", order.getSubject())
-                .replace("${mch_id}", mchid)
-                .replace("${nonce_str}", nonceStr)
-                .replace("${notify_url}", notify)
-                .replace("${out_trade_no}", order.getNo())
-                .replace("${total_fee}", fee)
-                .replace("${trade_type}", tradeType)
-                .replace("${sign}", sign);
-
-
-        System.out.println(template.toString());
-        URI URI = new URIBuilder()
-                .setScheme("https")
-                .setHost("api.mch.weixin.qq.com")
-                .setPath("/pay/unifiedorder")
-                .setCharset(Consts.UTF_8)
-                .build();
-
-        HttpEntity entity = new StringEntity(new String(template.getBytes(), "UTF-8"), ContentType.create("application/xml", "UTF-8"));
-
-        HttpUriRequest request = RequestBuilder.post(URI)
-                .setEntity(entity)
-                .build();
-
-        HttpResponse response = pool.getConnection().execute(request);
-
-        String content = IOUtils.toString(response.getEntity().getContent());
-        System.out.println(response.toString());
-        order.setReponse(content);
         return order;
     }
 
@@ -192,9 +189,22 @@ public class WeixinPay extends AbstractAPI implements Pay {
 
     @Override
     public boolean verify(Map params) throws Exception {
-        return false;
+        if (wxpay.isPayResultNotifySignatureValid(params)) {
+            // 签名正确
+            // 进行处理。
+            // 注意特殊情况：订单已经退款，但收到了支付结果成功的通知，不应把商户侧订单状态从退款改成支付成功
+            return true;
+        } else {
+            // 签名错误，如果数据里没有sign字段，也认为是签名错误
+            return false;
+        }
     }
 
+    @Override
+    public Map signature(Map params) throws Exception {
+        params.put("sign", WXPayUtil.generateSignature(params, signature));
+        return params;
+    }
 
     public static String signature(SortedMap<Object,Object> parameters, String key, String charset){
         StringBuffer sb = new StringBuffer();
@@ -204,8 +214,7 @@ public class WeixinPay extends AbstractAPI implements Pay {
             Map.Entry entry = (Map.Entry)it.next();
             String k = (String)entry.getKey();
             Object v = entry.getValue();
-            if(null != v && !"".equals(v)
-                    && !"sign".equals(k) && !"key".equals(k)) {
+            if(null != v && !"".equals(v) && !"sign".equals(k) && !"key".equals(k)) {
                 sb.append(k + "=" + v + "&");
             }
         }

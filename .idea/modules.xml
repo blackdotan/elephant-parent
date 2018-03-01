@@ -11,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/elephant-parent.iml" filepath="$PROJECT_DIR$/.idea/elephant-parent.iml" />
       <module fileurl="file://$PROJECT_DIR$/elephant-payment/elephant-payment.iml" filepath="$PROJECT_DIR$/elephant-payment/elephant-payment.iml" />
       <module fileurl="file://$PROJECT_DIR$/elephant-push/elephant-push.iml" filepath="$PROJECT_DIR$/elephant-push/elephant-push.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-sms/elephant-sms.iml" filepath="$PROJECT_DIR$/elephant-sms/elephant-sms.iml" />
       <module fileurl="file://$PROJECT_DIR$/elephant-utils/elephant-utils.iml" filepath="$PROJECT_DIR$/elephant-utils/elephant-utils.iml" />
     </modules>
   </component>

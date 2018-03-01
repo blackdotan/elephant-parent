@@ -4,7 +4,10 @@ import com.ipukr.elephant.architecture.configuration.Configuration;
 import com.ipukr.elephant.architecture.configuration.PropertiesConfiguration;
 import com.ipukr.elephant.architecture.constant.Constant;
 import com.ipukr.elephant.architecture.context.Context;
+import com.ipukr.elephant.utils.StringUtils;
 import org.apache.commons.configuration.ConfigurationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
@@ -15,7 +18,7 @@ import java.net.URLDecoder;
  * Created by wmw on 12/27/16.
  */
 public class Factory {
-
+    private static Logger logger = LoggerFactory.getLogger(Factory.class);
     private static com.ipukr.elephant.architecture.factory.Factory factory;
 
     private Factory() {}
@@ -192,6 +195,17 @@ public class Factory {
         Context context = new Context(configuration);
         context.setLabel(label);
         String clazz = context.findStringAccordingKey(Constant.CLASS);
+        if ( clazz == null || clazz.equals("")) {
+            String error = StringUtils.easyAppend("初始化class={}失败，未找到类型，请检测配置是否正确", clazz);
+            throw new RuntimeException(error);
+        } else {
+            try {
+                Class.forName(clazz);
+            } catch (ClassNotFoundException e) {
+                String error = StringUtils.easyAppend("初始化class={}失败，未找到类型，请检测配置是否正确", clazz);
+                throw new RuntimeException(error);
+            }
+        }
         Constructor constructor = Class.forName(clazz).getConstructor(Context.class);
         return (T) constructor.newInstance(context);
     }
@@ -208,6 +222,12 @@ public class Factory {
         Context context = new Context(configuration);
         context.setLabel(label);
         String clazz = context.findStringAccordingKey(Constant.CLASS);
+        try {
+            Class.forName( clazz );
+        } catch( ClassNotFoundException e ) {
+            String error = StringUtils.easyAppend("初始化class={}失败，未找到类型", clazz);
+            throw new RuntimeException(error);
+        }
         Constructor constructor = Class.forName(clazz).getConstructor(Context.class, Class.class);
         return (T) constructor.newInstance(context, generic);
     }

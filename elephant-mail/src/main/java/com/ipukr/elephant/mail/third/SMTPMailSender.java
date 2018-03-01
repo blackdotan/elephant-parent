@@ -1,10 +1,10 @@
-package com.pukr.cattle.mail.third;
+package com.ipukr.elephant.mail.third;
 
 import com.google.common.collect.Lists;
 import com.ipukr.elephant.architecture.AbstractAPI;
 import com.ipukr.elephant.architecture.context.Context;
-import com.pukr.cattle.mail.MailSender;
-import com.pukr.cattle.mail.constanst.MailConstanst;
+import com.ipukr.elephant.mail.MailSender;
+import com.ipukr.elephant.mail.constanst.MailConstanst;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -69,23 +69,23 @@ public class SMTPMailSender extends AbstractAPI implements MailSender{
 
 
     @Override
-    public void sender(String from, String to, String subject, String content) throws MessagingException {
+    public void send(String from, String to, String subject, String content) throws MessagingException {
         send(from, Lists.newArrayList(to),null ,subject,content);
     }
 
     @Override
-    public void sender(String from, List<String> tos, String subject, String content) throws MessagingException {
+    public void send(String from, List<String> tos, String subject, String content) throws MessagingException {
         send(from, tos, null, subject, content);
     }
 
     @Override
-    public void sender(String to, String subject, String content) throws MessagingException {
+    public void send(String to, String subject, String content) throws MessagingException {
         String from = context.findStringAccordingKey(MailConstanst.MAIL_FROM);
         send(from, Lists.newArrayList(to),null ,subject,content);
     }
 
     @Override
-    public void sender(List<String> tos, String subject, String content) throws MessagingException {
+    public void send(List<String> tos, String subject, String content) throws MessagingException {
         String from = context.findStringAccordingKey(MailConstanst.MAIL_FROM);
         send(from, tos, null, subject, content);
     }

@@ -1,4 +1,4 @@
-package com.pukr.cattle.mail.constanst;
+package com.ipukr.elephant.mail.constanst;
 
 /**
  * Created by wmw on 6/2/16.
@@ -12,5 +12,6 @@ public class MailConstanst {
     public static final String MAIL_USERNAME = "mail.username";
     public static final String MAIL_PASSWORD = "mail.password";
     public static final String MAIL_FROM = "mail.from";
+    public static final String MAIL_DEBUG = "mail.debug";
 
 }
