@@ -56,7 +56,10 @@ public class WeixinPay extends AbstractAPI implements Pay {
     private static final String NOTIFY_URL = "notify.url";
     private static final String SIGNATURE  = "sign.key";
     private static final String CERT_PATH  = "cert.path";
-
+    /**
+     * 放大倍数
+     */
+    private static final String MAGNIFICATION  = "amount.magnification.unit";
 
     private String schema;
     private String hostname;
@@ -70,6 +73,7 @@ public class WeixinPay extends AbstractAPI implements Pay {
     private String signature;
     private InputStream cert;
     private byte[] certBytes;
+    private Float magnification;
 
     private WXPayConfig config;
     private WXPay wxpay;
@@ -85,6 +89,7 @@ public class WeixinPay extends AbstractAPI implements Pay {
         this.mchid = context.findStringAccordingKey(MCHID);
         this.notify = context.findStringAccordingKey(NOTIFY_URL);
         this.signature = context.findStringAccordingKey(SIGNATURE);
+        this.magnification = context.findNumberAccordingKey(MAGNIFICATION, 1.0F).floatValue();
 
         InputStream cert = WeixinPay.class.getResourceAsStream(context.findStringAccordingKey(CERT_PATH));
 
@@ -128,8 +133,9 @@ public class WeixinPay extends AbstractAPI implements Pay {
 
     @Override
     public PayOrder create(PayOrder order) throws Exception {
+        order.setAmount(order.getAmount() * magnification);
 
-        String fee = String.valueOf(((Number) Math.max(order.getAmount() * 100, 0)).intValue());
+        String fee = String.valueOf(((Number) Math.max(order.getAmount() * 100, 1)).intValue());
         Long start = DateUtils.now().getTime();
         Map<String, String> data = new HashMap<String, String>();
         data.put("body", order.getSubject());
@@ -191,7 +197,7 @@ public class WeixinPay extends AbstractAPI implements Pay {
     public boolean verify(Map params) throws Exception {
         if (wxpay.isPayResultNotifySignatureValid(params)) {
             // 签名正确
-            // 进行处理。
+            // 进行处理。`
             // 注意特殊情况：订单已经退款，但收到了支付结果成功的通知，不应把商户侧订单状态从退款改成支付成功
             return true;
         } else {

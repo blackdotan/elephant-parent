@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -78,6 +79,10 @@ public class AliPay extends AbstractAPI implements Pay {
      * */
     private static final String NOTIFY_URL = "notify.url";
 
+    /**
+     * 放大倍数
+     */
+    private static final String MAGNIFICATION  = "amount.magnification.unit";
 
 
 
@@ -89,15 +94,16 @@ public class AliPay extends AbstractAPI implements Pay {
     private String alipayPublicKey;
     private String signType;
     private String notify;
+    private Float magnification;
 
     private AlipayClient client;
 
-    public AliPay(Context context) {
+    public AliPay(Context context) throws ParseException {
         super(context);
         this.init();
     }
 
-    private void init() {
+    private void init() throws ParseException {
         this.url = context.findStringAccordingKey(URL);
         this.appId = context.findStringAccordingKey(APP_ID);
         this.appPrivateKey = context.findStringAccordingKey(APP_PRIVATE_KEY);
@@ -106,6 +112,7 @@ public class AliPay extends AbstractAPI implements Pay {
         this.alipayPublicKey = context.findStringAccordingKey(ALIPAY_PUBLIC_KEY);
         this.signType = context.findStringAccordingKey(SIGN_TYPE);
         this.notify = context.findStringAccordingKey(NOTIFY_URL);
+        this.magnification = context.findNumberAccordingKey(MAGNIFICATION, 1.0F).floatValue();
         client = new DefaultAlipayClient(url, appId, appPrivateKey, format, charset, alipayPublicKey, signType);
     }
 
@@ -116,6 +123,8 @@ public class AliPay extends AbstractAPI implements Pay {
 
     @Override
     public PayOrder create(PayOrder order) throws Exception {
+        order.setAmount(order.getAmount() * magnification);
+
         AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
         AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
         model.setSubject(order.getSubject());
@@ -135,7 +144,6 @@ public class AliPay extends AbstractAPI implements Pay {
 
         request.putOtherTextParam("secret", order.getSecret());
         request.setNotifyUrl(notify);
-
 
         request.setBizModel(model);
 
@@ -199,7 +207,7 @@ public class AliPay extends AbstractAPI implements Pay {
     public PayOrder refund(PayOrder order) throws Exception {
         AlipayTradeRefundRequest request = new AlipayTradeRefundRequest();
         AlipayTradeRefundModel model = new AlipayTradeRefundModel();
-        model.setRefundAmount(String.valueOf(order.getAmount()));
+        model.setRefundAmount(String.valueOf(Math.max(order.getAmount(), 0.01F)));
         model.setOutTradeNo(order.getNo());
         model.setRefundReason(order.getRemark());
         model.setTradeNo(order.getExternalNo());

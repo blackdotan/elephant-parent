@@ -1,6 +1,7 @@
-package com.ipukr.elephant.payment;
+package com.ipukr.elephant.payment.third;
 
 import com.ipukr.elephant.architecture.factory.Factory;
+import com.ipukr.elephant.payment.Pay;
 import com.ipukr.elephant.payment.domain.Good;
 import com.ipukr.elephant.payment.domain.PayOrder;
 import com.ipukr.elephant.payment.domain.SimplePayOrder;
@@ -18,7 +19,7 @@ import java.util.*;
  *         <p>
  *         Created by ryan on 2017/12/27.
  */
-public class PayTest {
+public class AliPayTest {
     private Pay pay = null;
     @Before
     public void setUp() throws Exception {
@@ -33,11 +34,11 @@ public class PayTest {
         Good good = new Good.Builder()
                 .no("20170912312312123")
                 .name("Member Fee")
-                .price(0.01F)
+                .price(100F)
                 .quantity(1)
                 .build();
         PayOrder order = new SimplePayOrder.Builder()
-                .amount(0.01F)
+                .amount(100F)
                 .no(no)
                 .subject("云扬健身-会员充值")
                 .secret(token)
