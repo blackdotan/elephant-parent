@@ -11,7 +11,7 @@ import com.ipukr.elephant.utils.StringUtils;
  */
 public abstract class AbstractException extends Exception {
 
-    private String code = "E000X";
+    private String code = null;
 
     private String message;
 
@@ -37,8 +37,12 @@ public abstract class AbstractException extends Exception {
 
     @Override
     public String getMessage() {
-        String error = StringUtils.easyAppend("{}, {}", code, message);
-        return error;
+        if (code == null) {
+            return message;
+        } else {
+            String error = StringUtils.easyAppend("{}, {}", code, message);
+            return error;
+        }
     }
 
 }

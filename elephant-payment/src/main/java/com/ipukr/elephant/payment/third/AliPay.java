@@ -22,11 +22,14 @@ import com.ipukr.elephant.payment.Pay;
 import com.ipukr.elephant.payment.domain.Account;
 import com.ipukr.elephant.payment.domain.Good;
 import com.ipukr.elephant.payment.domain.PayOrder;
+import com.ipukr.elephant.payment.utils.MathUtils;
+import com.ipukr.elephant.utils.JsonUtils;
 import com.ipukr.elephant.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -123,7 +126,8 @@ public class AliPay extends AbstractAPI implements Pay {
 
     @Override
     public PayOrder create(PayOrder order) throws Exception {
-        order.setAmount(order.getAmount() * magnification);
+        Float f = MathUtils.multiply(order.getAmount(), magnification, 2);
+        order.setAmount(f);
 
         AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
         AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
@@ -131,18 +135,17 @@ public class AliPay extends AbstractAPI implements Pay {
         model.setTimeoutExpress("15d");
         model.setOutTradeNo(order.getNo());
         model.setGoodsType("0");
-        model.setTotalAmount(String.valueOf(order.getAmount()));
+        model.setTotalAmount(Float.toString(order.getAmount()));
         model.setProductCode(order.getSubject());
         if( order.getGoods()!=null && !order.getGoods().isEmpty()) {
             List<GoodsDetail> details = new ArrayList<GoodsDetail>();
             StringBuffer body = new StringBuffer();
             for (Good good : order.getGoods()) {
-                body.append(good).append(",");
+                body.append(good.getName()).append(",");
             }
             model.setBody(body.toString());
         }
 
-        request.putOtherTextParam("secret", order.getSecret());
         request.setNotifyUrl(notify);
 
         request.setBizModel(model);
@@ -151,6 +154,8 @@ public class AliPay extends AbstractAPI implements Pay {
 
         if(response.isSuccess()){
             order.setReponse(response.getBody());
+            String msg = StringUtils.easyAppend("支付宝订单创建成功,", JsonUtils.parserObj2String(response));
+            logger.debug(msg);
             return order;
         } else {
             String error = StringUtils.easyAppend("支付宝订单创建失败, error.code={}, error.msg={}", response.getCode(), response.getMsg());
@@ -219,6 +224,10 @@ public class AliPay extends AbstractAPI implements Pay {
 
     @Override
     public boolean verify(Map params) throws Exception {
+        System.out.println(alipayPublicKey);
+        System.out.println(charset);
+        System.out.println(signType);
+
         return AlipaySignature.rsaCheckV1(params, alipayPublicKey, charset, signType);
     }
 

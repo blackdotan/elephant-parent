@@ -10,6 +10,7 @@ import com.ipukr.elephant.payment.Pay;
 import com.ipukr.elephant.payment.domain.Account;
 import com.ipukr.elephant.payment.domain.PayOrder;
 import com.ipukr.elephant.payment.utils.MD5Tools;
+import com.ipukr.elephant.payment.utils.MathUtils;
 import com.ipukr.elephant.utils.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.math.RandomUtils;
@@ -134,8 +135,9 @@ public class WeixinPay extends AbstractAPI implements Pay {
     @Override
     public PayOrder create(PayOrder order) throws Exception {
         order.setAmount(order.getAmount() * magnification);
+//        Float f = MathUtils.multiply(order.getAmount() * 100, magnification);
 
-        String fee = String.valueOf(((Number) Math.max(order.getAmount() * 100, 1)).intValue());
+        String fee = Integer.toString(((Number) Math.max(order.getAmount() * 100, 1)).intValue());
         Long start = DateUtils.now().getTime();
         Map<String, String> data = new HashMap<String, String>();
         data.put("body", order.getSubject());
