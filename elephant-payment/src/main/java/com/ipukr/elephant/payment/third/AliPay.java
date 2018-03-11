@@ -31,9 +31,7 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 阿里支付 <br>
@@ -61,6 +59,10 @@ public class AliPay extends AbstractAPI implements Pay {
      * 开发者应用私钥，由开发者自己生成
      */
     private static final String APP_PRIVATE_KEY = "app.private.key";
+    /**
+     * 开发者应用公钥
+     */
+    private static final String APP_PUBLIC_KEY = "app.public.key";
     /**
      * 参数返回格式，只支持json
      */
@@ -131,12 +133,16 @@ public class AliPay extends AbstractAPI implements Pay {
 
         AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
         AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
+
         model.setSubject(order.getSubject());
-        model.setTimeoutExpress("15d");
         model.setOutTradeNo(order.getNo());
+        model.setTimeoutExpress("15d");
+
         model.setGoodsType("0");
+        model.setProductCode("QUICK_MSECURITY_PAY");
+
         model.setTotalAmount(Float.toString(order.getAmount()));
-        model.setProductCode(order.getSubject());
+
         if( order.getGoods()!=null && !order.getGoods().isEmpty()) {
             List<GoodsDetail> details = new ArrayList<GoodsDetail>();
             StringBuffer body = new StringBuffer();
@@ -153,6 +159,8 @@ public class AliPay extends AbstractAPI implements Pay {
         AlipayTradeAppPayResponse response = client.sdkExecute(request);
 
         if(response.isSuccess()){
+
+
             order.setReponse(response.getBody());
             String msg = StringUtils.easyAppend("支付宝订单创建成功,", JsonUtils.parserObj2String(response));
             logger.debug(msg);
@@ -224,10 +232,6 @@ public class AliPay extends AbstractAPI implements Pay {
 
     @Override
     public boolean verify(Map params) throws Exception {
-        System.out.println(alipayPublicKey);
-        System.out.println(charset);
-        System.out.println(signType);
-
         return AlipaySignature.rsaCheckV1(params, alipayPublicKey, charset, signType);
     }
 
