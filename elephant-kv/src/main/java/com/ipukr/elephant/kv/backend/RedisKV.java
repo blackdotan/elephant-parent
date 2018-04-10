@@ -33,33 +33,69 @@ public class RedisKV<T> extends AbstractAPI<T> implements KV<T> {
     public static final String REDIS_DB = "db";
 
 
+    private String addresses ;
+    private Integer port ;
+    private String password ;
+    private Integer db ;
+    private Integer maxTotal ;
+    private Integer maxIdle ;
+    private Integer maxWait ;
+    private Integer maxActive ;
+    private Boolean testOnBorrow ;
+    private Integer timeout ;
+
     private JedisPool pool;
 
     public RedisKV(Context context) {
         super(context);
+        addresses = context.findStringAccordingKey(REDIS_ADDRESS);
+        port = Integer.valueOf(context.findStringAccordingKey(REDIS_PORT));
+        password = context.findStringAccordingKey(REDIS_AUTH);
+        db = Integer.valueOf(context.findStringAccordingKey(REDIS_DB));
+        maxTotal = Integer.valueOf(context.findStringAccordingKey(REDIS_MAXTOTAL));
+        maxIdle = Integer.valueOf(context.findStringAccordingKey(REDIS_MAXIDLE));
+        maxWait = Integer.valueOf(context.findStringAccordingKey(REDIS_MAXWAIT));
+        maxActive = Integer.valueOf(context.findStringAccordingKey(REDIS_MAXACTIVE));
+        testOnBorrow = Boolean.valueOf( context.findStringAccordingKey(REDIS_TEST_ON_BORROW));
+        timeout = Integer.valueOf( context.findStringAccordingKey(REDIS_TIMEOUT));
+        logger.info("Setting maxTotal={}, maxIdle={}, maxWait={}. testOnBorrow={}", maxTotal, maxIdle, maxWait, testOnBorrow);
         this.doInit();
     }
 
     public RedisKV(Context context, Class<T> generic) {
         super(context, generic);
+        addresses = context.findStringAccordingKey(REDIS_ADDRESS);
+        port = Integer.valueOf(context.findStringAccordingKey(REDIS_PORT));
+        password = context.findStringAccordingKey(REDIS_AUTH);
+        db = Integer.valueOf(context.findStringAccordingKey(REDIS_DB));
+        maxTotal = Integer.valueOf(context.findStringAccordingKey(REDIS_MAXTOTAL));
+        maxIdle = Integer.valueOf(context.findStringAccordingKey(REDIS_MAXIDLE));
+        maxWait = Integer.valueOf(context.findStringAccordingKey(REDIS_MAXWAIT));
+        maxActive = Integer.valueOf(context.findStringAccordingKey(REDIS_MAXACTIVE));
+        testOnBorrow = Boolean.valueOf( context.findStringAccordingKey(REDIS_TEST_ON_BORROW));
+        timeout = Integer.valueOf( context.findStringAccordingKey(REDIS_TIMEOUT));
+        logger.info("Setting maxTotal={}, maxIdle={}, maxWait={}. testOnBorrow={}", maxTotal, maxIdle, maxWait, testOnBorrow);
         this.doInit();
+    }
+
+    private RedisKV(Builder builder) {
+        super(null);
+        addresses = builder.addresses;
+        port = builder.port;
+        password = builder.password;
+        db = builder.db;
+        maxTotal = builder.maxTotal;
+        maxIdle = builder.maxIdle;
+        maxWait = builder.maxWait;
+        maxActive = builder.maxActive;
+        testOnBorrow = builder.testOnBorrow;
+        timeout = builder.timeout;
+        pool = builder.pool;
     }
 
 
     public void doInit() {
-        String addresses = context.findStringAccordingKey(REDIS_ADDRESS);
-        Integer port = Integer.valueOf(context.findStringAccordingKey(REDIS_PORT));
-        String password = context.findStringAccordingKey(REDIS_AUTH);
-        Integer db = Integer.valueOf(context.findStringAccordingKey(REDIS_DB));
 
-
-        Integer maxTotal = Integer.valueOf(context.findStringAccordingKey(REDIS_MAXTOTAL));
-        Integer maxIdle = Integer.valueOf(context.findStringAccordingKey(REDIS_MAXIDLE));
-        Integer maxWait = Integer.valueOf(context.findStringAccordingKey(REDIS_MAXWAIT));
-        Integer maxActive = Integer.valueOf(context.findStringAccordingKey(REDIS_MAXACTIVE));
-        Boolean testOnBorrow = Boolean.valueOf( context.findStringAccordingKey(REDIS_TEST_ON_BORROW));
-        Integer timeout = Integer.valueOf( context.findStringAccordingKey(REDIS_TIMEOUT));
-        logger.info("Setting maxTotal={}, maxIdle={}, maxWait={}. testOnBorrow={}", maxTotal, maxIdle, maxWait, testOnBorrow);
 
         JedisPoolConfig config = new JedisPoolConfig();
 
@@ -195,5 +231,85 @@ public class RedisKV<T> extends AbstractAPI<T> implements KV<T> {
         }
         jedis.close();
         return t;
+    }
+
+    public final static Builder custom() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String addresses;
+        private Integer port;
+        private String password;
+        private Integer db;
+        private Integer maxTotal;
+        private Integer maxIdle;
+        private Integer maxWait;
+        private Integer maxActive;
+        private Boolean testOnBorrow;
+        private Integer timeout;
+        private JedisPool pool;
+
+        public Builder() {
+        }
+
+        public Builder addresses(String val) {
+            addresses = val;
+            return this;
+        }
+
+        public Builder port(Integer val) {
+            port = val;
+            return this;
+        }
+
+        public Builder password(String val) {
+            password = val;
+            return this;
+        }
+
+        public Builder db(Integer val) {
+            db = val;
+            return this;
+        }
+
+        public Builder maxTotal(Integer val) {
+            maxTotal = val;
+            return this;
+        }
+
+        public Builder maxIdle(Integer val) {
+            maxIdle = val;
+            return this;
+        }
+
+        public Builder maxWait(Integer val) {
+            maxWait = val;
+            return this;
+        }
+
+        public Builder maxActive(Integer val) {
+            maxActive = val;
+            return this;
+        }
+
+        public Builder testOnBorrow(Boolean val) {
+            testOnBorrow = val;
+            return this;
+        }
+
+        public Builder timeout(Integer val) {
+            timeout = val;
+            return this;
+        }
+
+        public Builder pool(JedisPool val) {
+            pool = val;
+            return this;
+        }
+
+        public RedisKV build() {
+            return new RedisKV(this);
+        }
     }
 }

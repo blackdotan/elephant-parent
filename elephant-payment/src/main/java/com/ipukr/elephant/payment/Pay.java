@@ -105,6 +105,8 @@ public interface Pay {
     boolean verify(Map params) throws Exception;
 
 
+
+
     /**
      * 参数签名[微信]
      * @param params 待签名参数

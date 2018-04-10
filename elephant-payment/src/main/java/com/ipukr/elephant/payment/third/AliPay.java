@@ -3,19 +3,10 @@ package com.ipukr.elephant.payment.third;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
-import com.alipay.api.domain.AlipayTradeAppPayModel;
-import com.alipay.api.domain.AlipayTradeCreateModel;
-import com.alipay.api.domain.AlipayTradeRefundModel;
-import com.alipay.api.domain.GoodsDetail;
+import com.alipay.api.domain.*;
 import com.alipay.api.internal.util.AlipaySignature;
-import com.alipay.api.request.AlipayOpenPublicTemplateMessageIndustryModifyRequest;
-import com.alipay.api.request.AlipayTradeAppPayRequest;
-import com.alipay.api.request.AlipayTradeQueryRequest;
-import com.alipay.api.request.AlipayTradeRefundRequest;
-import com.alipay.api.response.AlipayOpenPublicTemplateMessageIndustryModifyResponse;
-import com.alipay.api.response.AlipayTradeAppPayResponse;
-import com.alipay.api.response.AlipayTradeQueryResponse;
-import com.alipay.api.response.AlipayTradeRefundResponse;
+import com.alipay.api.request.*;
+import com.alipay.api.response.*;
 import com.ipukr.elephant.architecture.AbstractAPI;
 import com.ipukr.elephant.architecture.context.Context;
 import com.ipukr.elephant.payment.Pay;
@@ -105,10 +96,6 @@ public class AliPay extends AbstractAPI implements Pay {
 
     public AliPay(Context context) throws ParseException {
         super(context);
-        this.init();
-    }
-
-    private void init() throws ParseException {
         this.url = context.findStringAccordingKey(URL);
         this.appId = context.findStringAccordingKey(APP_ID);
         this.appPrivateKey = context.findStringAccordingKey(APP_PRIVATE_KEY);
@@ -118,6 +105,25 @@ public class AliPay extends AbstractAPI implements Pay {
         this.signType = context.findStringAccordingKey(SIGN_TYPE);
         this.notify = context.findStringAccordingKey(NOTIFY_URL);
         this.magnification = context.findNumberAccordingKey(MAGNIFICATION, 1.0F).floatValue();
+        this.init();
+    }
+
+    private AliPay(Builder builder) {
+        super(null);
+        url = builder.url;
+        appId = builder.appId;
+        appPrivateKey = builder.appPrivateKey;
+        format = builder.format;
+        charset = builder.charset;
+        alipayPublicKey = builder.alipayPublicKey;
+        signType = builder.signType;
+        notify = builder.notify;
+        magnification = builder.magnification;
+        client = builder.client;
+        this.init();
+    }
+
+    private void init() {
         client = new DefaultAlipayClient(url, appId, appPrivateKey, format, charset, alipayPublicKey, signType);
     }
 
@@ -129,6 +135,7 @@ public class AliPay extends AbstractAPI implements Pay {
     @Override
     public PayOrder create(PayOrder order) throws Exception {
         Float f = MathUtils.multiply(order.getAmount(), magnification, 2);
+
         order.setAmount(f);
 
         AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
@@ -159,15 +166,15 @@ public class AliPay extends AbstractAPI implements Pay {
         AlipayTradeAppPayResponse response = client.sdkExecute(request);
 
         if(response.isSuccess()){
-
-
+            order.setSecret(response.getBody());
             order.setReponse(response.getBody());
-            String msg = StringUtils.easyAppend("支付宝订单创建成功,", JsonUtils.parserObj2String(response));
-            logger.debug(msg);
+            order.setSuccess(true);
+            logger.info("支付宝，订单创建成功, no={}, detail={}", order.getNo(), JsonUtils.parserObj2String(response));
             return order;
         } else {
-            String error = StringUtils.easyAppend("支付宝订单创建失败, error.code={}, error.msg={}", response.getCode(), response.getMsg());
-            throw new RuntimeException(error);
+            logger.info("支付宝，订单创建失败, no={}, detail={}", order.getNo(), JsonUtils.parserObj2String(response));
+            order.setSuccess(false);
+            return order;
         }
     }
 
@@ -178,17 +185,20 @@ public class AliPay extends AbstractAPI implements Pay {
      */
     @Override
     public PayOrder find(PayOrder order) throws Exception {
-        // 创建API对应的request类
         AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
-        // 设置业务参数
-        request.setBizContent("{" +
-                "   \"out_trade_no\":\"20150320010101001\"," +
-                "   \"trade_no\":\"2014112611001004680073956707\"" +
-                "  }");
-        // 通过alipayClient调用API，获得对应的response类
+        AlipayTradeQueryModel model = new AlipayTradeQueryModel();
+        model.setOutTradeNo(order.getNo());
+        model.setTradeNo(order.getExternalNo());
+
+        request.setBizModel(model);
+
         AlipayTradeQueryResponse response = client.execute(request);
-        System.out.print(response.getBody());
-        return null;
+        if(response.isSuccess()){
+
+        } else {
+
+        }
+        return order;
     }
 
     @Override
@@ -218,15 +228,24 @@ public class AliPay extends AbstractAPI implements Pay {
 
     @Override
     public PayOrder refund(PayOrder order) throws Exception {
+        Float fee = MathUtils.multiply(order.getAmount(), magnification, 2);
+
         AlipayTradeRefundRequest request = new AlipayTradeRefundRequest();
         AlipayTradeRefundModel model = new AlipayTradeRefundModel();
-        model.setRefundAmount(String.valueOf(Math.max(order.getAmount(), 0.01F)));
         model.setOutTradeNo(order.getNo());
-        model.setRefundReason(order.getRemark());
+        model.setRefundAmount(String.valueOf(fee));
         model.setTradeNo(order.getExternalNo());
+        model.setRefundReason(order.getRemark());
         request.setBizModel(model);
-        AlipayTradeRefundResponse response = client.sdkExecute(request);
-        order.setReponse(response.getBody());
+        AlipayTradeRefundResponse response = client.execute(request);
+        if(response.isSuccess()) {
+            logger.info("支付宝，订单退款成功，no={}, detail={}" , order.getNo(), JsonUtils.parserObj2String(response));
+            order.setReponse(response.getBody());
+            order.setSuccess(true);
+        } else {
+            logger.info("支付宝，订单退款失败，no={}, detail={}" , order.getNo(), JsonUtils.parserObj2String(response));
+            order.setSuccess(false);
+        }
         return order;
     }
 
@@ -238,5 +257,79 @@ public class AliPay extends AbstractAPI implements Pay {
     @Override
     public Map signature(Map params) throws Exception {
         return params;
+    }
+
+    public final static Builder custom() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String url;
+        private String appId;
+        private String appPrivateKey;
+        private String format;
+        private String charset;
+        private String alipayPublicKey;
+        private String signType;
+        private String notify;
+        private Float magnification;
+        private AlipayClient client;
+
+        public Builder() {
+        }
+
+        public Builder url(String val) {
+            url = val;
+            return this;
+        }
+
+        public Builder appId(String val) {
+            appId = val;
+            return this;
+        }
+
+        public Builder appPrivateKey(String val) {
+            appPrivateKey = val;
+            return this;
+        }
+
+        public Builder format(String val) {
+            format = val;
+            return this;
+        }
+
+        public Builder charset(String val) {
+            charset = val;
+            return this;
+        }
+
+        public Builder alipayPublicKey(String val) {
+            alipayPublicKey = val;
+            return this;
+        }
+
+        public Builder signType(String val) {
+            signType = val;
+            return this;
+        }
+
+        public Builder notify(String val) {
+            notify = val;
+            return this;
+        }
+
+        public Builder magnification(Float val) {
+            magnification = val;
+            return this;
+        }
+
+        public Builder client(AlipayClient val) {
+            client = val;
+            return this;
+        }
+
+        public AliPay build() {
+            return new AliPay(this);
+        }
     }
 }

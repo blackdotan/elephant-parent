@@ -35,11 +35,11 @@ public class AliPayTest {
         Good good = new Good.Builder()
                 .no("20170912312312123")
                 .name("Member Fee")
-                .price(599F)
+                .price(500F)
                 .quantity(1)
                 .build();
         PayOrder order = new SimplePayOrder.Builder()
-                .amount(599F)
+                .amount(500F)
                 .no(no)
                 .subject("云扬健身-会员充值")
                 .secret(token)
@@ -51,12 +51,21 @@ public class AliPayTest {
     @Test
     public void refund() throws Exception {
         PayOrder order = new SimplePayOrder.Builder()
-                .amount(0.01F)
-                .no("956720210310594560")
+                .amount(500F)
+                .no("974962437331615744")
+                .externalNo("2018031721001004180533282342")
                 .subject("测试退款")
-                .notifyUrl("https://tst.ipukr.cn/kong-appint/account/bill/notify")
                 .build();
         PayOrder pOrder = pay.refund(order);
+        System.out.println(pOrder.getReponse());
+    }
+
+    @Test
+    public void find() throws Exception {
+        PayOrder order = new SimplePayOrder.Builder()
+                .no("974962437331615744")
+                .build();
+        PayOrder pOrder = pay.find(order);
         System.out.println(pOrder.getReponse());
     }
 

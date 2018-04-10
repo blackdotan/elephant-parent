@@ -25,14 +25,26 @@ public class AliyunSms extends AbstractAPI implements Sms{
     public static final String PRODUCT = "product";
     //产品域名,开发者无需替换
     public static final String DOMAIN = "domain";
-
     public static final String ACCESS_KEY_ID = "accessKeyId";
     public static final String ACCESS_KEY_SECRET = "accessKeySecret";
     public static final String TEMPLATE_ID= "templateId";
     public static final String SIGN_NAME= "sign";
 
+    private String product;
+    private String domain;
+    private String accessKeyId;
+    private String accessKeySecret;
+    private String templateId;
+    private String sign;
+
     public AliyunSms(Context context) throws ClientException {
         super(context);
+        product = context.findStringAccordingKey(PRODUCT);
+        domain = context.findStringAccordingKey(DOMAIN);
+        accessKeyId = context.findStringAccordingKey(ACCESS_KEY_ID);
+        accessKeySecret = context.findStringAccordingKey(ACCESS_KEY_SECRET);
+        templateId = context.findStringAccordingKey(TEMPLATE_ID);
+        sign = context.findStringAccordingKey(SIGN_NAME);
         this.init();
     }
 
@@ -41,18 +53,23 @@ public class AliyunSms extends AbstractAPI implements Sms{
     //组装请求对象-具体描述见控制台-文档部分内容
     private SendSmsRequest request = new SendSmsRequest();
 
-    private void init() throws ClientException {
-        String product = context.findStringAccordingKey(PRODUCT);
-        String domain = context.findStringAccordingKey(DOMAIN);
-        String accessKeyId = context.findStringAccordingKey(ACCESS_KEY_ID);
-        String accessKeySecret = context.findStringAccordingKey(ACCESS_KEY_SECRET);
-        String templateId = context.findStringAccordingKey(TEMPLATE_ID);
-        String sign = context.findStringAccordingKey(SIGN_NAME);
+    private AliyunSms(Builder builder) {
+        super(null);
+        product = builder.product;
+        domain = builder.domain;
+        accessKeyId = builder.accessKeyId;
+        accessKeySecret = builder.accessKeySecret;
+        templateId = builder.templateId;
+        sign = builder.sign;
+    }
 
+    private void init() throws ClientException {
+        // 
         IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret);
+        //
         DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", product, domain);
+        //
         acsClient = new DefaultAcsClient(profile);
-//        request.setEncoding("UTF-8");
         //必填:短信签名-可在短信控制台中找到
         request.setSignName(sign);
         //必填:短信模板-可在短信控制台中找到
@@ -94,5 +111,55 @@ public class AliyunSms extends AbstractAPI implements Sms{
     @Override
     public SmsStatus send(Integer templateId, String mobiles, String... args) {
         return null;
+    }
+
+    public final static Builder custom() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String product;
+        private String domain;
+        private String accessKeyId;
+        private String accessKeySecret;
+        private String templateId;
+        private String sign;
+
+        public Builder() {
+        }
+
+        public Builder product(String val) {
+            product = val;
+            return this;
+        }
+
+        public Builder domain(String val) {
+            domain = val;
+            return this;
+        }
+
+        public Builder accessKeyId(String val) {
+            accessKeyId = val;
+            return this;
+        }
+
+        public Builder accessKeySecret(String val) {
+            accessKeySecret = val;
+            return this;
+        }
+
+        public Builder templateId(String val) {
+            templateId = val;
+            return this;
+        }
+
+        public Builder sign(String val) {
+            sign = val;
+            return this;
+        }
+
+        public AliyunSms build() {
+            return new AliyunSms(this);
+        }
     }
 }

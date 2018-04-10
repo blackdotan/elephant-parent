@@ -40,11 +40,11 @@ public class WeixinPayTest {
         Good good = new Good.Builder()
                 .no("20170912312312123")
                 .name("Member Fee")
-                .price(0.1F)
+                .price(500F)
                 .quantity(1)
                 .build();
         PayOrder order = new SimplePayOrder.Builder()
-                .amount(0.01F)
+                .amount(500F)
                 .no(no)
                 .remark("厦门总店")
                 .subject("云扬健身-会员充值")
@@ -63,6 +63,18 @@ public class WeixinPayTest {
         pay.put("package", "Sign=WXPay");
         pay.put("sign", WXPayUtil.generateSignature(pay, "hHJhYD6iDBvRHAzHLZ7kC9GsrWpuUmB9"));
         System.out.println(JsonUtils.parserObj2String(pay));
+    }
+
+    @Test
+    public void refund() throws Exception {
+        PayOrder order = new SimplePayOrder.Builder()
+                .amount(2.0F)
+                .no("975005819370209280")
+                .remark("厦门总店")
+                .subject("云扬健身-押金退还")
+                .build();
+        pay.refund(order);
+
     }
 
     @Test

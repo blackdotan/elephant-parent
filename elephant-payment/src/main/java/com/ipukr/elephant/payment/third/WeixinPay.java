@@ -1,5 +1,6 @@
 package com.ipukr.elephant.payment.third;
 
+import com.alipay.api.internal.util.XmlUtils;
 import com.github.wxpay.sdk.WXPay;
 import com.github.wxpay.sdk.WXPayConfig;
 import com.github.wxpay.sdk.WXPayUtil;
@@ -23,6 +24,8 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.StringEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,9 +45,9 @@ import java.util.*;
  *         Created by ryan on 2017/12/19.
  */
 public class WeixinPay extends AbstractAPI implements Pay {
+    private static final Logger logger = LoggerFactory.getLogger(WeixinPay.class);
 
     private HttpClientPool pool;
-
 
     private static final String HTTP_SCHEMA      = "http.schema";
     private static final String HTTP_HOSTNAME    = "http.hostname";
@@ -62,18 +65,12 @@ public class WeixinPay extends AbstractAPI implements Pay {
      */
     private static final String MAGNIFICATION  = "amount.magnification.unit";
 
-    private String schema;
-    private String hostname;
-    private Short port;
-    private String protocol;
-    private Integer timeout;
-    private Integer connections;
+
     private String appid;
     private String mchid;
     private String notify;
     private String signature;
-    private InputStream cert;
-    private byte[] certBytes;
+    private String certification;
     private Float magnification;
 
     private WXPayConfig config;
@@ -81,18 +78,30 @@ public class WeixinPay extends AbstractAPI implements Pay {
 
     public WeixinPay(Context context) throws Exception {
         super(context);
-        this.init();
-    }
-
-    private void init() throws Exception {
-
         this.appid = context.findStringAccordingKey(APPID);
         this.mchid = context.findStringAccordingKey(MCHID);
         this.notify = context.findStringAccordingKey(NOTIFY_URL);
         this.signature = context.findStringAccordingKey(SIGNATURE);
         this.magnification = context.findNumberAccordingKey(MAGNIFICATION, 1.0F).floatValue();
+        this.certification = context.findStringAccordingKey(CERT_PATH);
+        this.init();
+    }
 
-        InputStream cert = WeixinPay.class.getResourceAsStream(context.findStringAccordingKey(CERT_PATH));
+    private WeixinPay(Builder builder) throws Exception {
+        super(null);
+        appid = builder.appid;
+        mchid = builder.mchid;
+        notify = builder.notify;
+        signature = builder.signature;
+        certification = builder.certification;
+        magnification = builder.magnification;
+        this.init();
+    }
+
+    private void init() throws Exception {
+        String path = WeixinPay.class.getResource("/").getPath().concat(certification);
+        logger.info("加载微信证书路径: {}", path);
+        InputStream cert = new FileInputStream(path);
 
         config = new WXPayConfig() {
 
@@ -135,7 +144,6 @@ public class WeixinPay extends AbstractAPI implements Pay {
     @Override
     public PayOrder create(PayOrder order) throws Exception {
         order.setAmount(order.getAmount() * magnification);
-//        Float f = MathUtils.multiply(order.getAmount() * 100, magnification);
 
         String fee = Integer.toString(((Number) Math.max(order.getAmount() * 100, 1)).intValue());
         Long start = DateUtils.now().getTime();
@@ -149,6 +157,9 @@ public class WeixinPay extends AbstractAPI implements Pay {
         data.put("trade_type", "APP");  // 此处指定为扫码支付
 
         Map<String, String> resp = wxpay.unifiedOrder(data);
+        System.out.println(JsonUtils.parserObj2String(resp));
+        order.setSuccess(resp.get("return_code").equals("SUCCESS"));
+        order.setMessage(resp.get("return_msg"));
         order.setResmap(resp);
         order.setReponse(JsonUtils.parserObj2String(resp));
 
@@ -192,7 +203,20 @@ public class WeixinPay extends AbstractAPI implements Pay {
 
     @Override
     public PayOrder refund(PayOrder order) throws Exception {
-        return null;
+
+        String fee = Integer.toString(((Number) Math.max(order.getAmount() * 100, 1)).intValue());
+
+        Long start = DateUtils.now().getTime();
+        Map<String, String> data = new HashMap<String, String>();
+        data.put("refund_fee", fee);
+        data.put("total_fee", fee);
+        data.put("out_trade_no", order.getNo());
+        data.put("out_refund_no", order.getNo());
+
+        Map<String, String> resp = wxpay.refund(data);
+        order.setSuccess(resp.get("return_code").equals("SUCCESS"));
+        order.setMessage(resp.get("return_msg"));
+        return order;
     }
 
     @Override
@@ -229,5 +253,55 @@ public class WeixinPay extends AbstractAPI implements Pay {
         sb.append("key=" + key);
         String sign = MD5Tools.MD5Encode(sb.toString(), charset).toUpperCase();
         return sign;
+    }
+
+    public final static Builder custom() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String appid;
+        private String mchid;
+        private String notify;
+        private String signature;
+        private String certification;
+        private Float magnification;
+
+        public Builder() {
+        }
+
+        public Builder appid(String val) {
+            appid = val;
+            return this;
+        }
+
+        public Builder mchid(String val) {
+            mchid = val;
+            return this;
+        }
+
+        public Builder notify(String val) {
+            notify = val;
+            return this;
+        }
+
+        public Builder signature(String val) {
+            signature = val;
+            return this;
+        }
+
+        public Builder certification(String val) {
+            certification = val;
+            return this;
+        }
+
+        public Builder magnification(Float val) {
+            magnification = val;
+            return this;
+        }
+
+        public WeixinPay build() throws Exception {
+            return new WeixinPay(this);
+        }
     }
 }

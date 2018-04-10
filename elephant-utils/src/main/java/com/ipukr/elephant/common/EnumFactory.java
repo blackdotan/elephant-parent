@@ -36,13 +36,12 @@ public class EnumFactory {
      * @param type 枚举类型.class文件
      * @param name 属性名
      * @param <T> 枚举泛型
-     * @param <K> 枚举getId类型
      * @return 枚举对象
      */
-    public static <T extends Enum<T> & Identifiable , K > T findAccordingPropName(Class<T> type, K name) {
+    public static <T extends Enum<T> & Identifiable> T findAccordingPropName(Class<T> type, String name) {
         EnumSet<T> set = EnumSet.allOf(type);
         if(set == null || set.size() <= 0){
-            String error = StringUtils.easyAppend("Not Found Enum {} Of Value :", type.getSimpleName(), name);
+            String error = StringUtils.easyAppend("Not Found Enum {} Of Value :{}", type.getSimpleName(), name);
             throw new IllegalArgumentException(error);
         }
         for(T t: set){
@@ -50,7 +49,7 @@ public class EnumFactory {
                 return t;
             }
         }
-        String error = StringUtils.easyAppend("Not Found Enum {} Of Value :", type.getSimpleName(), name);
+        String error = StringUtils.easyAppend("Not Found Enum {} Of Value :{}", type.getSimpleName(), name);
         throw new IllegalArgumentException(error);
     }
 }

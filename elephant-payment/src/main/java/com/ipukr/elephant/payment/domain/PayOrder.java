@@ -46,7 +46,7 @@ public abstract class PayOrder {
      */
     private List<Good> goods;
     /**
-     * 密钥
+     * 支付密钥
      * */
     private String secret;
     /**
@@ -63,6 +63,14 @@ public abstract class PayOrder {
      * 第三方回调地址
      * */
     private String notifyUrl;
+    /**
+     * 请求是否成功
+     */
+    private Boolean success = false;
+    /**
+     * 提示信息
+     */
+    private String message;
 
     public String getNo() {
         return no;
@@ -160,6 +168,21 @@ public abstract class PayOrder {
         this.resmap = resmap;
     }
 
+    public Boolean getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(Boolean success) {
+        this.success = success;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     @Override
     public String toString() {
@@ -176,6 +199,8 @@ public abstract class PayOrder {
                 ", reponse='" + reponse + '\'' +
                 ", resmap=" + resmap +
                 ", notifyUrl='" + notifyUrl + '\'' +
+                ", success=" + success +
+                ", message='" + message + '\'' +
                 '}';
     }
 }

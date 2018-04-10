@@ -49,19 +49,27 @@ public class QiniuStorage extends AbstractAPI implements Storage {
 
     public QiniuStorage(Context context) {
         super(context);
-        init();
-    }
-
-    private void init() {
-        Configuration cfg = new Configuration();
-
-        upload = new UploadManager(cfg);
-        //...生成上传凭证，然后准备上传
         accessKey = context.findStringAccordingKey(ACCESS_KEY);
         secretKey = context.findStringAccordingKey(SECRET_KEY);
         bucket = context.findStringAccordingKey(BUCKET);
         template = context.findStringAccordingKey(TEMPLATE, "{}");
         domain = context.findStringAccordingKey(DOMAIN, "https://127.0.0.1");
+        init();
+    }
+
+    private QiniuStorage(Builder builder) {
+        super(null);
+        accessKey = builder.accessKey;
+        secretKey = builder.secretKey;
+        bucket = builder.bucket;
+        template = builder.template;
+        domain = builder.domain;
+    }
+
+    private void init() {
+        Configuration cfg = new Configuration();
+        upload = new UploadManager(cfg);
+        //...生成上传凭证，然后准备上传
         auth = Auth.create(accessKey, secretKey);
     }
 
@@ -124,5 +132,50 @@ public class QiniuStorage extends AbstractAPI implements Storage {
     @Override
     public String domain() {
         return domain;
+    }
+
+
+    public final static Builder custom() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String accessKey;
+        private String secretKey;
+        private String bucket;
+        private String template;
+        private String domain;
+
+        public Builder() {
+        }
+
+        public Builder accessKey(String val) {
+            accessKey = val;
+            return this;
+        }
+
+        public Builder secretKey(String val) {
+            secretKey = val;
+            return this;
+        }
+
+        public Builder bucket(String val) {
+            bucket = val;
+            return this;
+        }
+
+        public Builder template(String val) {
+            template = val;
+            return this;
+        }
+
+        public Builder domain(String val) {
+            domain = val;
+            return this;
+        }
+
+        public QiniuStorage build() {
+            return new QiniuStorage(this);
+        }
     }
 }

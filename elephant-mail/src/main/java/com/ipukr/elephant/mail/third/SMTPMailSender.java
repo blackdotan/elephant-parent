@@ -17,17 +17,32 @@ import java.util.Properties;
  */
 public class SMTPMailSender extends AbstractAPI implements MailSender{
 
+    private String host;
+    private String protocol;
+    private String auth;
+    private String username;
+    private String password;
+
     public SMTPMailSender(Context context) {
         super(context);
+
+        host = context.findStringAccordingKey(MailConstanst.MAIL_HOST);
+        protocol = context.findStringAccordingKey(MailConstanst.MAIL_TRANSPORT_PROTOCOL);
+        auth = context.findStringAccordingKey(MailConstanst.MAIL_SMTP_AUTH);
+        username = context.findStringAccordingKey(MailConstanst.MAIL_USERNAME);
+        password = context.findStringAccordingKey(MailConstanst.MAIL_PASSWORD);
+    }
+
+    private SMTPMailSender(Builder builder) {
+        super(null);
+        host = builder.host;
+        protocol = builder.protocol;
+        auth = builder.auth;
+        username = builder.username;
+        password = builder.password;
     }
 
     public void send(String from, List<String> tos, List<String> ccs, String subject, String content) throws MessagingException {
-        String host = context.findStringAccordingKey(MailConstanst.MAIL_HOST);
-        String protocol = context.findStringAccordingKey(MailConstanst.MAIL_TRANSPORT_PROTOCOL);
-        String auth = context.findStringAccordingKey(MailConstanst.MAIL_SMTP_AUTH);
-        String username = context.findStringAccordingKey(MailConstanst.MAIL_USERNAME);
-        String password = context.findStringAccordingKey(MailConstanst.MAIL_PASSWORD);
-
 
         Properties prop = new Properties();
         prop.put(MailConstanst.MAIL_HOST, host );
@@ -88,5 +103,49 @@ public class SMTPMailSender extends AbstractAPI implements MailSender{
     public void send(List<String> tos, String subject, String content) throws MessagingException {
         String from = context.findStringAccordingKey(MailConstanst.MAIL_FROM);
         send(from, tos, null, subject, content);
+    }
+
+    public final static Builder custom() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String host;
+        private String protocol;
+        private String auth;
+        private String username;
+        private String password;
+
+        public Builder() {
+        }
+
+        public Builder host(String val) {
+            host = val;
+            return this;
+        }
+
+        public Builder protocol(String val) {
+            protocol = val;
+            return this;
+        }
+
+        public Builder auth(String val) {
+            auth = val;
+            return this;
+        }
+
+        public Builder username(String val) {
+            username = val;
+            return this;
+        }
+
+        public Builder password(String val) {
+            password = val;
+            return this;
+        }
+
+        public SMTPMailSender build() {
+            return new SMTPMailSender(this);
+        }
     }
 }

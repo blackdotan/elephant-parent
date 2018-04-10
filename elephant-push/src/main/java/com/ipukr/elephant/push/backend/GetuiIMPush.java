@@ -40,17 +40,26 @@ public class GetuiIMPush extends AbstractAPI implements IPush{
 
     public GetuiIMPush(Context context) {
         super(context);
-        this.init();
-    }
-
-    public void init(){
         this.host = context.findStringAccordingKey(HOST, "http://sdk.open.api.igexin.com/apiex.htm");
         this.appid = context.findStringAccordingKey(APPID);
         this.appkey = context.findStringAccordingKey(APPKEY);
         this.master = context.findStringAccordingKey(MASTER);
+        this.init();
+    }
+
+    private GetuiIMPush(Builder builder) {
+        super(null);
+        host = builder.host;
+        appid = builder.appid;
+        appkey = builder.appkey;
+        master = builder.master;
+    }
+
+    public void init(){
         mIGtPush = new IGtPush(host, appkey, master);
     }
 
+    @Override
     public boolean push(String CID, String text) {
         logger.debug("开始向Client_Id:{}, 推送数据text:{}", CID, text);
         TransmissionTemplate template = new TransmissionTemplate();
@@ -67,6 +76,7 @@ public class GetuiIMPush extends AbstractAPI implements IPush{
         return mIPushResult.getResponse().get("result").equals("ok");
     }
 
+    @Override
     public boolean push(List<String> CIDs, String text) {
         logger.debug("开始向Client_Ids:{}, 推送数据text:{}", CIDs, text);
         TransmissionTemplate template = new TransmissionTemplate();
@@ -92,6 +102,43 @@ public class GetuiIMPush extends AbstractAPI implements IPush{
             logger.warn("推送警告, 你要推送的CIDs为空");
             return true;
         }
+    }
 
+    public final static Builder custom() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String host = "http://sdk.open.api.igexin.com/apiex.htm";
+        private String appid;
+        private String appkey;
+        private String master;
+
+        public Builder() {
+        }
+
+        public Builder host(String val) {
+            host = val;
+            return this;
+        }
+
+        public Builder appid(String val) {
+            appid = val;
+            return this;
+        }
+
+        public Builder appkey(String val) {
+            appkey = val;
+            return this;
+        }
+
+        public Builder master(String val) {
+            master = val;
+            return this;
+        }
+
+        public GetuiIMPush build() {
+            return new GetuiIMPush(this);
+        }
     }
 }

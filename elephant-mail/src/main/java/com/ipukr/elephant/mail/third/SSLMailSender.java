@@ -32,16 +32,27 @@ public class SSLMailSender extends AbstractAPI implements MailSender{
 
     public SSLMailSender(Context context) {
         super(context);
-        this.init();
-    }
-
-    public void init(){
         host = context.findStringAccordingKey(MailConstanst.MAIL_HOST);
         protocol = context.findStringAccordingKey(MailConstanst.MAIL_TRANSPORT_PROTOCOL);
         auth = context.findStringAccordingKey(MailConstanst.MAIL_SMTP_AUTH);
         username = context.findStringAccordingKey(MailConstanst.MAIL_USERNAME);
         password = context.findStringAccordingKey(MailConstanst.MAIL_PASSWORD);
         debug = (Boolean) context.findBooleanAccordingKey(MailConstanst.MAIL_DEBUG, false);
+        this.init();
+    }
+
+    private SSLMailSender(Builder builder) {
+        super(null);
+        host = builder.host;
+        protocol = builder.protocol;
+        auth = builder.auth;
+        username = builder.username;
+        password = builder.password;
+        debug = builder.debug;
+    }
+
+    public void init(){
+
 
         Properties prop = new Properties();
         prop.put(MailConstanst.MAIL_HOST, host );
@@ -119,5 +130,55 @@ public class SSLMailSender extends AbstractAPI implements MailSender{
     public void send(List<String> tos, String subject, String content) throws MessagingException {
         String from = context.findStringAccordingKey(MailConstanst.MAIL_FROM);
         send(from, tos, null, subject, content);
+    }
+
+    public final static Builder custom() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String host;
+        private String protocol;
+        private String auth;
+        private String username;
+        private String password;
+        private Boolean debug;
+
+        public Builder() {
+        }
+
+        public Builder host(String val) {
+            host = val;
+            return this;
+        }
+
+        public Builder protocol(String val) {
+            protocol = val;
+            return this;
+        }
+
+        public Builder auth(String val) {
+            auth = val;
+            return this;
+        }
+
+        public Builder username(String val) {
+            username = val;
+            return this;
+        }
+
+        public Builder password(String val) {
+            password = val;
+            return this;
+        }
+
+        public Builder debug(Boolean val) {
+            debug = val;
+            return this;
+        }
+
+        public SSLMailSender build() {
+            return new SSLMailSender(this);
+        }
     }
 }

@@ -10,18 +10,13 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.client.utils.URIUtils;
-import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.message.BasicNameValuePair;
 import org.junit.Test;
 
 import java.io.*;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 请描述类 <br>
@@ -82,16 +77,16 @@ public class HttpClientPoolTest {
     @Test
     public void testName2() throws Exception {
 
-        HttpClientPool pool = HttpClientPool.custome()
+        HttpClientPool pool = HttpClientPool.custom()
                 .schema("https")
                 .hostname("dictation.nuancemobility.net")
                 .port((short) 443)
                 .protocol("TLSv1,TLSv1.1,TLSv1.2")
                 .timeout(60000)
-                .proxyHostname("45.77.198.207")
-                .proxyPort((short) 3128)
-                .proxyUsername("wmw1612")
-                .proxyPassword("kb0bta63")
+//                .proxyHostname("45.77.198.207")
+//                .proxyPort((short) 3128)
+//                .proxyUsername("wmw1612")
+//                .proxyPassword("kb0bta63")
                 .connections(200)
                 .routeMax(50)
                 .dns("dictation.nuancemobility.net:205.197.192.118")

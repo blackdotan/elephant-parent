@@ -25,19 +25,35 @@ public class CloopenSms extends AbstractAPI implements Sms {
     public static final String TEMPLATEID="templateId";
     public static final String DURATION="duration";
 
+
+    private String host;
+    private String port;
+    private String sid;
+    private String token;
+    private String appId;
+
     private CCPRestSmsSDK restAPI;
 
     public CloopenSms(Context context) {
         super(context);
+        host = context.findStringAccordingKey(HOST);
+        port = context.findStringAccordingKey(PORT);
+        sid = context.findStringAccordingKey(SID);
+        token = context.findStringAccordingKey(TOKEN);
+        appId = context.findStringAccordingKey(APPID);
         this.init();
     }
-    private void init(){
-        String host = context.findStringAccordingKey(HOST);
-        String port = context.findStringAccordingKey(PORT);
-        String sid = context.findStringAccordingKey(SID);
-        String token = context.findStringAccordingKey(TOKEN);
-        String appId = context.findStringAccordingKey(APPID);
 
+    private CloopenSms(Builder builder) {
+        super(null);
+        host = builder.host;
+        port = builder.port;
+        sid = builder.sid;
+        token = builder.token;
+        appId = builder.appId;
+    }
+
+    private void init(){
         //初始化SDK
         restAPI = new CCPRestSmsSDK();
 
@@ -132,6 +148,50 @@ public class CloopenSms extends AbstractAPI implements Sms {
             if(result.get("statusCode").equals("160040"))
                 return SmsStatus.Fail_Cause_Out_Of_Max_Limit;
             return SmsStatus.Fail;
+        }
+    }
+
+    public final static Builder custom() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String host;
+        private String port;
+        private String sid;
+        private String token;
+        private String appId;
+
+        public Builder() {
+        }
+
+        public Builder host(String val) {
+            host = val;
+            return this;
+        }
+
+        public Builder port(String val) {
+            port = val;
+            return this;
+        }
+
+        public Builder sid(String val) {
+            sid = val;
+            return this;
+        }
+
+        public Builder token(String val) {
+            token = val;
+            return this;
+        }
+
+        public Builder appId(String val) {
+            appId = val;
+            return this;
+        }
+
+        public CloopenSms build() {
+            return new CloopenSms(this);
         }
     }
 }
