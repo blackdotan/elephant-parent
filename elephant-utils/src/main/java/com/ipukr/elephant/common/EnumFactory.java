@@ -31,6 +31,20 @@ public class EnumFactory {
     }
 
     /**
+     * 根据[数据类型], [枚举名]获取枚举对象
+     *
+     * @param type 枚举类型.class文件
+     * @param id getId
+     * @param <T> 枚举泛型
+     * @param <K> 枚举getId类型
+     * @return 枚举对象
+     */
+    public static <T extends Enum<T> & Identifiable<K> , K > T find(Class<T> type, K id) {
+        return findAccordingValue(type, id);
+    }
+
+
+    /**
      * 根据[数据类型], [枚举值]获取枚举对象
      *
      * @param type 枚举类型.class文件
