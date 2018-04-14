@@ -1,5 +1,7 @@
 package com.ipukr.elephant.common.exception;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * 认证异常 <br>
  *
@@ -13,6 +15,9 @@ public class AuthenticationException extends AbstractException {
         super(message);
     }
 
+    public AuthenticationException(HttpStatus status, String message) {
+        super(status, message);
+    }
 
     public AuthenticationException(Throwable cause) {
         super(cause);
@@ -22,10 +27,8 @@ public class AuthenticationException extends AbstractException {
         super(cause, message);
     }
 
-
-    public AuthenticationException(Throwable cause, String code, String message) {
-        super(cause, code, message);
+    public AuthenticationException(Throwable cause, HttpStatus status, String message) {
+        super(cause, status, message);
     }
-
 
 }

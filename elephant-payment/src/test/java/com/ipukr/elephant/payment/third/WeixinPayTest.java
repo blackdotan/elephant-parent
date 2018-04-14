@@ -74,6 +74,11 @@ public class WeixinPayTest {
                 .subject("云扬健身-押金退还")
                 .build();
         pay.refund(order);
+        if(order.getSuccess()) {
+            System.out.println("退款成功");
+        } else {
+            System.out.println("退款失败");
+        }
 
     }
 

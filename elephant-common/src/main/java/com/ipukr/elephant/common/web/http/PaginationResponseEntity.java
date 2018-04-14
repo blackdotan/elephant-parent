@@ -3,7 +3,10 @@ package com.ipukr.elephant.common.web.http;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.github.miemiedev.mybatis.paginator.domain.Paginator;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 
 /**
  * 请描述类 <br>
@@ -17,8 +20,19 @@ public class PaginationResponseEntity<T> extends HttpEntity {
     private HttpStatus statusCode;
 
     private T body;
+
     public PaginationResponseEntity(T body, HttpStatus statusCode) {
         this.body = body;
+        this.statusCode = statusCode;
+    }
+
+    public PaginationResponseEntity(MultiValueMap<String, String> headers, HttpStatus statusCode) {
+        super(headers);
+        this.statusCode = statusCode;
+    }
+
+    public PaginationResponseEntity(T body, MultiValueMap<String, String> headers, HttpStatus statusCode) {
+        super(body, headers);
         this.statusCode = statusCode;
     }
 
@@ -35,7 +49,6 @@ public class PaginationResponseEntity<T> extends HttpEntity {
         }
         return prb;
     }
-
 
 
 
@@ -63,17 +76,30 @@ public class PaginationResponseEntity<T> extends HttpEntity {
     }
 
 
+
     public static class BodyBuilder {
 
         private final HttpStatus status;
 
+        private final HttpHeaders headers = new HttpHeaders();
 
         public BodyBuilder(HttpStatus status) {
             this.status = status;
         }
 
+        public BodyBuilder header(String headerName, String... headerValues) {
+            for (String headerValue : headerValues) {
+                this.headers.add(headerName, headerValue);
+            }
+            return this;
+        }
+
+        public PaginationResponseEntity<Void> build() {
+            return new PaginationResponseEntity<Void>(null, this.headers, this.status);
+        }
+
         public <T> PaginationResponseEntity<T> body(T body) {
-            return new PaginationResponseEntity<T>(body, this.status);
+            return new PaginationResponseEntity<T>(body, this.headers, this.status);
         }
     }
 

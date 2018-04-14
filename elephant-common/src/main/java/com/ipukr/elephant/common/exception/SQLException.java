@@ -1,5 +1,7 @@
 package com.ipukr.elephant.common.exception;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * SQL语句异常 <br>
  *
@@ -7,10 +9,15 @@ package com.ipukr.elephant.common.exception;
  *         <p>
  *         Created by ryan on 2017/11/14.
  */
+@Deprecated
 public class SQLException extends AbstractException {
 
     public SQLException(String message) {
         super(message);
+    }
+
+    public SQLException(HttpStatus status, String message) {
+        super(status, message);
     }
 
     public SQLException(Throwable cause) {
@@ -18,10 +25,10 @@ public class SQLException extends AbstractException {
     }
 
     public SQLException(Throwable cause, String message) {
-        super(cause, AbstractExceptionConstant.SQL_ERROR_CODE, message);
+        super(cause, message);
     }
 
-    public SQLException(Throwable cause, String code, String message) {
-        super(cause, code, message);
+    public SQLException(Throwable cause, HttpStatus status, String message) {
+        super(cause, status, message);
     }
 }

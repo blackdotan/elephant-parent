@@ -1,5 +1,7 @@
 package com.ipukr.elephant.common.exception;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * 非法参数 <br>
  *
@@ -13,6 +15,10 @@ public class IllegalArgumentException extends AbstractException {
         super(message);
     }
 
+    public IllegalArgumentException(HttpStatus status, String message) {
+        super(status, message);
+    }
+
     public IllegalArgumentException(Throwable cause) {
         super(cause);
     }
@@ -21,7 +27,7 @@ public class IllegalArgumentException extends AbstractException {
         super(cause, message);
     }
 
-    public IllegalArgumentException(Throwable cause, String code, String message) {
-        super(cause, code, message);
+    public IllegalArgumentException(Throwable cause, HttpStatus status, String message) {
+        super(cause, status, message);
     }
 }

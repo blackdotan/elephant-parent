@@ -1,5 +1,7 @@
 package com.ipukr.elephant.common.exception;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * 权限异常 <br>
  *
@@ -13,6 +15,10 @@ public class AuthorizeException extends AbstractException {
         super(message);
     }
 
+    public AuthorizeException(HttpStatus status, String message) {
+        super(status, message);
+    }
+
     public AuthorizeException(Throwable cause) {
         super(cause);
     }
@@ -21,7 +27,7 @@ public class AuthorizeException extends AbstractException {
         super(cause, message);
     }
 
-    public AuthorizeException(Throwable cause, String code, String message) {
-        super(cause, code, message);
+    public AuthorizeException(Throwable cause, HttpStatus status, String message) {
+        super(cause, status, message);
     }
 }

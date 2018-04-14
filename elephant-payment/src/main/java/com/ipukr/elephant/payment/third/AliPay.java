@@ -236,6 +236,7 @@ public class AliPay extends AbstractAPI implements Pay {
         model.setRefundAmount(String.valueOf(fee));
         model.setTradeNo(order.getExternalNo());
         model.setRefundReason(order.getRemark());
+
         request.setBizModel(model);
         AlipayTradeRefundResponse response = client.execute(request);
         if(response.isSuccess()) {

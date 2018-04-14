@@ -1,6 +1,8 @@
 package com.ipukr.elephant.common.exception;
 
 import com.ipukr.elephant.utils.StringUtils;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 
 /**
  * 请描述类 <br>
@@ -11,38 +13,48 @@ import com.ipukr.elephant.utils.StringUtils;
  */
 public abstract class AbstractException extends Exception {
 
-    private String code = null;
+    private HttpStatus status;
 
-    private String message;
+    private HttpHeaders headers = new HttpHeaders();
+
+    public AbstractException(String message) {
+        super(message);
+        headers.add("msg", message);
+    }
+
+    public AbstractException(HttpStatus status, String message) {
+        status = status;
+        headers.add("msg", message);
+    }
 
     public AbstractException(Throwable cause) {
         super(cause);
     }
 
-    public AbstractException(String message) {
-        super(message);
-        this.message = message;
-    }
-
     public AbstractException(Throwable cause, String message) {
         super(cause);
-        this.message = message;
+        headers.add("msg", message);
     }
 
-    public AbstractException(Throwable cause, String code, String message) {
+    public AbstractException(Throwable cause, HttpStatus status, String message) {
         super(cause);
-        this.code = code;
-        this.message = message;
+        status = status;
+        headers.add("msg", message);
     }
 
-    @Override
-    public String getMessage() {
-        if (code == null) {
-            return message;
-        } else {
-            String error = StringUtils.easyAppend("{}, {}", code, message);
-            return error;
-        }
+    public HttpStatus getStatus() {
+        return status;
     }
 
+    public void setStatus(HttpStatus status) {
+        this.status = status;
+    }
+
+    public HttpHeaders getHeaders() {
+        return headers;
+    }
+
+    public void setHeaders(HttpHeaders headers) {
+        this.headers = headers;
+    }
 }
