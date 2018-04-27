@@ -2,6 +2,7 @@ package com.ipukr.elephant.kv;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by ryan on 下午5:46.
@@ -77,12 +78,37 @@ public interface KV<T> {
      */
     List<T> match(String pattern) throws IOException;
 
+    /**
+     * @param key
+     * @param value
+     */
     void put(String key, T value);
 
+    /**
+     * @param key
+     * @param value
+     * @param ttl
+     */
     void put(String key, T value, Long ttl);
 
+    /**
+     * @param key
+     * @return
+     * @throws IOException
+     */
     T pop(String key) throws IOException;
 
+    /**
+     * @param key
+     * @param def
+     * @return
+     * @throws IOException
+     */
     T pop(String key, T def) throws IOException;
 
+    /**
+     * 获取所有Key
+     * @return
+     */
+    Set<String> keys();
 }

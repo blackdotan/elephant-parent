@@ -22,6 +22,7 @@ public class JsonUtils {
 
     static {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
         DateFormat df = new SimpleDateFormat(DateUtils.STD_PATTERN);
         df.setTimeZone(DateUtils.tz);
         mapper.setDateFormat(df);

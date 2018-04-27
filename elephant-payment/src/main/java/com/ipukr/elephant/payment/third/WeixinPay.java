@@ -1,6 +1,5 @@
 package com.ipukr.elephant.payment.third;
 
-import com.alipay.api.internal.util.XmlUtils;
 import com.github.wxpay.sdk.WXPay;
 import com.github.wxpay.sdk.WXPayConfig;
 import com.github.wxpay.sdk.WXPayUtil;
@@ -11,27 +10,13 @@ import com.ipukr.elephant.payment.Pay;
 import com.ipukr.elephant.payment.domain.Account;
 import com.ipukr.elephant.payment.domain.PayOrder;
 import com.ipukr.elephant.payment.utils.MD5Tools;
-import com.ipukr.elephant.payment.utils.MathUtils;
 import com.ipukr.elephant.utils.*;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.math.RandomUtils;
-import org.apache.http.Consts;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.client.methods.RequestBuilder;
-import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.FileEntity;
-import org.apache.http.entity.StringEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.net.URI;
-import java.nio.charset.Charset;
 import java.util.*;
 
 /**
@@ -73,6 +58,8 @@ public class WeixinPay extends AbstractAPI implements Pay {
     private String certification;
     private Float magnification;
 
+    private byte[] cert;
+
     private WXPayConfig config;
     private WXPay wxpay;
 
@@ -84,7 +71,7 @@ public class WeixinPay extends AbstractAPI implements Pay {
         this.signature = context.findStringAccordingKey(SIGNATURE);
         this.magnification = context.findNumberAccordingKey(MAGNIFICATION, 1.0F).floatValue();
         this.certification = context.findStringAccordingKey(CERT_PATH);
-        this.init();
+        this.recon();
     }
 
     private WeixinPay(Builder builder) throws Exception {
@@ -95,15 +82,19 @@ public class WeixinPay extends AbstractAPI implements Pay {
         signature = builder.signature;
         certification = builder.certification;
         magnification = builder.magnification;
-        this.init();
+        this.recon();
     }
 
-    private void init() throws Exception {
+    private void recon() throws Exception {
         String path = WeixinPay.class.getResource("/").getPath().concat(certification);
         logger.info("加载微信证书路径: {}", path);
-        InputStream cert = new FileInputStream(path);
+        InputStream ins = new FileInputStream(path);
+        cert = new byte[(int) ins.available()];
+        ins.read(this.cert);
+        ins.close();
 
         config = new WXPayConfig() {
+
 
             @Override
             public String getAppID() {
@@ -122,7 +113,8 @@ public class WeixinPay extends AbstractAPI implements Pay {
 
             @Override
             public InputStream getCertStream() {
-                return cert;
+                ByteArrayInputStream certBis = new ByteArrayInputStream(cert);
+                return certBis;
             }
 
             @Override
@@ -134,8 +126,8 @@ public class WeixinPay extends AbstractAPI implements Pay {
             public int getHttpReadTimeoutMs() {
                 return 6000;
             }
-        };
 
+        };
 
         wxpay = new WXPay(config);
 

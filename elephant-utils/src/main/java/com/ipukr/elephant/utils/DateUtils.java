@@ -37,11 +37,11 @@ public class DateUtils {
      * date类型转换为String类型
      *
      * @param data 时间
-     * @param formatType 时间格式
+     * @param format 时间格式
      * @return 时间[字符型]
      */
-    public static String dateToString(Date data, String formatType) {
-        return new SimpleDateFormat(formatType).format(data);
+    public static String dateToString(Date data, String format) {
+        return new SimpleDateFormat(format).format(data);
     }
 
 
@@ -120,6 +120,49 @@ public class DateUtils {
         return calendar.getTime();
     }
 
+    /**
+     * 日期拼接时间
+     * @param date 日期
+     * @param time 时间
+     * @return
+     */
+    public static Date concat(Date date, Date time) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        Calendar dtime = Calendar.getInstance();
+        dtime.setTime(time);
+
+        calendar.set(Calendar.HOUR_OF_DAY, dtime.get(Calendar.HOUR_OF_DAY));
+        calendar.set(Calendar.MINUTE, dtime.get(Calendar.MINUTE));
+        calendar.set(Calendar.SECOND, dtime.get(Calendar.SECOND));
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    }
+
+    /**
+     * 时间转化
+     * @param date　　时间
+     * @param format　格式
+     * @return
+     * @throws ParseException
+     */
+    public static Date parser(Date date, String format) throws ParseException {
+        return new SimpleDateFormat(format).parse(dateToString(date, STD_PATTERN));
+    }
+
+    /**
+     * @param date
+     * @param begin
+     * @param end
+     * @return
+     */
+    public static boolean between(Date date, Date begin, Date end) {
+        return (date.after(begin) || date.equals(begin)) && (date.before(end) || date.equals(end));
+    }
+    public static boolean between(Date date, Date begin, Date end, String closed) {
+        return (date.after(begin) || (date.equals(begin) && "left".equals(closed))) && (date.before(end) || (date.equals(end) && "right".equals(closed)));
+    }
 
     /**
      * 获取当前日期是星期几

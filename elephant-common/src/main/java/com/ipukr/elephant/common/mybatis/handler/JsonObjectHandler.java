@@ -35,7 +35,7 @@ public abstract class JsonObjectHandler<T extends Object> extends BaseTypeHandle
         String result = rs.getString(columnName);
         if(result != null && !result.equals("")) {
             try {
-                if (JsonUtils.validate(result, List.class, String.class)) {
+                if (JsonUtils.validate(result, getGeneric())) {
                     return JsonUtils.parserString2Obj(result, getGeneric());
                 }
             } catch (IOException e) {
@@ -50,7 +50,7 @@ public abstract class JsonObjectHandler<T extends Object> extends BaseTypeHandle
         String result = rs.getString(columnIndex);
         if(result != null && !result.equals("")) {
             try {
-                if (JsonUtils.validate(result, List.class, String.class)) {
+                if (JsonUtils.validate(result, getGeneric())) {
                     return JsonUtils.parserString2Obj(result, getGeneric());
                 }
             } catch (IOException e) {
@@ -65,7 +65,7 @@ public abstract class JsonObjectHandler<T extends Object> extends BaseTypeHandle
         String result = cs.getString(columnIndex);
         if(result != null && !result.equals("")) {
             try {
-                if (JsonUtils.validate(result, List.class, String.class)) {
+                if (JsonUtils.validate(result, getGeneric())) {
                     return JsonUtils.parserString2Obj(result, getGeneric());
                 }
             } catch (IOException e) {

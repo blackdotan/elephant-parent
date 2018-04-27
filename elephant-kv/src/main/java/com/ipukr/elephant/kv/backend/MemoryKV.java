@@ -4,10 +4,7 @@ import com.ipukr.elephant.architecture.AbstractAPI;
 import com.ipukr.elephant.architecture.context.Context;
 import com.ipukr.elephant.kv.KV;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by ryan on 下午5:47.
@@ -95,5 +92,10 @@ public class MemoryKV<T> extends AbstractAPI<T> implements KV<T>{
     @Override
     public T pop(String key, T def) {
         return map.containsKey(key)?map.remove(key): def;
+    }
+
+    @Override
+    public Set<String> keys() {
+        return map.keySet();
     }
 }

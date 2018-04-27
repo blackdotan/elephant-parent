@@ -1,6 +1,10 @@
 package com.ipukr.elephant.utils;
 
+import com.ipukr.elephant.utils.domain.User;
 import org.junit.Test;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by wmw on 11/26/16.
@@ -13,4 +17,21 @@ public class JsonUtilsTest {
         ExpressAddress address = JsonUtils.parserString2Obj(json, ExpressAddress.class);
         System.out.println(JsonUtils.parserObj2String(address));
     }
+
+    @Test
+    public void parserObj2String() {
+        User user = User.custom()
+                .nickname("ryan")
+                .username("gointosunset")
+                .password("123456")
+                .build();
+        System.out.println(JsonUtils.parserObj2String(user));
+    }
+
+    @Test
+    public void parserString2Obj() throws IOException {
+        User user = JsonUtils.parserString2Obj(new File(this.getClass().getResource("/").getPath().concat("data/json/user.json")), User.class);
+        System.out.println(user);
+    }
 }
+

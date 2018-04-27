@@ -11,6 +11,7 @@ import redis.clients.jedis.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by ryan on 下午5:47.
@@ -231,6 +232,14 @@ public class RedisKV<T> extends AbstractAPI<T> implements KV<T> {
         }
         jedis.close();
         return t;
+    }
+
+    @Override
+    public Set<String> keys() {
+        Jedis jedis = pool.getResource();
+        Set<String> keys = jedis.keys("*");
+        jedis.close();
+        return keys;
     }
 
     public final static Builder custom() {

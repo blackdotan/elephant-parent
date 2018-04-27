@@ -2,6 +2,11 @@ package com.ipukr.elephant.utils;
 
 import org.junit.Test;
 
+import java.text.ParseException;
+import java.util.Date;
+
+import static com.ipukr.elephant.utils.DateUtils.STD_PATTERN;
+
 /**
  * 请描述类 <br>
  *
@@ -27,5 +32,13 @@ public class DateUtilsTest {
         System.out.println(DateUtils.getWeekOfDateToChinese(DateUtils.nowWithOffset(-8)));
         System.out.println(DateUtils.getWeekOfDateToChinese(DateUtils.nowWithOffset(-9)));
         System.out.println(DateUtils.getWeekOfDateToChinese(DateUtils.nowWithOffset(-10)));
+    }
+
+    @Test
+    public void between() throws ParseException {
+        Date date = DateUtils.stringToDate("2018-09-01 11:00:00", STD_PATTERN);
+        Date begin = DateUtils.stringToDate("2018-09-01 10:00:00", STD_PATTERN);
+        Date end = DateUtils.stringToDate("2018-09-01 11:00:00", STD_PATTERN);
+        System.out.println(DateUtils.between(date, begin, end, null));
     }
 }
