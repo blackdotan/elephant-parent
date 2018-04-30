@@ -20,6 +20,7 @@
         <module>elephant-httpclient</module>
         <module>elephant-payment</module>
         <module>elephant-sms</module>
+        <module>elephant-simulator</module>
     </modules>
 
     <dependencyManagement>
