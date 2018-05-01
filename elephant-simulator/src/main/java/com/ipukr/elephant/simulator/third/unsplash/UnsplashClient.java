@@ -1,6 +1,7 @@
 package com.ipukr.elephant.simulator.third.unsplash;
 
 import com.ipukr.elephant.http.third.HttpClientPool;
+import com.ipukr.elephant.simulator.SimulatorHelper;
 import com.ipukr.elephant.utils.JsonUtils;
 import org.apache.http.Consts;
 import org.apache.http.HttpResponse;
@@ -15,6 +16,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,10 +28,14 @@ import java.util.List;
  */
 public class UnsplashClient {
 
+
+    public static final Integer MAX_SIZE = 30;
     private Integer clientId;
     private String access;
 
     private HttpClientPool pool = null;
+
+    private List<String> pictures = new ArrayList<>();
 
     private UnsplashClient(Builder builder) throws Exception {
         clientId = builder.clientId;
@@ -55,6 +61,37 @@ public class UnsplashClient {
         pool = builder.build();
     }
 
+    /**
+     * 基于缓存机制
+     * @param keyword
+     * @param size 缓存大小
+     * @return
+     * @throws Exception
+     */
+    public List<String> cache(String keyword, int size) throws Exception {
+        List<String> cache = new ArrayList<>();
+        if (size > MAX_SIZE) {
+            int count = 0;
+            for (int i = 0; i < size / MAX_SIZE + 1; i++) {
+                cache.addAll(collections(keyword, ++count, MAX_SIZE).regular());
+            }
+        } else {
+            cache.addAll(collections(keyword, 1, size).regular());
+        }
+        pictures.addAll(cache);
+        return cache;
+    }
+
+    /**
+     * 基于缓存机制
+     * @param size
+     * @return
+     * @throws Exception
+     */
+    public List<String> ncache(int size) throws Exception {
+        return SimulatorHelper.random(pictures, size);
+    }
+
     public UnsplashPicture random(String keyword) throws Exception {
         URI URI = new URIBuilder()
                 .setScheme("https")
@@ -77,6 +114,13 @@ public class UnsplashClient {
         return JsonUtils.parserString2Obj(result, UnsplashPicture.class);
     }
 
+    /**
+     * @param keyword
+     * @param pageIndex
+     * @param pageSize /max 30
+     * @return
+     * @throws Exception
+     */
     public UnsplashResult collections(String keyword, Integer pageIndex, Integer pageSize) throws Exception {
         URI URI = new URIBuilder()
                 .setScheme("https")

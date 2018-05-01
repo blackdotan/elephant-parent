@@ -7,6 +7,8 @@ import io.codearte.jfairy.producer.text.TextProducer;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -125,6 +127,23 @@ public class SimulatorHelper {
         int i = new Random().nextInt(arr.size());
         return arr.get(i);
     }
+
+    public static <T> List<T> random(List<T> arr, int n) {
+        if(arr.size() < n) {
+            return arr;
+        } else {
+            List<T> _arr = new ArrayList<>();
+            Collections.copy(arr, _arr);
+            List<T> narr = new ArrayList<>();
+            int size = arr.size();
+            for (int i = 0; i < n; i++) {
+                narr.add(_arr.remove(new Random().nextInt(size)));
+                size -- ;
+            }
+            return narr;
+        }
+    }
+
 
     /**
      * @param array
