@@ -7,8 +7,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.MultiValueMap;
 
-import java.util.List;
-
 /**
  * 请描述类 <br>
  *
@@ -16,39 +14,39 @@ import java.util.List;
  * <p>
  * Created by ryan wu on 2018/4/2.
  */
-public class PaginationResponseEntity<T> extends HttpEntity {
+public class PaginationResponseEntity1<T> extends HttpEntity {
 
     private HttpStatus statusCode;
 
-    private PaginationResponseBody body;
+    private T body;
 
-    public PaginationResponseEntity(List<T> data, HttpStatus statusCode) {
-        this(data, new HttpHeaders(), statusCode);
+    public PaginationResponseEntity1(T body, HttpStatus statusCode) {
+        this.body = body;
+        this.statusCode = statusCode;
     }
 
-    public PaginationResponseEntity(MultiValueMap<String, String> headers, HttpStatus statusCode) {
+    public PaginationResponseEntity1(MultiValueMap<String, String> headers, HttpStatus statusCode) {
         super(headers);
         this.statusCode = statusCode;
     }
 
-    public PaginationResponseEntity(List<T> data, MultiValueMap<String, String> headers, HttpStatus statusCode) {
-        body = new PaginationResponseBody();
-
-        if(data instanceof PageList) {
-            Paginator paginator = ((PageList) data).getPaginator();
-            body.setCount(paginator.getTotalCount());
-            body.setPageIndex(paginator.getPage());
-            body.setPageSize(paginator.getLimit());
-            body.setPageCount(paginator.getTotalPages());
-            body.setData(data);
-        }
-
+    public PaginationResponseEntity1(T body, MultiValueMap<String, String> headers, HttpStatus statusCode) {
+        super(body, headers);
         this.statusCode = statusCode;
     }
 
     @Override
     public Object getBody() {
-        return body;
+        PaginationResponseBody prb = new PaginationResponseBody();
+        if(body instanceof PageList) {
+            Paginator paginator = ((PageList) body).getPaginator();
+            prb.setCount(paginator.getTotalCount());
+            prb.setPageIndex(paginator.getPage());
+            prb.setPageSize(paginator.getLimit());
+            prb.setPageCount(paginator.getTotalPages());
+            prb.setData(body);
+        }
+        return prb;
     }
 
 
@@ -72,8 +70,8 @@ public class PaginationResponseEntity<T> extends HttpEntity {
         return new BodyBuilder(HttpStatus.OK);
     }
 
-    public static <T> PaginationResponseEntity ok(List<T> data){
-        return new PaginationResponseEntity(data, HttpStatus.OK);
+        public static <T> PaginationResponseEntity1<T> ok(T body){
+        return new PaginationResponseEntity1<T>(body, HttpStatus.OK);
     }
 
 
@@ -95,17 +93,17 @@ public class PaginationResponseEntity<T> extends HttpEntity {
             return this;
         }
 
-        public PaginationResponseEntity build() {
-            return new PaginationResponseEntity(null, this.headers, this.status);
+        public PaginationResponseEntity1<Void> build() {
+            return new PaginationResponseEntity1<Void>(null, this.headers, this.status);
         }
 
-        public PaginationResponseEntity body(List data) {
-            return new PaginationResponseEntity(data, this.headers, this.status);
+        public <T> PaginationResponseEntity1<T> body(T body) {
+            return new PaginationResponseEntity1<T>(body, this.headers, this.status);
         }
     }
 
 
-    public static class PaginationResponseBody {
+    private class PaginationResponseBody {
         /**
          * 页面大小
          */
@@ -129,7 +127,7 @@ public class PaginationResponseEntity<T> extends HttpEntity {
         /**
          * 数据
          * */
-        private List data;
+        private T data;
 
         public Integer getPageSize() {
             return pageSize;
@@ -163,11 +161,11 @@ public class PaginationResponseEntity<T> extends HttpEntity {
             this.count = count;
         }
 
-        public List getData() {
+        public T getData() {
             return data;
         }
 
-        public void setData(List data) {
+        public void setData(T data) {
             this.data = data;
         }
     }

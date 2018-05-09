@@ -27,11 +27,21 @@ public class DateUtils {
 
     /**
      * 获取当前时间
+     * @param pattern 时间格式
+     * @return
+     */
+    public static String now(String pattern) {
+        return new SimpleDateFormat(pattern).format(now());
+    }
+
+    /**
+     * 获取当前时间
      * @return 时间[字符型]
      */
     public static String nowStr(){
         return new SimpleDateFormat(STD_PATTERN).format(now());
     }
+
 
     /**
      * date类型转换为String类型

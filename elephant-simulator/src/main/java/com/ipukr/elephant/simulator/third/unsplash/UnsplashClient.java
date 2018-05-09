@@ -2,6 +2,7 @@ package com.ipukr.elephant.simulator.third.unsplash;
 
 import com.ipukr.elephant.http.third.HttpClientPool;
 import com.ipukr.elephant.simulator.SimulatorHelper;
+import com.ipukr.elephant.utils.DateUtils;
 import com.ipukr.elephant.utils.JsonUtils;
 import org.apache.http.Consts;
 import org.apache.http.HttpResponse;
@@ -11,6 +12,8 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -28,6 +31,7 @@ import java.util.List;
  */
 public class UnsplashClient {
 
+    private static final Logger logger = LoggerFactory.getLogger(UnsplashClient.class);
 
     public static final Integer MAX_SIZE = 30;
     private Integer clientId;
@@ -75,6 +79,7 @@ public class UnsplashClient {
             for (int i = 0; i < size / MAX_SIZE + 1; i++) {
                 cache.addAll(collections(keyword, ++count, MAX_SIZE).regular());
             }
+            logger.debug("请求接口次数 : count={}, hour={}", count, DateUtils.now("yyyy-MM-dd HH:mm"));
         } else {
             cache.addAll(collections(keyword, 1, size).regular());
         }

@@ -7,10 +7,12 @@
       <module fileurl="file://$PROJECT_DIR$/elephant-common/elephant-common.iml" filepath="$PROJECT_DIR$/elephant-common/elephant-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/elephant-httpclient/elephant-httpclient.iml" filepath="$PROJECT_DIR$/elephant-httpclient/elephant-httpclient.iml" />
       <module fileurl="file://$PROJECT_DIR$/elephant-kv/elephant-kv.iml" filepath="$PROJECT_DIR$/elephant-kv/elephant-kv.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-license/elephant-license.iml" filepath="$PROJECT_DIR$/elephant-license/elephant-license.iml" />
       <module fileurl="file://$PROJECT_DIR$/elephant-mail/elephant-mail.iml" filepath="$PROJECT_DIR$/elephant-mail/elephant-mail.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/elephant-parent.iml" filepath="$PROJECT_DIR$/.idea/elephant-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-parent.iml" filepath="$PROJECT_DIR$/elephant-parent.iml" />
       <module fileurl="file://$PROJECT_DIR$/elephant-payment/elephant-payment.iml" filepath="$PROJECT_DIR$/elephant-payment/elephant-payment.iml" />
       <module fileurl="file://$PROJECT_DIR$/elephant-push/elephant-push.iml" filepath="$PROJECT_DIR$/elephant-push/elephant-push.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-simulator/elephant-simulator.iml" filepath="$PROJECT_DIR$/elephant-simulator/elephant-simulator.iml" />
       <module fileurl="file://$PROJECT_DIR$/elephant-sms/elephant-sms.iml" filepath="$PROJECT_DIR$/elephant-sms/elephant-sms.iml" />
       <module fileurl="file://$PROJECT_DIR$/elephant-utils/elephant-utils.iml" filepath="$PROJECT_DIR$/elephant-utils/elephant-utils.iml" />
     </modules>
