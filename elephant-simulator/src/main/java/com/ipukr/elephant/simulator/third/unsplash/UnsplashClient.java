@@ -54,15 +54,13 @@ public class UnsplashClient {
 
     private void init() throws Exception {
         // HttpClientPool构建器
-        HttpClientPool.Builder builder = HttpClientPool.custom()
+        pool = HttpClientPool.custom()
                 .schema("https")
                 .hostname("api.unsplash.com")
                 .protocol("TLSv1,TLSv1.1,TLSv1.2")
                 .timeout(20 * 1000)
-                .connections(10);
-
-        // 创建HttpClientPool
-        pool = builder.build();
+                .connections(10)
+                .build();
     }
 
     /**

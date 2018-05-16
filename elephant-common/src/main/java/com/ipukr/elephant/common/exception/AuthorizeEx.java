@@ -9,25 +9,25 @@ import org.springframework.http.HttpStatus;
  *         <p>
  *         Created by ryan on 2017/11/14.
  */
-public class AuthorizeException extends AbstractException {
+public class AuthorizeEx extends AbstractEx {
 
-    public AuthorizeException(String message) {
+    public AuthorizeEx(String message) {
         super(message);
     }
 
-    public AuthorizeException(HttpStatus status, String message) {
+    public AuthorizeEx(HttpStatus status, String message) {
         super(status, message);
     }
 
-    public AuthorizeException(Throwable cause) {
+    public AuthorizeEx(Throwable cause) {
         super(cause);
     }
 
-    public AuthorizeException(Throwable cause, String message) {
+    public AuthorizeEx(Throwable cause, String message) {
         super(cause, message);
     }
 
-    public AuthorizeException(Throwable cause, HttpStatus status, String message) {
+    public AuthorizeEx(Throwable cause, HttpStatus status, String message) {
         super(cause, status, message);
     }
 }

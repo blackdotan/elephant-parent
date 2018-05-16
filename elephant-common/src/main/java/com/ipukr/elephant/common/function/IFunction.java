@@ -9,5 +9,7 @@ package com.ipukr.elephant.common.function;
  */
 @FunctionalInterface
 public interface IFunction<One, Two> {
+
     public void apply(One one, Two two);
+
 }

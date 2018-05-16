@@ -24,7 +24,9 @@ import java.util.List;
  * Created by ryan on 2018/1/21.
  */
 public abstract class JsonObjectHandler<T extends Object> extends BaseTypeHandler<T>  {
+
     private static final Logger logger = LoggerFactory.getLogger(JsonObjectHandler.class);
+
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, T parameter, JdbcType jdbcType) throws SQLException {
         ps.setString(i, JsonUtils.parserObj2String(parameter));

@@ -11,34 +11,34 @@ import org.springframework.http.HttpStatus;
  *         <p>
  *         Created by ryan on 2017/12/6.
  */
-public abstract class AbstractException extends Exception {
+public abstract class AbstractEx extends RuntimeException {
 
     private HttpStatus status;
 
     private HttpHeaders headers = new HttpHeaders();
 
-    public AbstractException(String message) {
+    public AbstractEx(String message) {
         super(message);
         headers.add("msg", message);
     }
 
-    public AbstractException(HttpStatus status, String message) {
-        status = status;
+    public AbstractEx(HttpStatus status, String message) {
+        this.status = status;
         headers.add("msg", message);
     }
 
-    public AbstractException(Throwable cause) {
+    public AbstractEx(Throwable cause) {
         super(cause);
     }
 
-    public AbstractException(Throwable cause, String message) {
+    public AbstractEx(Throwable cause, String message) {
         super(cause);
         headers.add("msg", message);
     }
 
-    public AbstractException(Throwable cause, HttpStatus status, String message) {
+    public AbstractEx(Throwable cause, HttpStatus status, String message) {
         super(cause);
-        status = status;
+        this.status = status;
         headers.add("msg", message);
     }
 

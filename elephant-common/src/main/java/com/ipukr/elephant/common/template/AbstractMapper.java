@@ -75,6 +75,7 @@ public interface AbstractMapper<T, K extends java.io.Serializable> {
      * @param record Domain对象/忽略空属性，主键冲突更新属性
      * @return 插入记录数目
      */
+    @Deprecated
     int insertSelectiveIgnore(@Param("record") T record);
 
     /**
@@ -203,6 +204,39 @@ public interface AbstractMapper<T, K extends java.io.Serializable> {
      */
     List<T> condition(@Param("condition") String condition, PageBounds bounds);
 
+
+    /**
+     * 条件匹配
+     * @param record
+     * @param condition
+     * @return
+     */
+    List<T> qcondition(@Param("record") T record, @Param("condition") String condition);
+    /**
+     * 条件匹配
+     * @param record
+     * @param condition
+     * @param bounds
+     * @return
+     */
+    List<T> qcondition(@Param("record") T record, @Param("condition") String condition, PageBounds bounds );
+
+    /**
+     * 条件搜索
+     * @param record
+     * @param condition
+     * @return
+     */
+    List<T> scondition(@Param("record") T record, @Param("condition") String condition);
+
+    /**
+     * 条件搜索
+     * @param record
+     * @param condition
+     * @param bounds
+     * @return
+     */
+    List<T> scondition(@Param("record") T record, @Param("condition") String condition, PageBounds bounds );
     /**
      * 数据抽样, 随机获取一条记录
      *
@@ -217,4 +251,18 @@ public interface AbstractMapper<T, K extends java.io.Serializable> {
      * @return Domain对象列表
      */
     List<T> nexample(int n);
+
+    /**
+     * 插入 / 主键冲突忽略
+     * @param record
+     * @return
+     */
+    int igsert(@Param("record") T record);
+
+    /**
+     * 插入 / 主键冲突更新
+     * @param record
+     * @return
+     */
+    int upsert(@Param("record") T record);
 }

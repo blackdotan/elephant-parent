@@ -9,5 +9,7 @@ package com.ipukr.elephant.common.function;
  */
 @FunctionalInterface
 public interface IPredicate<One, Two> {
+
     public Boolean test(One one, Two two);
+
 }

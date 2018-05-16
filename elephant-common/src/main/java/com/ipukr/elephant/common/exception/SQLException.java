@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
  *         Created by ryan on 2017/11/14.
  */
 @Deprecated
-public class SQLException extends AbstractException {
+public class SQLException extends AbstractEx {
 
     public SQLException(String message) {
         super(message);
