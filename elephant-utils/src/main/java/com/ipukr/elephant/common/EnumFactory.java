@@ -40,9 +40,35 @@ public class EnumFactory {
      * @return 枚举对象
      */
     public static <T extends Enum<T> & Identifiable<K> , K > T find(Class<T> type, K id) {
-        return findAccordingValue(type, id);
+        for (T t : type.getEnumConstants()) {
+            if(t.getId().equals(id)) {
+                return t;
+            }
+        }
+        return null;
     }
 
+    /**
+     *
+     * @param type
+     * @param name
+     * @param <T>
+     * @return
+     */
+    public static <T extends Enum<T> & Identifiable> T prop(Class type, String name) {
+        EnumSet<T> set = EnumSet.allOf(type);
+        if(set == null || set.size() <= 0){
+            String error = StringUtils.easyAppend("Not Found Enum {} Of Value :{}", type.getSimpleName(), name);
+            throw new IllegalArgumentException(error);
+        }
+        for(T t: set){
+            if(t.name().equals(name)){
+                return t;
+            }
+        }
+        String error = StringUtils.easyAppend("Not Found Enum {} Of Value :{}", type.getSimpleName(), name);
+        throw new IllegalArgumentException(error);
+    }
 
     /**
      * 根据[数据类型], [枚举值]获取枚举对象
