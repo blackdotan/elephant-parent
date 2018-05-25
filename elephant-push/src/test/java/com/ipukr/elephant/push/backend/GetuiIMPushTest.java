@@ -20,7 +20,7 @@ public class GetuiIMPushTest{
 
     @Test
     public void testSingle() {
-        mIPush.push("b65c186b8e67e9c5594cef04d4fcc385", "123");
+        mIPush.push("5be56edb65387415253b05011668a0ec", "你好吗");
     }
 
     public void testList() {

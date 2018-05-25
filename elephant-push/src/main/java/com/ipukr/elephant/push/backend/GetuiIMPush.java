@@ -11,6 +11,7 @@ import com.gexin.rp.sdk.template.TransmissionTemplate;
 import com.ipukr.elephant.architecture.AbstractAPI;
 import com.ipukr.elephant.architecture.context.Context;
 import com.ipukr.elephant.push.IPush;
+import com.ipukr.elephant.utils.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,6 +74,7 @@ public class GetuiIMPush extends AbstractAPI implements IPush{
         target.setAppId(appid);
         target.setClientId(CID);
         IPushResult mIPushResult = mIGtPush.pushMessageToSingle(message, target);
+        System.out.println(JsonUtils.parserObj2String(mIPushResult.getResponse()));
         return mIPushResult.getResponse().get("result").equals("ok");
     }
 
@@ -85,6 +87,7 @@ public class GetuiIMPush extends AbstractAPI implements IPush{
         template.setTransmissionContent(text);
 
         ListMessage message = new ListMessage();
+
         message.setData(template);
 
         List<Target> targets = new ArrayList<Target>();
