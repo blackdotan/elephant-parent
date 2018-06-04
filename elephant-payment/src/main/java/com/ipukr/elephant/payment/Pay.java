@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 请描述类 <br>
+ * 支付接口 <br>
  *
  * @author ryan.
  *         <p>
@@ -103,8 +103,6 @@ public interface Pay {
      * @throws Exception
      */
     boolean verify(Map params) throws Exception;
-
-
 
 
     /**

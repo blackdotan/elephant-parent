@@ -257,7 +257,8 @@ public class AliPay extends AbstractAPI implements Pay {
 
     @Override
     public Map signature(Map params) throws Exception {
-        return params;
+        throw new UnsupportedOperationException("不支持签名方法");
+//        return params;
     }
 
     public final static Builder custom() {
