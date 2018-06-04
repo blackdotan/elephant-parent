@@ -21,4 +21,11 @@ public interface IPush {
      * @return
      */
     public boolean push(List<String> CIDs, String text);
+
+    /**
+     * 推送所有
+     * @param text
+     * @return
+     */
+    public boolean push(String text);
 }

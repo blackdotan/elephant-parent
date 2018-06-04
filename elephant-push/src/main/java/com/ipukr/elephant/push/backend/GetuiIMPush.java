@@ -1,6 +1,7 @@
 package com.ipukr.elephant.push.backend;
 
 import com.gexin.rp.sdk.base.IPushResult;
+import com.gexin.rp.sdk.base.impl.AppMessage;
 import com.gexin.rp.sdk.base.impl.ListMessage;
 import com.gexin.rp.sdk.base.impl.SingleMessage;
 import com.gexin.rp.sdk.base.impl.Target;
@@ -108,7 +109,6 @@ public class GetuiIMPush extends AbstractAPI implements IPush{
         targets.add(target);
 
         String taskId = mIGtPush.getContentId(message);
-        logger.debug("创建推送任务 taskId={}", taskId);
         IPushResult mIPushResult = mIGtPush.pushMessageToList(taskId, targets);;
         logger.debug("推送任务 taskId={}, result={}", taskId, JsonUtils.parserObj2String(mIPushResult));
         return mIPushResult.getResponse().get("result").equals("ok");
@@ -117,13 +117,8 @@ public class GetuiIMPush extends AbstractAPI implements IPush{
     @Override
     public boolean push(List<String> CIDs, String text) {
         logger.debug("开始向Client_Ids:{}, 推送数据text:{}", CIDs, text);
-//        TransmissionTemplate template = new TransmissionTemplate();
-//        template.setAppId(appid);
-//        template.setAppkey(appkey);
-//        template.setTransmissionContent(text);
 
         NotificationTemplate template = generatedNotificationTemplate(title, text);
-
 
         ListMessage message = new ListMessage();
         message.setData(template);
@@ -140,6 +135,7 @@ public class GetuiIMPush extends AbstractAPI implements IPush{
             }
             String taskId = mIGtPush.getContentId(message);
             IPushResult mIPushResult = mIGtPush.pushMessageToList(taskId, targets);
+            logger.debug("推送任务 taskId={}, result={}", taskId, JsonUtils.parserObj2String(mIPushResult));
             return mIPushResult.getResponse().get("result").equals("ok");
         } else {
             logger.warn("推送警告, 你要推送的CIDs为空");
@@ -147,6 +143,21 @@ public class GetuiIMPush extends AbstractAPI implements IPush{
         }
     }
 
+    @Override
+    public boolean push(String text) {
+        logger.debug("开始向App所有Client, 推送数据text:{}", text);
+
+        NotificationTemplate template = generatedNotificationTemplate(title, text);
+
+        AppMessage message = new AppMessage();
+        message.setData(template);
+        message.setOffline(offline);
+        message.setOfflineExpireTime(24 * 1000 * 3600);
+
+        IPushResult mIPushResult = mIGtPush.pushMessageToApp(message);
+        logger.debug("推送任务 result={}", JsonUtils.parserObj2String(mIPushResult));
+        return mIPushResult.getResponse().get("result").equals("ok");
+    }
 
     private NotificationTemplate generatedNotificationTemplate(String title, String text) {
         NotificationTemplate template = new NotificationTemplate();
@@ -172,7 +183,6 @@ public class GetuiIMPush extends AbstractAPI implements IPush{
         iAPNPayload.setAlertMsg(new APNPayload.SimpleAlertMsg(text));
         iAPNPayload.setSound(sound);
         template.setAPNInfo(iAPNPayload);
-
 
         // 透传消息设置，1为强制启动应用，客户端接收到消息后就会立即启动应用；2为等待应用启动
         template.setTransmissionType(2);
