@@ -10,9 +10,7 @@ import com.alipay.api.response.*;
 import com.ipukr.elephant.architecture.AbstractAPI;
 import com.ipukr.elephant.architecture.context.Context;
 import com.ipukr.elephant.payment.Pay;
-import com.ipukr.elephant.payment.domain.Account;
-import com.ipukr.elephant.payment.domain.Good;
-import com.ipukr.elephant.payment.domain.PayOrder;
+import com.ipukr.elephant.payment.domain.*;
 import com.ipukr.elephant.payment.utils.MathUtils;
 import com.ipukr.elephant.utils.JsonUtils;
 import com.ipukr.elephant.utils.StringUtils;
@@ -201,29 +199,15 @@ public class AliPay extends AbstractAPI implements Pay {
         return order;
     }
 
+
     @Override
-    public PayOrder find() {
-        return null;
+    public boolean transfer(TransferOrder order) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<PayOrder> findAccordingExample(PayOrder order) {
-        return null;
-    }
-
-    @Override
-    public List<PayOrder> findAccordingAccount(Account account) {
-        return null;
-    }
-
-    @Override
-    public PayOrder transfer(PayOrder order) {
-        return null;
-    }
-
-    @Override
-    public PayOrder transfer(Account from, Account to, PayOrder order) {
-        return null;
+    public boolean withdraw(WithdrawOrder order) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

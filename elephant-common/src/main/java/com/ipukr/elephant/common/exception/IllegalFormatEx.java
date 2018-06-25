@@ -15,8 +15,16 @@ public class IllegalFormatEx extends AbstractEx {
         super(message);
     }
 
+    public IllegalFormatEx(String message, String... args) {
+        super(message, args);
+    }
+
     public IllegalFormatEx(HttpStatus status, String message) {
         super(status, message);
+    }
+
+    public IllegalFormatEx(HttpStatus status, String message, String... args) {
+        super(status, message, args);
     }
 
     public IllegalFormatEx(Throwable cause) {
@@ -27,7 +35,15 @@ public class IllegalFormatEx extends AbstractEx {
         super(cause, message);
     }
 
+    public IllegalFormatEx(Throwable cause, String message, String... args) {
+        super(cause, message, args);
+    }
+
     public IllegalFormatEx(Throwable cause, HttpStatus status, String message) {
         super(cause, status, message);
+    }
+
+    public IllegalFormatEx(Throwable cause, HttpStatus status, String message, String... args) {
+        super(cause, status, message, args);
     }
 }

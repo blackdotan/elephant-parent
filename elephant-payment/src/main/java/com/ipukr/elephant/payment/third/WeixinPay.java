@@ -9,6 +9,8 @@ import com.ipukr.elephant.http.third.HttpClientPool;
 import com.ipukr.elephant.payment.Pay;
 import com.ipukr.elephant.payment.domain.Account;
 import com.ipukr.elephant.payment.domain.PayOrder;
+import com.ipukr.elephant.payment.domain.TransferOrder;
+import com.ipukr.elephant.payment.domain.WithdrawOrder;
 import com.ipukr.elephant.payment.utils.MD5Tools;
 import com.ipukr.elephant.utils.*;
 import org.slf4j.Logger;
@@ -163,34 +165,21 @@ public class WeixinPay extends AbstractAPI implements Pay {
         return null;
     }
 
-    @Override
-    public PayOrder find() throws Exception {
-        return null;
-    }
 
-    @Override
-    public List<PayOrder> findAccordingExample(PayOrder order) throws Exception {
-        return null;
-    }
-
-    @Override
-    public List<PayOrder> findAccordingAccount(Account account) throws Exception {
-        return null;
-    }
 
     @Override
     public PayOrder close(PayOrder order) throws Exception {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public PayOrder transfer(PayOrder order) throws Exception {
-        return null;
+    public boolean transfer(TransferOrder order) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public PayOrder transfer(Account from, Account to, PayOrder order) throws Exception {
-        return null;
+    public boolean withdraw(WithdrawOrder order) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

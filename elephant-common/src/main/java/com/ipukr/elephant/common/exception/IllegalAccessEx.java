@@ -15,8 +15,16 @@ public class IllegalAccessEx extends AbstractEx {
         super(message);
     }
 
+    public IllegalAccessEx(String message, String... args) {
+        super(message, args);
+    }
+
     public IllegalAccessEx(HttpStatus status, String message) {
         super(status, message);
+    }
+
+    public IllegalAccessEx(HttpStatus status, String message, String... args) {
+        super(status, message, args);
     }
 
     public IllegalAccessEx(Throwable cause) {
@@ -27,7 +35,15 @@ public class IllegalAccessEx extends AbstractEx {
         super(cause, message);
     }
 
+    public IllegalAccessEx(Throwable cause, String message, String... args) {
+        super(cause, message, args);
+    }
+
     public IllegalAccessEx(Throwable cause, HttpStatus status, String message) {
         super(cause, status, message);
+    }
+
+    public IllegalAccessEx(Throwable cause, HttpStatus status, String message, String... args) {
+        super(cause, status, message, args);
     }
 }

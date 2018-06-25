@@ -3,6 +3,8 @@ package com.ipukr.elephant.payment;
 import com.alipay.api.AlipayApiException;
 import com.ipukr.elephant.payment.domain.Account;
 import com.ipukr.elephant.payment.domain.PayOrder;
+import com.ipukr.elephant.payment.domain.TransferOrder;
+import com.ipukr.elephant.payment.domain.WithdrawOrder;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,7 @@ import java.util.Map;
  *         Created by ryan on 2017/12/19.
  */
 public interface Pay {
+
     /**
      * 创建订单
      *
@@ -31,31 +34,6 @@ public interface Pay {
      */
     PayOrder find(PayOrder order)throws Exception;
 
-    /**
-     * 获取所有订单
-     *
-     * @return
-     */
-    @Deprecated
-    PayOrder find()throws Exception;
-
-    /**
-     * 根据订单示例, 获取匹配的订单
-     *
-     * @param order
-     * @return
-     */
-    @Deprecated
-    List<PayOrder> findAccordingExample(PayOrder order)throws Exception;
-
-    /**
-     * 根据账户信息, 获取匹配订单
-     *
-     * @param account
-     * @return
-     */
-    @Deprecated
-    List<PayOrder> findAccordingAccount(Account account)throws Exception;
 
     /**
      * 关闭订单
@@ -67,23 +45,10 @@ public interface Pay {
 
     /**
      * 转账
-     *
      * @param order
      * @return
      */
-    @Deprecated
-    PayOrder transfer(PayOrder order)throws Exception;
-
-    /**
-     * 转账
-     *
-     * @param from 转账账户
-     * @param to 收款账户
-     * @param order 订单
-     * @return
-     */
-    @Deprecated
-    PayOrder transfer(Account from, Account to, PayOrder order)throws Exception;
+    boolean transfer(TransferOrder order)throws Exception;
 
 
     /**
@@ -103,6 +68,14 @@ public interface Pay {
      * @throws Exception
      */
     boolean verify(Map params) throws Exception;
+
+    /**
+     * 提现
+     * @param order
+     * @return
+     */
+    boolean withdraw(WithdrawOrder order) throws Exception;
+
 
 
     /**

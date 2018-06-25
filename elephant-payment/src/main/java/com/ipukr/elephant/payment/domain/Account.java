@@ -7,6 +7,7 @@ package com.ipukr.elephant.payment.domain;
  *         <p>
  *         Created by ryan on 2017/12/19.
  */
+@Deprecated
 public class Account {
 
     /**

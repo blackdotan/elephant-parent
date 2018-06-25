@@ -15,8 +15,16 @@ public class AuthorizeEx extends AbstractEx {
         super(message);
     }
 
+    public AuthorizeEx(String message, String... args) {
+        super(message, args);
+    }
+
     public AuthorizeEx(HttpStatus status, String message) {
         super(status, message);
+    }
+
+    public AuthorizeEx(HttpStatus status, String message, String... args) {
+        super(status, message, args);
     }
 
     public AuthorizeEx(Throwable cause) {
@@ -27,7 +35,15 @@ public class AuthorizeEx extends AbstractEx {
         super(cause, message);
     }
 
+    public AuthorizeEx(Throwable cause, String message, String... args) {
+        super(cause, message, args);
+    }
+
     public AuthorizeEx(Throwable cause, HttpStatus status, String message) {
         super(cause, status, message);
+    }
+
+    public AuthorizeEx(Throwable cause, HttpStatus status, String message, String... args) {
+        super(cause, status, message, args);
     }
 }

@@ -1,6 +1,7 @@
 package com.ipukr.elephant.common.exception;
 
 import com.ipukr.elephant.utils.StringUtils;
+import org.slf4j.helpers.MessageFormatter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
@@ -22,9 +23,19 @@ public abstract class AbstractEx extends RuntimeException {
         headers.add("msg", message);
     }
 
+    public AbstractEx(String message, String...args) {
+        super(message);
+        headers.add("msg", MessageFormatter.format(message, args).getMessage());
+    }
+
     public AbstractEx(HttpStatus status, String message) {
         this.status = status;
         headers.add("msg", message);
+    }
+
+    public AbstractEx(HttpStatus status, String message, String...args) {
+        this.status = status;
+        headers.add("msg", MessageFormatter.format(message, args).getMessage());
     }
 
     public AbstractEx(Throwable cause) {
@@ -36,10 +47,21 @@ public abstract class AbstractEx extends RuntimeException {
         headers.add("msg", message);
     }
 
+    public AbstractEx(Throwable cause, String message, String...args) {
+        super(cause);
+        headers.add("msg", MessageFormatter.format(message, args).getMessage());
+    }
+
     public AbstractEx(Throwable cause, HttpStatus status, String message) {
         super(cause);
         this.status = status;
         headers.add("msg", message);
+    }
+
+    public AbstractEx(Throwable cause, HttpStatus status, String message, String...args) {
+        super(cause);
+        this.status = status;
+        headers.add("msg", MessageFormatter.format(message, args).getMessage());
     }
 
     public HttpStatus getStatus() {

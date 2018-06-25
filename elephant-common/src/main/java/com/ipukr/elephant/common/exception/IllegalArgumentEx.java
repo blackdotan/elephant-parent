@@ -10,13 +10,20 @@ import org.springframework.http.HttpStatus;
  *         Created by ryan on 2017/11/14.
  */
 public class IllegalArgumentEx extends AbstractEx {
-
     public IllegalArgumentEx(String message) {
         super(message);
     }
 
+    public IllegalArgumentEx(String message, String... args) {
+        super(message, args);
+    }
+
     public IllegalArgumentEx(HttpStatus status, String message) {
         super(status, message);
+    }
+
+    public IllegalArgumentEx(HttpStatus status, String message, String... args) {
+        super(status, message, args);
     }
 
     public IllegalArgumentEx(Throwable cause) {
@@ -27,7 +34,15 @@ public class IllegalArgumentEx extends AbstractEx {
         super(cause, message);
     }
 
+    public IllegalArgumentEx(Throwable cause, String message, String... args) {
+        super(cause, message, args);
+    }
+
     public IllegalArgumentEx(Throwable cause, HttpStatus status, String message) {
         super(cause, status, message);
+    }
+
+    public IllegalArgumentEx(Throwable cause, HttpStatus status, String message, String... args) {
+        super(cause, status, message, args);
     }
 }

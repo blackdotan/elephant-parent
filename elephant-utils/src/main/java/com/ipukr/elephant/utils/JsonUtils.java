@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Map;
@@ -76,6 +77,20 @@ public class JsonUtils {
         return t;
     }
 
+    /**
+     * 输入流转对象
+     * @param ins
+     * @param clazz
+     * @param <T>
+     * @return
+     * @throws IOException
+     */
+    public static <T> T parserInputStream2Obj(InputStream ins, Class<T> clazz) throws IOException {
+        T t = null;
+        t =  mapper.readValue(ins, clazz);
+        return t;
+    }
+
 
     /**
      * 文本转Json对象 <br>
@@ -106,6 +121,21 @@ public class JsonUtils {
         CollectionType type = mapper.getTypeFactory().constructCollectionType(cClazz, eClazz);
         return mapper.readValue(file, type);
     }
+
+    /**
+     * 输入流转Json对象
+     * @param inputStream
+     * @param cClazz
+     * @param eClazz
+     * @param <T>
+     * @return
+     * @throws IOException
+     */
+    public static <T> T parserInputStream2CollectionWithType(InputStream inputStream, java.lang.Class<? extends java.util.Collection> cClazz, java.lang.Class<?> eClazz) throws IOException {
+        CollectionType type = mapper.getTypeFactory().constructCollectionType(cClazz, eClazz);
+        return mapper.readValue(inputStream, type);
+    }
+
 
     /**
      * 验证Json是否有效

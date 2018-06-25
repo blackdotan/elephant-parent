@@ -15,8 +15,16 @@ public class UnsupportedOperationEx extends AbstractEx {
         super(message);
     }
 
+    public UnsupportedOperationEx(String message, String... args) {
+        super(message, args);
+    }
+
     public UnsupportedOperationEx(HttpStatus status, String message) {
         super(status, message);
+    }
+
+    public UnsupportedOperationEx(HttpStatus status, String message, String... args) {
+        super(status, message, args);
     }
 
     public UnsupportedOperationEx(Throwable cause) {
@@ -27,7 +35,15 @@ public class UnsupportedOperationEx extends AbstractEx {
         super(cause, message);
     }
 
+    public UnsupportedOperationEx(Throwable cause, String message, String... args) {
+        super(cause, message, args);
+    }
+
     public UnsupportedOperationEx(Throwable cause, HttpStatus status, String message) {
         super(cause, status, message);
+    }
+
+    public UnsupportedOperationEx(Throwable cause, HttpStatus status, String message, String... args) {
+        super(cause, status, message, args);
     }
 }

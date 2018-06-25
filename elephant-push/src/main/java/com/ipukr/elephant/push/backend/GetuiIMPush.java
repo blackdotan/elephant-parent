@@ -1,5 +1,6 @@
 package com.ipukr.elephant.push.backend;
 
+import com.beust.jcommander.internal.Lists;
 import com.gexin.rp.sdk.base.IPushResult;
 import com.gexin.rp.sdk.base.impl.AppMessage;
 import com.gexin.rp.sdk.base.impl.ListMessage;
@@ -150,6 +151,7 @@ public class GetuiIMPush extends AbstractAPI implements IPush{
         NotificationTemplate template = generatedNotificationTemplate(title, text);
 
         AppMessage message = new AppMessage();
+        message.setAppIdList(Lists.newArrayList(appid));
         message.setData(template);
         message.setOffline(offline);
         message.setOfflineExpireTime(24 * 1000 * 3600);
@@ -180,8 +182,14 @@ public class GetuiIMPush extends AbstractAPI implements IPush{
         template.setStyle(style);
 
         APNPayload iAPNPayload = new APNPayload();
-        iAPNPayload.setAlertMsg(new APNPayload.SimpleAlertMsg(text));
+        APNPayload.DictionaryAlertMsg iAlertMsg = new APNPayload.DictionaryAlertMsg();
+        iAlertMsg.setTitle(title);
+        iAlertMsg.setBody(text);
+        iAlertMsg.setTitleLocKey("TitleLocKey");
+        iAlertMsg.addTitleLocArg("TitleLocArg");
+        iAPNPayload.setAlertMsg(iAlertMsg);
         iAPNPayload.setSound(sound);
+
         template.setAPNInfo(iAPNPayload);
 
         // 透传消息设置，1为强制启动应用，客户端接收到消息后就会立即启动应用；2为等待应用启动

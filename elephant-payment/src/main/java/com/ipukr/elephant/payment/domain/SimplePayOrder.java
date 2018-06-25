@@ -3,7 +3,7 @@ package com.ipukr.elephant.payment.domain;
 import java.util.List;
 
 /**
- * 请描述类 <br>
+ * 支付订单 <br>
  *
  * @author ryan.
  *         <p>
