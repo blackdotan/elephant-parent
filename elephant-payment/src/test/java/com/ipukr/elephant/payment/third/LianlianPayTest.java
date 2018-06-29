@@ -3,11 +3,10 @@ package com.ipukr.elephant.payment.third;
 import com.ipukr.elephant.architecture.factory.Factory;
 import com.ipukr.elephant.payment.Pay;
 import com.ipukr.elephant.payment.domain.lianlian.LianlianWithdrawOrder;
+import com.ipukr.elephant.utils.DateUtils;
 import com.ipukr.elephant.utils.IdGen;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Calendar;
 
 /**
  * 请描述类 <br>
@@ -29,7 +28,7 @@ public class LianlianPayTest {
     public void withdraw() throws Exception {
         LianlianWithdrawOrder iLianlianWithdrawOrder = LianlianWithdrawOrder.custom()
                 .no(String.valueOf(IdGen.get().nextId()))
-                .dtOrder(String.valueOf(Calendar.getInstance().getTime().getTime()))
+                .dtOrder(String.valueOf(DateUtils.dateToString(DateUtils.now(), "yyyyMMddHHmmss")))
                 .amount(0.05F)
                 .cardNo("6214835929117487")
                 .build();

@@ -13,7 +13,6 @@ import com.ipukr.elephant.payment.domain.lianlian.bean.PaymentRequestBean;
 import com.ipukr.elephant.payment.domain.lianlian.bean.PaymentResponseBean;
 import com.ipukr.elephant.payment.domain.lianlian.bean.QueryPaymentRequestBean;
 import com.ipukr.elephant.payment.domain.lianlian.bean.QueryPaymentResponseBean;
-import com.ipukr.elephant.payment.domain.lianlian.constant.PaymentConstant;
 import com.ipukr.elephant.payment.domain.lianlian.constant.PaymentStatusEnum;
 import com.ipukr.elephant.payment.domain.lianlian.constant.RetCodeEnum;
 import com.ipukr.elephant.payment.domain.lianlian.util.HttpUtil;
@@ -45,12 +44,14 @@ public class LianlianPay extends AbstractAPI implements Pay{
     private static final String OID_PARTNER = "oid.partner";
     private static final String API_VERSION = "api.version";
     private static final String SIGN_TYPE = "sign.type";
+    private static final String NOTIFY_URL = "notify.url";
     private static final String PUBLIC_KEY_ONLINE = "public.key.online";
     private static final String BUSINESS_PRIVATE_KEY = "business.private.key";
 
     private String oidPartner;
     private String apiVersion;
     private String signType;
+    private String notifyUrl;
     private String publicKeyOnline;
     private String businessPrivateKey;
 
@@ -60,6 +61,7 @@ public class LianlianPay extends AbstractAPI implements Pay{
         this.oidPartner = context.findStringAccordingKey(OID_PARTNER);
         this.apiVersion = context.findStringAccordingKey(API_VERSION, "1.0");
         this.signType = context.findStringAccordingKey(SIGN_TYPE, "RSA");
+        this.notifyUrl = context.findStringAccordingKey(NOTIFY_URL, NOTIFY_URL);
         this.publicKeyOnline = context.findStringAccordingKey(PUBLIC_KEY_ONLINE);
         this.businessPrivateKey = context.findStringAccordingKey(BUSINESS_PRIVATE_KEY);
     }
@@ -103,13 +105,14 @@ public class LianlianPay extends AbstractAPI implements Pay{
             paymentRequestBean.setDt_order(((LianlianWithdrawOrder) order).getDtOrder());
             paymentRequestBean.setMoney_order(StringFormatter.format("%.2f", ((LianlianWithdrawOrder) order).getAmount()).getValue());
             paymentRequestBean.setCard_no(((LianlianWithdrawOrder) order).getCardNo());
-            paymentRequestBean.setAcct_name("全渠道");
+            paymentRequestBean.setAcct_name("吴明旺");
             // paymentRequestBean.setBank_name("中国平安银行");
             paymentRequestBean.setInfo_order("转账测试");
             paymentRequestBean.setFlag_card("0");
             paymentRequestBean.setMemo("代付");
             // 填写商户自己的接收付款结果回调异步通知
-            paymentRequestBean.setNotify_url(((LianlianWithdrawOrder) order).getNotifyUrl());
+//            paymentRequestBean.setNotify_url(((LianlianWithdrawOrder) order).getNotifyUrl());
+            paymentRequestBean.setNotify_url(notifyUrl);
             paymentRequestBean.setOid_partner(oidPartner);
             paymentRequestBean.setPlatform("onlyfruit.cn");
             paymentRequestBean.setApi_version(apiVersion);
