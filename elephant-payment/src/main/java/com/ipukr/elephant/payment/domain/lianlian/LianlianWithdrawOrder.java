@@ -1,6 +1,5 @@
 package com.ipukr.elephant.payment.domain.lianlian;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ipukr.elephant.payment.domain.WithdrawOrder;
 
@@ -79,6 +78,12 @@ public class LianlianWithdrawOrder extends WithdrawOrder {
 
     private Float amount;
 
+    /**
+     * 收款备注
+     */
+    @JsonProperty("memo")
+    private String memo;
+
     private LianlianWithdrawOrder(Builder builder) {
         setNo(builder.no);
         setDtOrder(builder.dtOrder);
@@ -94,6 +99,7 @@ public class LianlianWithdrawOrder extends WithdrawOrder {
         setSign(builder.sign);
         setSignType(builder.signType);
         setAmount(builder.amount);
+        setMemo(builder.memo);
     }
 
     public static Builder custom() {
@@ -204,6 +210,13 @@ public class LianlianWithdrawOrder extends WithdrawOrder {
         this.amount = amount;
     }
 
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
 
     public static final class Builder {
         private String no;
@@ -220,6 +233,7 @@ public class LianlianWithdrawOrder extends WithdrawOrder {
         private String sign;
         private String signType;
         private Float amount;
+        private String memo;
 
         private Builder() {
         }
@@ -291,6 +305,11 @@ public class LianlianWithdrawOrder extends WithdrawOrder {
 
         public Builder amount(Float val) {
             amount = val;
+            return this;
+        }
+
+        public Builder memo(String val) {
+            memo = val;
             return this;
         }
 

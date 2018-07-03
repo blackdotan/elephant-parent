@@ -2,6 +2,7 @@ package com.ipukr.elephant.payment.third;
 
 import com.ipukr.elephant.architecture.factory.Factory;
 import com.ipukr.elephant.payment.Pay;
+import com.ipukr.elephant.payment.domain.lianlian.LianlianPayOrder;
 import com.ipukr.elephant.payment.domain.lianlian.LianlianWithdrawOrder;
 import com.ipukr.elephant.utils.DateUtils;
 import com.ipukr.elephant.utils.IdGen;
@@ -30,9 +31,19 @@ public class LianlianPayTest {
                 .no(String.valueOf(IdGen.get().nextId()))
                 .dtOrder(String.valueOf(DateUtils.dateToString(DateUtils.now(), "yyyyMMddHHmmss")))
                 .amount(0.05F)
-                .cardNo("6214835929117487")
+                .cardNo("6217001930001550277")
+                .acctName("陈伟仁")
                 .build();
         pay.withdraw(iLianlianWithdrawOrder);
+
+    }
+
+    @Test
+    public void find() throws Exception {
+        LianlianPayOrder order = new LianlianPayOrder();
+        order.setNo("1012627496702574592");
+
+        pay.find(order);
 
     }
 
