@@ -34,41 +34,19 @@ public abstract class JsonSetHandler<T> extends BaseTypeHandler<Set<T>>  {
 
     @Override
     public Set<T> getNullableResult(ResultSet rs, String columnName) throws SQLException {
-        String result = rs.getString(columnName);
-        if(result != null && !result.equals("")) {
-            try {
-                return JsonUtils.parserString2CollectionWithType(result, Set.class, getGeneric());
-            } catch (IOException e) {
-                logger.error("JsonSetHandler转换异常, 请验证数据格式", e);
-            }
-        }
-        return new HashSet<>();
+        return convert(rs.getString(columnName));
     }
 
     @Override
     public Set<T> getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-        String result = rs.getString(columnIndex);
-        if(result != null && !result.equals("")) {
-            try {
-                return JsonUtils.parserString2CollectionWithType(result, Set.class, getGeneric());
-            } catch (IOException e) {
-                logger.error("JsonSetHandler转换异常, 请验证数据格式", e);
-            }
-        }
-        return new HashSet();
+        return convert(rs.getString(columnIndex));
+
     }
 
     @Override
     public Set<T> getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-        String result = cs.getString(columnIndex);
-        if(result != null && !result.equals("")) {
-            try {
-                return JsonUtils.parserString2CollectionWithType(result, Set.class, getGeneric());
-            } catch (IOException e) {
-                logger.error("JsonSetHandler转换异常, 请验证数据格式", e);
-            }
-        }
-        return new HashSet();
+        return convert(cs.getString(columnIndex));
+
     }
 
     @Override
@@ -83,4 +61,15 @@ public abstract class JsonSetHandler<T> extends BaseTypeHandler<Set<T>>  {
 
 
     public abstract Class<T> getGeneric();
+
+    private Set<T> convert(String text) {
+        if(text != null && !text.equals("")) {
+            try {
+                return JsonUtils.parserString2CollectionWithType(text, Set.class, getGeneric());
+            } catch (Exception e) {
+                logger.error("JsonSetHandler转换异常, 请验证数据格式", e);
+            }
+        }
+        return new HashSet();
+    }
 }

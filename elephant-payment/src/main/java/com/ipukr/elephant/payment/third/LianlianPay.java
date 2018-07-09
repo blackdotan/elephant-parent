@@ -21,7 +21,6 @@ import com.ipukr.elephant.payment.domain.lianlian.util.HttpUtil;
 import com.ipukr.elephant.payment.domain.lianlian.util.SignUtil;
 import com.lianlianpay.security.utils.LianLianPaySecurity;
 import com.lianpay.api.util.TraderRSAUtil;
-import com.sun.javafx.binding.StringFormatter;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -175,19 +174,21 @@ public class LianlianPay extends AbstractAPI implements Pay{
     @Override
     public boolean withdraw(WithdrawOrder order) throws Exception {
         if (order instanceof LianlianWithdrawOrder ) {
+            LianlianWithdrawOrder iLianlianWithdrawOrder = (LianlianWithdrawOrder) order;
             // 连连内部测试环境数据(商户测试期间需要用正式的数据测试，测试时默认单笔单日单月额度50，等测试OK，申请走上线流程打开额度）
             PaymentRequestBean paymentRequestBean = new PaymentRequestBean();
-            paymentRequestBean.setNo_order(order.getNo());
-            paymentRequestBean.setDt_order(((LianlianWithdrawOrder) order).getDtOrder());
-            paymentRequestBean.setMoney_order(StringFormatter.format("%.2f", ((LianlianWithdrawOrder) order).getAmount()).getValue());
-            paymentRequestBean.setCard_no(((LianlianWithdrawOrder) order).getCardNo());
-            paymentRequestBean.setAcct_name(((LianlianWithdrawOrder) order).getAcctName());
+            paymentRequestBean.setNo_order(iLianlianWithdrawOrder.getNo());
+            paymentRequestBean.setDt_order(iLianlianWithdrawOrder.getDtOrder());
+            // 保留小数点两位
+            paymentRequestBean.setMoney_order(String.valueOf(Math.round(iLianlianWithdrawOrder.getAmount().floatValue() * 100) / 100F));
+            paymentRequestBean.setCard_no(iLianlianWithdrawOrder.getCardNo());
+            paymentRequestBean.setAcct_name(iLianlianWithdrawOrder.getAcctName());
             // paymentRequestBean.setBank_name("中国平安银行");
-            paymentRequestBean.setInfo_order(((LianlianWithdrawOrder) order).getInfoOrder());
-            paymentRequestBean.setFlag_card(((LianlianWithdrawOrder) order).getFlagCard());
-            paymentRequestBean.setMemo(((LianlianWithdrawOrder) order).getMemo());
+            paymentRequestBean.setInfo_order(iLianlianWithdrawOrder.getInfoOrder());
+            paymentRequestBean.setFlag_card(iLianlianWithdrawOrder.getFlagCard());
+            paymentRequestBean.setMemo(iLianlianWithdrawOrder.getMemo());
             // 填写商户自己的接收付款结果回调异步通知
-//            paymentRequestBean.setNotify_url(((LianlianWithdrawOrder) order).getNotifyUrl());
+//            paymentRequestBean.setNotify_url(iLianlianWithdrawOrder.getNotifyUrl());
             paymentRequestBean.setNotify_url(notifyUrl);
             paymentRequestBean.setOid_partner(oidPartner);
             paymentRequestBean.setPlatform(platform);

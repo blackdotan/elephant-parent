@@ -34,41 +34,18 @@ public abstract class JsonArrayHandler<T> extends BaseTypeHandler<List<T>>  {
 
     @Override
     public List<T> getNullableResult(ResultSet rs, String columnName) throws SQLException {
-        String result = rs.getString(columnName);
-        if(result != null && !result.equals("")) {
-            try {
-                return JsonUtils.parserString2CollectionWithType(result, List.class, getGeneric());
-            } catch (IOException e) {
-                logger.error("JsonArrayHandler转换异常, 请验证数据格式", e);
-            }
-        }
-        return new ArrayList<>();
+        return convert(rs.getString(columnName));
     }
 
     @Override
     public List<T> getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-        String result = rs.getString(columnIndex);
-        if(result != null && !result.equals("")) {
-            try {
-                return JsonUtils.parserString2CollectionWithType(result, List.class, getGeneric());
-            } catch (IOException e) {
-                logger.error("JsonArrayHandler转换异常, 请验证数据格式", e);
-            }
-        }
-        return new ArrayList<>();
+
+        return convert(rs.getString(columnIndex));
     }
 
     @Override
     public List<T> getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-        String result = cs.getString(columnIndex);
-        if(result != null && !result.equals("")) {
-            try {
-                return JsonUtils.parserString2CollectionWithType(result, List.class, getGeneric());
-            } catch (IOException e) {
-                logger.error("JsonArrayHandler转换异常, 请验证数据格式", e);
-            }
-        }
-        return new ArrayList<>();
+        return convert(cs.getString(columnIndex));
     }
 
     @Override
@@ -83,4 +60,17 @@ public abstract class JsonArrayHandler<T> extends BaseTypeHandler<List<T>>  {
 
 
     public abstract Class<T> getGeneric();
+
+    private List<T> convert(String text) {
+        if(text != null && !text.equals("")) {
+            List<T> ts = null;
+            try {
+                ts = JsonUtils.parserString2CollectionWithType(text, List.class, getGeneric());
+                return ts;
+            } catch (Exception e) {
+                logger.error("JsonArrayHandler转换异常, 请验证数据格式", e);
+            }
+        }
+        return new ArrayList<>();
+    }
 }

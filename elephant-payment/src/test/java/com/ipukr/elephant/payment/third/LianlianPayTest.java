@@ -49,4 +49,10 @@ public class LianlianPayTest {
         pay.checkout(order);
     }
 
+
+    @Test
+    public void round() {
+
+        System.out.println(Math.round(0.1231154123123 * 100) / 100F);
+    }
 }

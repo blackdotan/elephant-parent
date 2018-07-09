@@ -34,47 +34,17 @@ public abstract class JsonObjectHandler<T extends Object> extends BaseTypeHandle
 
     @Override
     public T getNullableResult(ResultSet rs, String columnName) throws SQLException {
-        String result = rs.getString(columnName);
-        if(result != null && !result.equals("")) {
-            try {
-                if (JsonUtils.validate(result, getGeneric())) {
-                    return JsonUtils.parserString2Obj(result, getGeneric());
-                }
-            } catch (IOException e) {
-                logger.error("Json转换异常", e);
-            }
-        }
-        return null;
+        return convert(rs.getString(columnName));
     }
 
     @Override
     public T getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-        String result = rs.getString(columnIndex);
-        if(result != null && !result.equals("")) {
-            try {
-                if (JsonUtils.validate(result, getGeneric())) {
-                    return JsonUtils.parserString2Obj(result, getGeneric());
-                }
-            } catch (IOException e) {
-                logger.error("Json转换异常", e);
-            }
-        }
-        return null;
+        return convert(rs.getString(columnIndex));
     }
 
     @Override
     public T getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-        String result = cs.getString(columnIndex);
-        if(result != null && !result.equals("")) {
-            try {
-                if (JsonUtils.validate(result, getGeneric())) {
-                    return JsonUtils.parserString2Obj(result, getGeneric());
-                }
-            } catch (IOException e) {
-                logger.error("Json转换异常", e);
-            }
-        }
-        return null;
+        return convert(cs.getString(columnIndex));
     }
 
     @Override
@@ -88,4 +58,17 @@ public abstract class JsonObjectHandler<T extends Object> extends BaseTypeHandle
     }
 
     public abstract Class<T> getGeneric();
+
+    private T convert(String text) {
+        if(text != null && !text.equals("")) {
+            try {
+                if (JsonUtils.validate(text, getGeneric())) {
+                    return JsonUtils.parserString2Obj(text, getGeneric());
+                }
+            } catch (Exception e) {
+                logger.error("Json转换异常", e);
+            }
+        }
+        return null;
+    }
 }

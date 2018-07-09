@@ -28,7 +28,7 @@
       <module name="elephant-kv" target="1.8" />
       <module name="elephant-license" target="1.8" />
       <module name="elephant-mail" target="1.8" />
-      <module name="elephant-parent" target="1.8" />
+      <module name="elephant-parent" target="1.5" />
       <module name="elephant-payment" target="1.8" />
       <module name="elephant-push" target="1.8" />
       <module name="elephant-simulator" target="1.8" />
