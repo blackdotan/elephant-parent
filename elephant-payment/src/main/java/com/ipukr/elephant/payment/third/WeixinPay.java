@@ -7,10 +7,7 @@ import com.ipukr.elephant.architecture.AbstractAPI;
 import com.ipukr.elephant.architecture.context.Context;
 import com.ipukr.elephant.http.third.HttpClientPool;
 import com.ipukr.elephant.payment.Pay;
-import com.ipukr.elephant.payment.domain.Account;
-import com.ipukr.elephant.payment.domain.PayOrder;
-import com.ipukr.elephant.payment.domain.TransferOrder;
-import com.ipukr.elephant.payment.domain.WithdrawOrder;
+import com.ipukr.elephant.payment.domain.*;
 import com.ipukr.elephant.payment.utils.MD5Tools;
 import com.ipukr.elephant.utils.*;
 import org.slf4j.Logger;
@@ -234,6 +231,11 @@ public class WeixinPay extends AbstractAPI implements Pay {
         sb.append("key=" + key);
         String sign = MD5Tools.MD5Encode(sb.toString(), charset).toUpperCase();
         return sign;
+    }
+
+    @Override
+    public boolean checkout(CheckoutOrder order) throws Exception {
+        throw new UnsupportedOperationException("不支持此方法");
     }
 
     public final static Builder custom() {

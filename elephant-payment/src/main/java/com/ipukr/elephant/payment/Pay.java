@@ -1,10 +1,7 @@
 package com.ipukr.elephant.payment;
 
 import com.alipay.api.AlipayApiException;
-import com.ipukr.elephant.payment.domain.Account;
-import com.ipukr.elephant.payment.domain.PayOrder;
-import com.ipukr.elephant.payment.domain.TransferOrder;
-import com.ipukr.elephant.payment.domain.WithdrawOrder;
+import com.ipukr.elephant.payment.domain.*;
 
 import java.util.List;
 import java.util.Map;
@@ -77,6 +74,11 @@ public interface Pay {
     boolean withdraw(WithdrawOrder order) throws Exception;
 
 
+    /**
+     * 校验
+     * @return
+     */
+    boolean checkout(CheckoutOrder order) throws Exception;
 
     /**
      * 参数签名[微信]

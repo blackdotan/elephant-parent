@@ -5,9 +5,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.ipukr.elephant.architecture.AbstractAPI;
 import com.ipukr.elephant.architecture.context.Context;
 import com.ipukr.elephant.payment.Pay;
+import com.ipukr.elephant.payment.domain.CheckoutOrder;
 import com.ipukr.elephant.payment.domain.PayOrder;
 import com.ipukr.elephant.payment.domain.TransferOrder;
 import com.ipukr.elephant.payment.domain.WithdrawOrder;
+import com.ipukr.elephant.payment.domain.lianlian.LianlianCheckoutOrder;
 import com.ipukr.elephant.payment.domain.lianlian.LianlianWithdrawOrder;
 import com.ipukr.elephant.payment.domain.lianlian.bean.PaymentRequestBean;
 import com.ipukr.elephant.payment.domain.lianlian.bean.PaymentResponseBean;
@@ -323,5 +325,29 @@ public class LianlianPay extends AbstractAPI implements Pay{
     @Override
     public Map signature(Map params) throws Exception {
         return null;
+    }
+
+    @Override
+    public boolean checkout(CheckoutOrder order) throws Exception {
+        if (order instanceof LianlianCheckoutOrder) {
+            LianlianCheckoutOrder iLianlianCheckoutOrder = (LianlianCheckoutOrder) order;
+            JSONObject reqObj = new JSONObject();
+            reqObj.put("oid_partner", oidPartner);
+            reqObj.put("user_id", iLianlianCheckoutOrder.getUserId());
+            reqObj.put("offset", "0");
+            reqObj.put("sign_type", signType);
+            reqObj.put("pay_type", "D");
+            reqObj.put("card_no", iLianlianCheckoutOrder.getCardNo());
+            String sign = SignUtil.genRSASign(reqObj, businessPrivateKey);
+            reqObj.put("sign", sign);
+            String reqJSON = reqObj.toString();
+            System.out.println("用户已绑定银行列表查询请求报文[" + reqJSON + "]");
+
+            String queryResult = HttpUtil.doPost("https://queryapi.lianlianpay.com/bankcardbindlist.htm", reqObj, "UTF-8");
+            System.out.println("用户已绑定银行列表查询响应报文[" + queryResult + "]");
+            return false;
+        } else {
+            throw new IllegalAccessException();
+        }
     }
 }

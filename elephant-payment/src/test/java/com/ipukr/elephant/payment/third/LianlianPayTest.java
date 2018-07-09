@@ -2,6 +2,8 @@ package com.ipukr.elephant.payment.third;
 
 import com.ipukr.elephant.architecture.factory.Factory;
 import com.ipukr.elephant.payment.Pay;
+import com.ipukr.elephant.payment.domain.CheckoutOrder;
+import com.ipukr.elephant.payment.domain.lianlian.LianlianCheckoutOrder;
 import com.ipukr.elephant.payment.domain.lianlian.LianlianPayOrder;
 import com.ipukr.elephant.payment.domain.lianlian.LianlianWithdrawOrder;
 import com.ipukr.elephant.utils.DateUtils;
@@ -39,12 +41,12 @@ public class LianlianPayTest {
     }
 
     @Test
-    public void find() throws Exception {
-        LianlianPayOrder order = new LianlianPayOrder();
-        order.setNo("1012627496702574592");
-
-        pay.find(order);
-
+    public void checkout() throws Exception {
+        LianlianCheckoutOrder order = LianlianCheckoutOrder.custom()
+                .userId("13799737911")
+                .cardNo("6217001930001550277")
+                .build();
+        pay.checkout(order);
     }
 
 }
