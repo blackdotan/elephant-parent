@@ -229,7 +229,7 @@ public class LianlianPay extends AbstractAPI implements Pay{
                     }
                     logger.info(paymentRequestBean.getNo_order() + "订单处于付款处理中");
                     // 已生成连连支付单，付款处理中（交易成功，不是指付款成功，是指跟连连流程正常），商户可以在这里处理自已的业务逻辑（或者不处理，在异步回调里处理逻辑）,最终的付款状态由异步通知回调告知
-
+                    return true;
                 } else if (paymentResponseBean.getRet_code().equals("4002")
                         || paymentResponseBean.getRet_code().equals("4004")) {
                     // 当调用付款申请接口返回4002，4003，4004,会同时返回验证码，用于确认付款接口
