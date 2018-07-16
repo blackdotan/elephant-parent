@@ -287,7 +287,7 @@
                             <!-- 不混淆所有包名，本人测试混淆后WEB项目问题实在太多，毕竟Spring配置中有大量固定写法的包名-->
                             <option>-keeppackagenames</option>
                             <!-- 不混淆所有特殊的类-->
-                            <option>-keepattributes Signature</option>
+                            <option>-keepattributes Signature,Exceptions</option>
                             <!-- 不混淆所有的set/get方法，毕竟项目中使用的部分第三方框架（例如Shiro）会用到大量的set/get映射-->
                             <!--<option>-keepclassmembers public class * {void set*(***);*** get*();}</option>-->
 

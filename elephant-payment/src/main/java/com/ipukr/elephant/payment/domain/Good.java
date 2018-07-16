@@ -79,6 +79,10 @@ public class Good {
     }
 
 
+    public final static Builder custom() {
+        return new Builder();
+    }
+
     public static final class Builder {
         private String category;
         private String no;

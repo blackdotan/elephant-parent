@@ -26,6 +26,10 @@ public class SimplePayOrder extends PayOrder {
         setNotifyUrl(builder.notifyUrl);
     }
 
+    public final static Builder custom() {
+        return new Builder();
+    }
+
 
     public static final class Builder {
         private String no;
