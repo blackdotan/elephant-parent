@@ -1,4 +1,4 @@
-package com.ipukr.elephant.queue;
+package com.ipukr.elephant.common.queue;
 
 import java.util.concurrent.Callable;
 

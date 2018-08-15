@@ -3,6 +3,7 @@ package com.ipukr.elephant.utils;
 import org.junit.Test;
 
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 
 import static com.ipukr.elephant.utils.DateUtils.STD_PATTERN;
@@ -40,5 +41,15 @@ public class DateUtilsTest {
         Date begin = DateUtils.stringToDate("2018-09-01 10:00:00", STD_PATTERN);
         Date end = DateUtils.stringToDate("2018-09-01 11:00:00", STD_PATTERN);
         System.out.println(DateUtils.between(date, begin, end, null));
+    }
+
+    @Test
+    public void latest() {
+        for (Date item : DateUtils.latest(12)) {
+            System.out.println(item);
+        }
+        for (String item : DateUtils.latest("yyyyMM", Calendar.MONTH,12)) {
+            System.out.println(item);
+        }
     }
 }

@@ -91,21 +91,36 @@ public class RedisKV<T> extends AbstractAPI<T> implements KV<T> {
         maxActive = builder.maxActive;
         testOnBorrow = builder.testOnBorrow;
         timeout = builder.timeout;
-        pool = builder.pool;
+        this.doInit();
+    }
+
+    private RedisKV(Builder builder, Class<T> generic) {
+        super(null, generic);
+        addresses = builder.addresses;
+        port = builder.port;
+        password = builder.password;
+        db = builder.db;
+        maxTotal = builder.maxTotal;
+        maxIdle = builder.maxIdle;
+        maxWait = builder.maxWait;
+        maxActive = builder.maxActive;
+        testOnBorrow = builder.testOnBorrow;
+        timeout = builder.timeout;
+        logger.info("Setting maxTotal={}, maxIdle={}, maxWait={}. testOnBorrow={}", maxTotal, maxIdle, maxWait, testOnBorrow);
+        this.doInit();
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
     }
 
 
     public void doInit() {
-
-
         JedisPoolConfig config = new JedisPoolConfig();
-
         config.setMaxTotal(maxTotal);
         config.setMaxIdle(maxIdle);
         config.setMaxWaitMillis(maxWait);
         config.setTestOnBorrow(testOnBorrow);
-
-
         logger.info("connect redis: addresses={}, port={}, timeout={}, auth={}, db={}", addresses, port, timeout, password, db);
         if(password==null || password.equals("")){
             pool = new JedisPool(config, addresses, port, timeout);
@@ -257,9 +272,10 @@ public class RedisKV<T> extends AbstractAPI<T> implements KV<T> {
         private Integer maxActive;
         private Boolean testOnBorrow;
         private Integer timeout;
-        private JedisPool pool;
+        private Class generic;
 
-        public Builder() {
+
+        private Builder() {
         }
 
         public Builder addresses(String val) {
@@ -312,13 +328,17 @@ public class RedisKV<T> extends AbstractAPI<T> implements KV<T> {
             return this;
         }
 
-        public Builder pool(JedisPool val) {
-            pool = val;
+        public Builder generic(Class val) {
+            generic = val;
             return this;
         }
 
         public RedisKV build() {
-            return new RedisKV(this);
+            if (generic!=null) {
+                return new RedisKV(this, generic);
+            } else {
+                return new RedisKV(this);
+            }
         }
     }
 }

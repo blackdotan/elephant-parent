@@ -3,9 +3,8 @@ package com.ipukr.elephant.utils;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by wmw on 16/10/21.
@@ -170,9 +169,58 @@ public class DateUtils {
     public static boolean between(Date date, Date begin, Date end) {
         return (date.after(begin) || date.equals(begin)) && (date.before(end) || date.equals(end));
     }
+
+    /**
+     * @param date
+     * @param begin
+     * @param end
+     * @param closed
+     * @return
+     */
     public static boolean between(Date date, Date begin, Date end, String closed) {
         return (date.after(begin) || (date.equals(begin) && "left".equals(closed))) && (date.before(end) || (date.equals(end) && "right".equals(closed)));
     }
+
+    /**
+     * 获得最近月份
+     * @param limit
+     * @return
+     */
+    public static List<Date> latest(int limit) {
+        return latest(Calendar.DAY_OF_YEAR, limit);
+    }
+
+    /**
+     * 获得最近月份
+     * @param field
+     * @param limit
+     * @return
+     */
+    public static List<Date> latest(int field, int limit) {
+        Date date = now();
+        List<Date> arr = new ArrayList<>();
+        for(int i=0; i < limit ; i++) {
+            arr.add(DateUtils.dateWithOffset(date, -i, field));
+        }
+        return arr;
+    }
+
+    /**
+     * 获得最近月份
+     * @param pattern
+     * @param field
+     * @param limit
+     * @return
+     */
+    public static List<String> latest(String pattern, int field, int limit) {
+        Date date = now();
+        List<Date> arr = new ArrayList<>();
+        for(int i=0; i < limit ; i++) {
+            arr.add(DateUtils.dateWithOffset(date, -i, field));
+        }
+        return arr.stream().map(e->dateToString(e, pattern)).collect(Collectors.toList());
+    }
+
 
     /**
      * 获取当前日期是星期几

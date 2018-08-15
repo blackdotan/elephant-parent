@@ -33,14 +33,13 @@ public class PaginationResponseEntity<T> extends HttpEntity {
 
     public PaginationResponseEntity(List<T> data, MultiValueMap<String, String> headers, HttpStatus statusCode) {
         body = new PaginationResponseBody();
-
+        body.setData(data);
         if(data instanceof PageList) {
             Paginator paginator = ((PageList) data).getPaginator();
             body.setCount(paginator.getTotalCount());
             body.setPageIndex(paginator.getPage());
             body.setPageSize(paginator.getLimit());
             body.setPageCount(paginator.getTotalPages());
-            body.setData(data);
         }
 
         this.statusCode = statusCode;

@@ -1,6 +1,4 @@
-package com.ipukr.elephant.queue;
-
-import java.util.Collection;
+package com.ipukr.elephant.common.queue;
 
 /**
  * 请描述类 <br>

@@ -12,6 +12,7 @@
       <module fileurl="file://$PROJECT_DIR$/elephant-parent.iml" filepath="$PROJECT_DIR$/elephant-parent.iml" />
       <module fileurl="file://$PROJECT_DIR$/elephant-payment/elephant-payment.iml" filepath="$PROJECT_DIR$/elephant-payment/elephant-payment.iml" />
       <module fileurl="file://$PROJECT_DIR$/elephant-push/elephant-push.iml" filepath="$PROJECT_DIR$/elephant-push/elephant-push.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-qr/elephant-qr.iml" filepath="$PROJECT_DIR$/elephant-qr/elephant-qr.iml" />
       <module fileurl="file://$PROJECT_DIR$/elephant-simulator/elephant-simulator.iml" filepath="$PROJECT_DIR$/elephant-simulator/elephant-simulator.iml" />
       <module fileurl="file://$PROJECT_DIR$/elephant-sms/elephant-sms.iml" filepath="$PROJECT_DIR$/elephant-sms/elephant-sms.iml" />
       <module fileurl="file://$PROJECT_DIR$/elephant-utils/elephant-utils.iml" filepath="$PROJECT_DIR$/elephant-utils/elephant-utils.iml" />
