@@ -1,7 +1,16 @@
 package com.ipukr.elephant.qr;
 
-import java.awt.*;
+
+import org.apache.commons.imaging.ImageFormat;
+
+import javax.imageio.ImageIO;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * 请描述类 <br>
@@ -39,5 +48,23 @@ public class ImageHelper {
                 null);
         graphics.dispose();
         return image;
+    }
+
+    /**
+     * @param ous
+     * @param format
+     * @param images
+     * @throws IOException
+     */
+    public static void zip(ZipOutputStream ous, ImageFormat format, Map<String, BufferedImage> images) throws IOException {
+        if (images.size() > 0) {
+            for (Map.Entry<String, BufferedImage> entry : images.entrySet()) {
+                ZipEntry ize = new ZipEntry(entry.getKey().concat(".").concat(format.getName()));
+                ous.putNextEntry(ize);
+                ImageIO.write(entry.getValue(), format.getName(), ous);
+                ous.closeEntry();
+            }
+            ous.close();
+        }
     }
 }
