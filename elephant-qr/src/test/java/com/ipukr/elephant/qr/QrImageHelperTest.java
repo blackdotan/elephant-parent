@@ -18,7 +18,7 @@ import java.io.IOException;
 public class QrImageHelperTest {
     @Test
     public void test() throws IOException, WriterException {
-        BufferedImage image = QrImageHelper.write("你好", 200, 200);
+        BufferedImage image = QrImageHelper.generate("你好", 200, 200);
         ImageIO.write(image, "PNG", new File(FontImageTest.class.getResource("/").getPath().concat("b.png")));
     }
 }

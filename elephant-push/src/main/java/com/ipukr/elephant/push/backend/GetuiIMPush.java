@@ -165,6 +165,7 @@ public class GetuiIMPush extends AbstractAPI implements IPush{
         NotificationTemplate template = new NotificationTemplate();
         // 设置APPID与APPKEY
         template.setAppId(appid);
+        //
         template.setAppkey(appkey);
 
         Style0 style = new Style0();
@@ -181,19 +182,20 @@ public class GetuiIMPush extends AbstractAPI implements IPush{
         style.setClearable(true);
         template.setStyle(style);
 
-        APNPayload iAPNPayload = new APNPayload();
-        APNPayload.DictionaryAlertMsg iAlertMsg = new APNPayload.DictionaryAlertMsg();
-        iAlertMsg.setTitle(title);
-        iAlertMsg.setBody(text);
-        iAlertMsg.setTitleLocKey("TitleLocKey");
-        iAlertMsg.addTitleLocArg("TitleLocArg");
-        iAPNPayload.setAlertMsg(iAlertMsg);
-        iAPNPayload.setSound(sound);
+//        APNPayload iAPNPayload = new APNPayload();
+//        APNPayload.DictionaryAlertMsg iAlertMsg = new APNPayload.DictionaryAlertMsg();
+//        iAlertMsg.setTitle(title);
+//        iAlertMsg.setBody(text);
+//        iAlertMsg.setTitleLocKey("TitleLocKey");
+//        iAlertMsg.addTitleLocArg("TitleLocArg");
+//
+//        iAPNPayload.setAlertMsg(iAlertMsg);
+//        iAPNPayload.setSound(sound);
+//        template.setAPNInfo(iAPNPayload);
 
-        template.setAPNInfo(iAPNPayload);
 
         // 透传消息设置，1为强制启动应用，客户端接收到消息后就会立即启动应用；2为等待应用启动
-        template.setTransmissionType(2);
+        template.setTransmissionType(1);
         template.setTransmissionContent(text);
 
         return template;

@@ -47,6 +47,10 @@ public class QiniuStorage extends AbstractAPI implements Storage {
     private UploadManager upload;
     private Auth auth;
 
+    /**
+     * 上下文构造方法
+     * @param context
+     */
     public QiniuStorage(Context context) {
         super(context);
         accessKey = context.findStringAccordingKey(ACCESS_KEY);
@@ -54,9 +58,13 @@ public class QiniuStorage extends AbstractAPI implements Storage {
         bucket = context.findStringAccordingKey(BUCKET);
         template = context.findStringAccordingKey(TEMPLATE, "{}");
         domain = context.findStringAccordingKey(DOMAIN, "https://127.0.0.1");
-        init();
+        this.init();
     }
 
+    /**
+     * 构建模式构造
+     * @param builder
+     */
     private QiniuStorage(Builder builder) {
         super(null);
         accessKey = builder.accessKey;
@@ -64,6 +72,7 @@ public class QiniuStorage extends AbstractAPI implements Storage {
         bucket = builder.bucket;
         template = builder.template;
         domain = builder.domain;
+        this.init();
     }
 
     private void init() {
@@ -78,6 +87,11 @@ public class QiniuStorage extends AbstractAPI implements Storage {
         return auth.uploadToken(bucket);
     }
 
+    /**
+     *
+     * @param file 上传文件
+     * @throws IOException
+     */
     @Override
     public void upload(File file) throws IOException {
         String type = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf("."));

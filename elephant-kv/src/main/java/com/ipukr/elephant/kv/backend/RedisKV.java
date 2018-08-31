@@ -91,6 +91,7 @@ public class RedisKV<T> extends AbstractAPI<T> implements KV<T> {
         maxActive = builder.maxActive;
         testOnBorrow = builder.testOnBorrow;
         timeout = builder.timeout;
+        logger.info("Setting maxTotal={}, maxIdle={}, maxWait={}. testOnBorrow={}", maxTotal, maxIdle, maxWait, testOnBorrow);
         this.doInit();
     }
 
