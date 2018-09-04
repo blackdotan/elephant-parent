@@ -6,12 +6,20 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="elephant-architecture" />
+        <module name="elephant-boot-cloud-storage" />
+        <module name="elephant-boot-common" />
+        <module name="elephant-boot-httpclient" />
+        <module name="elephant-boot-kv" />
+        <module name="elephant-boot-mail" />
+        <module name="elephant-boot-payment" />
+        <module name="elephant-boot-push" />
+        <module name="elephant-boot-qr" />
+        <module name="elephant-boot-sms" />
+        <module name="elephant-boot-utils" />
         <module name="elephant-cloud-storage" />
         <module name="elephant-common" />
         <module name="elephant-httpclient" />
         <module name="elephant-kv" />
-        <module name="elephant-license" />
         <module name="elephant-mail" />
         <module name="elephant-payment" />
         <module name="elephant-push" />
@@ -23,13 +31,25 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="elephant-architecture" target="1.8" />
+      <module name="elephant-boot-cloud-storage" target="1.8" />
+      <module name="elephant-boot-common" target="1.8" />
+      <module name="elephant-boot-httpclient" target="1.8" />
+      <module name="elephant-boot-kv" target="1.8" />
+      <module name="elephant-boot-mail" target="1.8" />
+      <module name="elephant-boot-parent" target="1.8" />
+      <module name="elephant-boot-payment" target="1.8" />
+      <module name="elephant-boot-push" target="1.8" />
+      <module name="elephant-boot-qr" target="1.8" />
+      <module name="elephant-boot-simulator" target="1.8" />
+      <module name="elephant-boot-sms" target="1.8" />
+      <module name="elephant-boot-utils" target="1.8" />
       <module name="elephant-cloud-storage" target="1.8" />
       <module name="elephant-common" target="1.8" />
       <module name="elephant-httpclient" target="1.8" />
       <module name="elephant-kv" target="1.8" />
       <module name="elephant-license" target="1.8" />
       <module name="elephant-mail" target="1.8" />
-      <module name="elephant-parent" target="1.5" />
+      <module name="elephant-parent" target="1.8" />
       <module name="elephant-payment" target="1.8" />
       <module name="elephant-push" target="1.8" />
       <module name="elephant-qr" target="1.8" />

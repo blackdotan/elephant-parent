@@ -1,0 +1,8 @@
+ipukr.elephant.httpclient.schema: https
+ipukr.elephant.httpclient.hostname: www.baidu.com
+ipukr.elephant.httpclient.port: 443
+ipukr.elephant.httpclient.protocol: TLSv1,TLSv1.1,TLSv1.2
+ipukr.elephant.httpclient.timeout: 60000
+ipukr.elephant.httpclient.connections: 200
+ipukr.elephant.httpclient.route.max: 50
+ipukr.elephant.httpclient.dns: dictation.nuancemobility.net:205.197.192.118

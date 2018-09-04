@@ -2,20 +2,17 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/elephant-architecture/elephant-architecture.iml" filepath="$PROJECT_DIR$/elephant-architecture/elephant-architecture.iml" />
-      <module fileurl="file://$PROJECT_DIR$/elephant-cloud-storage/elephant-cloud-storage.iml" filepath="$PROJECT_DIR$/elephant-cloud-storage/elephant-cloud-storage.iml" />
-      <module fileurl="file://$PROJECT_DIR$/elephant-common/elephant-common.iml" filepath="$PROJECT_DIR$/elephant-common/elephant-common.iml" />
-      <module fileurl="file://$PROJECT_DIR$/elephant-httpclient/elephant-httpclient.iml" filepath="$PROJECT_DIR$/elephant-httpclient/elephant-httpclient.iml" />
-      <module fileurl="file://$PROJECT_DIR$/elephant-kv/elephant-kv.iml" filepath="$PROJECT_DIR$/elephant-kv/elephant-kv.iml" />
-      <module fileurl="file://$PROJECT_DIR$/elephant-license/elephant-license.iml" filepath="$PROJECT_DIR$/elephant-license/elephant-license.iml" />
-      <module fileurl="file://$PROJECT_DIR$/elephant-mail/elephant-mail.iml" filepath="$PROJECT_DIR$/elephant-mail/elephant-mail.iml" />
-      <module fileurl="file://$PROJECT_DIR$/elephant-parent.iml" filepath="$PROJECT_DIR$/elephant-parent.iml" />
-      <module fileurl="file://$PROJECT_DIR$/elephant-payment/elephant-payment.iml" filepath="$PROJECT_DIR$/elephant-payment/elephant-payment.iml" />
-      <module fileurl="file://$PROJECT_DIR$/elephant-push/elephant-push.iml" filepath="$PROJECT_DIR$/elephant-push/elephant-push.iml" />
-      <module fileurl="file://$PROJECT_DIR$/elephant-qr/elephant-qr.iml" filepath="$PROJECT_DIR$/elephant-qr/elephant-qr.iml" />
-      <module fileurl="file://$PROJECT_DIR$/elephant-simulator/elephant-simulator.iml" filepath="$PROJECT_DIR$/elephant-simulator/elephant-simulator.iml" />
-      <module fileurl="file://$PROJECT_DIR$/elephant-sms/elephant-sms.iml" filepath="$PROJECT_DIR$/elephant-sms/elephant-sms.iml" />
-      <module fileurl="file://$PROJECT_DIR$/elephant-utils/elephant-utils.iml" filepath="$PROJECT_DIR$/elephant-utils/elephant-utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-boot-cloud-storage/elephant-boot-cloud-storage.iml" filepath="$PROJECT_DIR$/elephant-boot-cloud-storage/elephant-boot-cloud-storage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-boot-common/elephant-boot-common.iml" filepath="$PROJECT_DIR$/elephant-boot-common/elephant-boot-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-boot-httpclient/elephant-boot-httpclient.iml" filepath="$PROJECT_DIR$/elephant-boot-httpclient/elephant-boot-httpclient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-boot-kv/elephant-boot-kv.iml" filepath="$PROJECT_DIR$/elephant-boot-kv/elephant-boot-kv.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-boot-mail/elephant-boot-mail.iml" filepath="$PROJECT_DIR$/elephant-boot-mail/elephant-boot-mail.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-boot-parent.iml" filepath="$PROJECT_DIR$/elephant-boot-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-boot-payment/elephant-boot-payment.iml" filepath="$PROJECT_DIR$/elephant-boot-payment/elephant-boot-payment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-boot-push/elephant-boot-push.iml" filepath="$PROJECT_DIR$/elephant-boot-push/elephant-boot-push.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-boot-qr/elephant-boot-qr.iml" filepath="$PROJECT_DIR$/elephant-boot-qr/elephant-boot-qr.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-boot-sms/elephant-boot-sms.iml" filepath="$PROJECT_DIR$/elephant-boot-sms/elephant-boot-sms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elephant-boot-utils/elephant-boot-utils.iml" filepath="$PROJECT_DIR$/elephant-boot-utils/elephant-boot-utils.iml" />
     </modules>
   </component>
 </project>

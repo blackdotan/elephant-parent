@@ -3,17 +3,17 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/elephant-architecture" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/elephant-cloud-storage" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/elephant-common" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/elephant-httpclient" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/elephant-kv" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/elephant-boot-cloud-storage" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/elephant-boot-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/elephant-boot-httpclient" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/elephant-boot-kv" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/elephant-boot-mail" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/elephant-boot-payment" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/elephant-boot-push" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/elephant-boot-qr" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/elephant-boot-simulator" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/elephant-boot-sms" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/elephant-boot-utils" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/elephant-license" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/elephant-mail" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/elephant-payment" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/elephant-push" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/elephant-qr" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/elephant-simulator" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/elephant-sms" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/elephant-utils" charset="UTF-8" />
   </component>
 </project>

@@ -1,0 +1,11 @@
+ipukr.elephant.kv.redis:
+  address: tst.ipukr.cn
+  port: 6379
+  auth: admin123@$^!
+  db: 7
+  maxTotal: 300
+  maxIdle: 100
+  maxWait: 10
+  maxActive: 300
+  testOnBorrow: false
+  timeout: 6000

@@ -5,10 +5,16 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/elephant-simulator/pom.xml" />
+        <option value="$PROJECT_DIR$/elephant-mail/pom.xml" />
+        <option value="$PROJECT_DIR$/elephant-httpclient/pom.xml" />
+        <option value="$PROJECT_DIR$/elephant-boot-cloud-storage/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/elephant-architecture/pom.xml" />
+        <option value="$PROJECT_DIR$/elephant-boot-simulator/pom.xml" />
+        <option value="$PROJECT_DIR$/elephant-license/pom.xml" />
         <option value="$PROJECT_DIR$/elephant-qr/pom.xml" />
       </set>
     </option>

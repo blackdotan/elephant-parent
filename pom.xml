@@ -4,71 +4,51 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.3.RELEASE</version>
+        <relativePath/>
+    </parent>
+
     <groupId>com.ipukr.elephant</groupId>
-    <artifactId>elephant-parent</artifactId>
+    <artifactId>elephant-boot-parent</artifactId>
     <packaging>pom</packaging>
-    <version>2.1.2-SNAPSHOT</version>
+    <version>2.0.0-RELEASE</version>
 
     <modules>
-        <module>elephant-utils</module>
-        <module>elephant-common</module>
-        <module>elephant-kv</module>
-        <module>elephant-push</module>
-        <module>elephant-mail</module>
-        <module>elephant-cloud-storage</module>
-        <module>elephant-architecture</module>
-        <module>elephant-httpclient</module>
-        <module>elephant-payment</module>
-        <module>elephant-sms</module>
-        <module>elephant-simulator</module>
-        <module>elephant-license</module>
-        <module>elephant-qr</module>
+        <module>elephant-boot-utils</module>
+        <module>elephant-boot-common</module>
+        <module>elephant-boot-kv</module>
+        <module>elephant-boot-push</module>
+        <module>elephant-boot-mail</module>
+        <module>elephant-boot-cloud-storage</module>
+        <module>elephant-boot-httpclient</module>
+        <module>elephant-boot-payment</module>
+        <module>elephant-boot-sms</module>
+        <module>elephant-boot-qr</module>
     </modules>
+
+    <properties>
+        <spring.boot.version>2.0.3.RELEASE</spring.boot.version>
+    </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- Junit -->
             <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>4.10</version>
-                <scope>provided</scope>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring.boot.version}</version>
+                <scope>test</scope>
             </dependency>
 
-            <!-- Apache Common -->
-            <dependency>
-                <groupId>commons-configuration</groupId>
-                <artifactId>commons-configuration</artifactId>
-                <version>1.9</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>2.4</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-collections</groupId>
-                <artifactId>commons-collections</artifactId>
-                <version>3.2.1</version>
-            </dependency>
-            <!-- 日志框架 -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>1.7.7</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>1.7.7</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>1.2.17</version>
-                <scope>test</scope>
-            </dependency>
+
+
             <!-- Guava -->
             <dependency>
                 <groupId>com.google.guava</groupId>
@@ -87,14 +67,6 @@
                 <artifactId>jedis</artifactId>
                 <version>2.9.0</version>
             </dependency>
-
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-beans</artifactId>
-                <version>4.1.1.RELEASE</version>
-                <scope>provided</scope>
-            </dependency>
-
             <!-- Mybatis -->
             <dependency>
                 <groupId>com.github.miemiedev</groupId>
@@ -188,10 +160,7 @@
                 <artifactId>core</artifactId>
                 <version>3.3.3</version>
             </dependency>
-
         </dependencies>
-
-
     </dependencyManagement>
 
 
@@ -219,42 +188,11 @@
                 </plugin>
                 <!--配置生成Javadoc包-->
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.10.4</version>
-                    <configuration>
-                        <encoding>UTF-8</encoding>
-                        <aggregate>true</aggregate>
-                        <charset>UTF-8</charset>
-                        <docencoding>UTF-8</docencoding>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>attach-javadocs</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                            <configuration>
-                                <additionalparam>-Xdoclint:none</additionalparam>
-                            </configuration>
-                        </execution>
-                    </executions>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
                 </plugin>
-                <!--配置生成源码包
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>3.0.1</version>
-                    <executions>
-                        <execution>
-                            <id>attach-sources</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                -->
+
+                <!--代码混淆-->
                 <plugin>
                     <groupId>com.github.wvengen</groupId>
                     <artifactId>proguard-maven-plugin</artifactId>
