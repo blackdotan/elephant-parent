@@ -51,8 +51,5 @@ public class KVTest {
     @Test
     public void keys() throws IOException {
         List<byte[]> values = mKV.match("*");
-
-
-
     }
 }

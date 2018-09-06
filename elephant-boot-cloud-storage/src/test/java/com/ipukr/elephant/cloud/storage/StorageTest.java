@@ -42,6 +42,5 @@ public class StorageTest {
     public void testaddress() throws Exception {
         String domain = mStorage.address("Hekki.jpg");
         System.out.println(domain);
-
     }
 }

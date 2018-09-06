@@ -27,6 +27,9 @@
         <module>elephant-boot-payment</module>
         <module>elephant-boot-sms</module>
         <module>elephant-boot-qr</module>
+        <module>elephant-boot-payment-alipay</module>
+        <module>elephant-boot-payment-lianlian</module>
+        <module>elephant-boot-payment-weixin</module>
     </modules>
 
     <properties>
