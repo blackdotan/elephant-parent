@@ -10,6 +10,7 @@ import java.util.Map;
  *         <p>
  *         Created by ryan on 2017/12/19.
  */
+@Deprecated
 public abstract class PayOrder {
     /**
      * 订单编号

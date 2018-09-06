@@ -7,6 +7,7 @@ package com.ipukr.elephant.payment.domain;
  *         <p>
  *         Created by ryan on 2017/12/25.
  */
+@Deprecated
 public class Good {
     /**
      * 商品编号

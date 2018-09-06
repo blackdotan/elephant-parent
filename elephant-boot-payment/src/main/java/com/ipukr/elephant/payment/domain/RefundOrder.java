@@ -1,4 +1,4 @@
-package com.ipukr.elephant.payment.alipay;
+package com.ipukr.elephant.payment.domain;
 
 /**
  * 请描述类 <br>
@@ -7,6 +7,5 @@ package com.ipukr.elephant.payment.alipay;
  * <p>
  * Created by ryan wu on 2018/9/6.
  */
-public class Alipay {
-
+public class RefundOrder {
 }
