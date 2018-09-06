@@ -9,7 +9,9 @@
 .idea/dictionaries
 
 *.iml
+.idea/*
 .idea
+
 
 
 # Sensitive or high-churn files:
