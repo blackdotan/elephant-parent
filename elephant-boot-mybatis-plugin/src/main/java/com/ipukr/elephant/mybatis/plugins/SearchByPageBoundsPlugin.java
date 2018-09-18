@@ -20,7 +20,7 @@ import java.util.Set;
  * Created by wmw on 5/12/16.
  */
 @Deprecated
-public class SearchByRowBoundsPlugin extends PluginAdapter {
+public class SearchByPageBoundsPlugin extends PluginAdapter {
     public boolean validate(List<String> list) {
         return true;
     }
@@ -41,13 +41,13 @@ public class SearchByRowBoundsPlugin extends PluginAdapter {
 
         iMethod.getParameters().clear();
         iMethod.addParameter(new Parameter(new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()), "record", "@Param(\"record\")"));
-        iMethod.addParameter(new Parameter(new FullyQualifiedJavaType("RowBounds"), "bounds"));
+        iMethod.addParameter(new Parameter(new FullyQualifiedJavaType("PageBounds"), "bounds"));
 
         interfaze.addMethod(iMethod);
         Set set = new HashSet<FullyQualifiedJavaType>();
         set.add(FullyQualifiedJavaType.getNewListInstance());
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
-        set.add(new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"));
+        set.add(new FullyQualifiedJavaType("com.github.miemiedev.mybatis.paginator.domain.PageBounds"));
         interfaze.addImportedTypes(set);
         return true;
     }

@@ -36,7 +36,7 @@ public class FindAccordingFieldConditionParamsPlugin extends PluginAdapter {
         // 引入包
         Set set = new HashSet<FullyQualifiedJavaType>();
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
-        set.add(new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"));
+        set.add(new FullyQualifiedJavaType("com.github.miemiedev.mybatis.paginator.domain.PageBounds"));
         set.add(new FullyQualifiedJavaType(Set.class.getName()));
         interfaze.addImportedTypes(set);
         // 返回类型
@@ -69,7 +69,7 @@ public class FindAccordingFieldConditionParamsPlugin extends PluginAdapter {
         iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("String"), "field", "@Param(\"field\")"));
         iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("String"), "condition", "@Param(\"condition\")"));
         iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("Object"), "param", "@Param(\"param\")"));
-        iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("RowBounds"), "bounds"));
+        iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("PageBounds"), "bounds"));
         interfaze.addMethod(iMethod2);
 
         return true;

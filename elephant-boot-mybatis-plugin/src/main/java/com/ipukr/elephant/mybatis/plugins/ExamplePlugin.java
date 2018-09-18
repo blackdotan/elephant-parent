@@ -56,7 +56,7 @@ public class ExamplePlugin extends PluginAdapter {
         set.add(new FullyQualifiedJavaType(List.class.getName()));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
-        set.add(new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"));
+        set.add(new FullyQualifiedJavaType("com.github.miemiedev.mybatis.paginator.domain.PageBounds"));
         interfaze.addImportedTypes(set);
         // 返回类型
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType(List.class.getName());

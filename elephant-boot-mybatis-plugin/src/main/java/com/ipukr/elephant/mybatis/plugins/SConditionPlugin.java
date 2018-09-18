@@ -66,7 +66,7 @@ public class SConditionPlugin extends PluginAdapter {
         iMethod4.getParameters().clear();
         iMethod4.addParameter(new Parameter(new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()), "record", "@Param(\"record\")"));
         iMethod4.addParameter(new Parameter(new FullyQualifiedJavaType(String.class.getName()), "condition", "@Param(\"condition\")"));
-        iMethod4.addParameter(new Parameter(new FullyQualifiedJavaType("RowBounds"), "bounds"));
+        iMethod4.addParameter(new Parameter(new FullyQualifiedJavaType("PageBounds"), "bounds"));
         iMethod4.addAnnotation("/**");
         iMethod4.addAnnotation(" * 模糊匹配 + 条件，获取数据（分页）");
         iMethod4.addAnnotation(" **/");

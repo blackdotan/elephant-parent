@@ -40,7 +40,7 @@ public class QueryPlugin extends PluginAdapter {
         set.add(new FullyQualifiedJavaType(List.class.getName()));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
-        set.add(new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"));
+        set.add(new FullyQualifiedJavaType("com.github.miemiedev.mybatis.paginator.domain.PageBounds"));
         interfaze.addImportedTypes(set);
         // 返回类型
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType(List.class.getName());
@@ -69,7 +69,7 @@ public class QueryPlugin extends PluginAdapter {
 
         iMethod2.getParameters().clear();
         iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()), "record", "@Param(\"record\")"));
-        iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("RowBounds"), "bounds"));
+        iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("PageBounds"), "bounds"));
         iMethod2.addAnnotation("/**");
         iMethod2.addAnnotation(" * 匹配记录（分页）");
         iMethod2.addAnnotation(" **/");

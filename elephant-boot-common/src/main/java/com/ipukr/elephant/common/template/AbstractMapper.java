@@ -1,7 +1,7 @@
 package com.ipukr.elephant.common.template;
 
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.session.RowBounds;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 
 import java.util.List;
 import java.util.Map;
@@ -90,14 +90,14 @@ public interface AbstractMapper<T, K extends java.io.Serializable> {
      * @param bounds 分页对象
      * @return Domain对象列表
      */
-    List<T> findAll(RowBounds bounds);
+    List<T> findAll(PageBounds bounds);
     /**
      * 分页获取数据
      * @param bounds 分页对象
      * @return Domain对象列表
      */
     @Deprecated
-    List<T> find(RowBounds bounds);
+    List<T> find(PageBounds bounds);
 
     /**
      * 根据主键列表获取数据
@@ -112,7 +112,7 @@ public interface AbstractMapper<T, K extends java.io.Serializable> {
      * @param bounds 分页对象
      * @return Domain对象列表
      */
-    List<T> findByIds(@Param("ids") List ids, RowBounds bounds);
+    List<T> findByIds(@Param("ids") List ids, PageBounds bounds);
 
     /**
      * 匹配查询
@@ -127,7 +127,7 @@ public interface AbstractMapper<T, K extends java.io.Serializable> {
      * @param bounds 分页对象
      * @return Domain对象列表
      */
-    List<T> query(@Param("record") T record, RowBounds bounds);
+    List<T> query(@Param("record") T record, PageBounds bounds);
 
 
     /**
@@ -143,7 +143,7 @@ public interface AbstractMapper<T, K extends java.io.Serializable> {
      * @param bounds 分页对象
      * @return Domain对象列表
      */
-    List<T> search(@Param("record") T record, RowBounds bounds);
+    List<T> search(@Param("record") T record, PageBounds bounds);
 
     /**
      * 匹配, 统计记录数
@@ -202,7 +202,7 @@ public interface AbstractMapper<T, K extends java.io.Serializable> {
      * @param bounds 分页对象
      * @return Domain对象列表
      */
-    List<T> condition(@Param("condition") String condition, RowBounds bounds);
+    List<T> condition(@Param("condition") String condition, PageBounds bounds);
 
 
     /**
@@ -219,7 +219,7 @@ public interface AbstractMapper<T, K extends java.io.Serializable> {
      * @param bounds
      * @return
      */
-    List<T> qcondition(@Param("record") T record, @Param("condition") String condition, RowBounds bounds );
+    List<T> qcondition(@Param("record") T record, @Param("condition") String condition, PageBounds bounds );
 
     /**
      * 条件搜索
@@ -236,7 +236,7 @@ public interface AbstractMapper<T, K extends java.io.Serializable> {
      * @param bounds
      * @return
      */
-    List<T> scondition(@Param("record") T record, @Param("condition") String condition, RowBounds bounds );
+    List<T> scondition(@Param("record") T record, @Param("condition") String condition, PageBounds bounds );
     /**
      * 数据抽样, 随机获取一条记录
      *

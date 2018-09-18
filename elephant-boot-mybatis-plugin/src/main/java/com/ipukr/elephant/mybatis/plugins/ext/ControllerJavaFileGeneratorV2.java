@@ -154,7 +154,7 @@ public class ControllerJavaFileGeneratorV2 extends BaseControllerJavaFileGenerat
         imports.add(new FullyQualifiedJavaType("org.springframework.web.bind.annotation.RequestParam"));
         imports.add(new FullyQualifiedJavaType("org.springframework.web.bind.annotation.PathVariable"));
         imports.add(new FullyQualifiedJavaType("org.springframework.web.bind.annotation.*"));
-        imports.add(new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"));
+        imports.add(new FullyQualifiedJavaType("com.github.miemiedev.mybatis.paginator.domain.PageBounds"));
         imports.add(new FullyQualifiedJavaType("com.ipukr.elephant.utils.DataUtils"));
         imports.add(new FullyQualifiedJavaType("javax.annotation.Resource"));
         imports.add(new FullyQualifiedJavaType("java.lang.Exception"));
@@ -232,7 +232,7 @@ public class ControllerJavaFileGeneratorV2 extends BaseControllerJavaFileGenerat
 //     *  @RequestMapping(method = RequestMethod.GET)
 //     *  @ResponseBody
 //     *  public Object find(@RequestParam(defaultValue = "1") Integer pageIndex, @RequestParam(defaultValue = "10") Integer pageSize){
-//     *      RowBounds bounds = new RowBounds(pageIndex, pageSize, true);
+//     *      PageBounds bounds = new PageBounds(pageIndex, pageSize, true);
 //     *      return ResponseUtils.entResponse(m{Model}Service.find(editor, bounds));
 //     *  }
 //     * @param Model
@@ -265,7 +265,7 @@ public class ControllerJavaFileGeneratorV2 extends BaseControllerJavaFileGenerat
 //
 //
 //        StringBuffer body = new StringBuffer();
-//        body.append("RowBounds bounds = new RowBounds(pageIndex, pageSize, true);\n")
+//        body.append("PageBounds bounds = new PageBounds(pageIndex, pageSize, true);\n")
 //                .append("\t\treturn PaginationResponseEntity.ok(m{Model}Service.find(bounds));");
 //        method.addBodyLine(body.toString().replace("{Model}", Model));
 //
@@ -276,7 +276,7 @@ public class ControllerJavaFileGeneratorV2 extends BaseControllerJavaFileGenerat
 //     *  @RequestMapping(value = "/query", method = RequestMethod.POST)
 //     *  @ResponseBody
 //     *  public Object query({Model}Form form, @RequestParam(defaultValue = "1") Integer pageIndex, @RequestParam(defaultValue = "10") Integer pageSize) {
-//     *      RowBounds bounds = new RowBounds(pageIndex, pageSize, true);
+//     *      PageBounds bounds = new PageBounds(pageIndex, pageSize, true);
 //     *      return ResponseUtils.entResponse(m{Model}Service.query(editor, bounds));
 //     *  }
 //     * @param Model
@@ -311,7 +311,7 @@ public class ControllerJavaFileGeneratorV2 extends BaseControllerJavaFileGenerat
 //        method.addParameter(parameter4);
 //
 //        StringBuffer body = new StringBuffer();
-//        body.append("RowBounds bounds = new RowBounds(pageIndex, pageSize, true);\n");
+//        body.append("PageBounds bounds = new PageBounds(pageIndex, pageSize, true);\n");
 //        body.append("\t\t{Model} model = DataUtils.copyPropertiesIgnoreNull(form, {Model}.class);\n");
 //
 //        body.append("\t\treturn PaginationResponseEntity.ok(m{Model}Service.query(model, bounds));");
@@ -325,7 +325,7 @@ public class ControllerJavaFileGeneratorV2 extends BaseControllerJavaFileGenerat
 //     *  @RequestMapping(value = "/search", method = RequestMethod.POST)
 //     *  @ResponseBody
 //     *  public Object query({Model}Form form, @RequestParam(defaultValue = "1") Integer pageIndex, @RequestParam(defaultValue = "10") Integer pageSize) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-//     *      RowBounds bounds = new RowBounds(pageIndex, pageSize, true);
+//     *      PageBounds bounds = new PageBounds(pageIndex, pageSize, true);
 //     *      {Model} model = DataUtils.copyPropertiesIgnoreNull(form, {Model}.class);
 //     *      return ResponseUtils.entResponse(m{Model}Service.query(model, bounds));
 //     *  }
@@ -364,7 +364,7 @@ public class ControllerJavaFileGeneratorV2 extends BaseControllerJavaFileGenerat
 //        method.addParameter(parameter4);
 //
 //        StringBuffer body = new StringBuffer();
-//        body.append("RowBounds bounds = new RowBounds(pageIndex, pageSize, true);\n")
+//        body.append("PageBounds bounds = new PageBounds(pageIndex, pageSize, true);\n")
 //                .append("\t\t{Model} model = DataUtils.copyPropertiesIgnoreNull(form, {Model}.class);\n");
 //
 //        body.append("\t\treturn PaginationResponseEntity.ok(m{Model}Service.search(model, bounds));");

@@ -40,7 +40,7 @@ public class QConditionPlugin extends PluginAdapter {
         set.add(new FullyQualifiedJavaType(List.class.getName()));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
-        set.add(new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"));
+        set.add(new FullyQualifiedJavaType("com.github.miemiedev.mybatis.paginator.domain.PageBounds"));
         interfaze.addImportedTypes(set);
         // 返回类型
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType(List.class.getName());
@@ -71,7 +71,7 @@ public class QConditionPlugin extends PluginAdapter {
         iMethod2.getParameters().clear();
         iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()), "record", "@Param(\"record\")"));
         iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType(String.class.getName()), "condition", "@Param(\"condition\")"));
-        iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("RowBounds"), "bounds"));
+        iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("PageBounds"), "bounds"));
         iMethod2.addAnnotation("/**");
         iMethod2.addAnnotation(" * 记录匹配 + 条件，获取数据（分页）");
         iMethod2.addAnnotation(" **/");

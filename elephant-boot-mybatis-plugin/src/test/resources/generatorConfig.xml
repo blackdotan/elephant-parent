@@ -39,7 +39,7 @@
             <property name="builderClassName" value="Builder"/>
         </plugin>
         <plugin type="org.mybatis.generator.plugins.MapperAnnotationPlugin"/>
-        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.PageBoundsPlugin"/>
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
         <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/>
