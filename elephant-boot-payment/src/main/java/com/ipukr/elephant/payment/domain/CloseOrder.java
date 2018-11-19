@@ -7,5 +7,5 @@ package com.ipukr.elephant.payment.domain;
  * <p>
  * Created by ryan wu on 2018/9/6.
  */
-public class CloseOrder {
+public abstract class CloseOrder {
 }

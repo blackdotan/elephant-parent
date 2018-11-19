@@ -45,12 +45,20 @@ public class DateUtils {
     /**
      * date类型转换为String类型
      *
-     * @param data 时间
+     * @param date 时间
      * @param format 时间格式
      * @return 时间[字符型]
      */
-    public static String dateToString(Date data, String format) {
-        return new SimpleDateFormat(format).format(data);
+    public static String dateToString(Date date, String format) {
+        return new SimpleDateFormat(format).format(date);
+    }
+
+    /**
+     * @param date/默认格式
+     * @return
+     */
+    public static String dateToString(Date date) {
+        return dateToString(date, STD_PATTERN);
     }
 
 
@@ -63,6 +71,15 @@ public class DateUtils {
     public static Date stringToDate(String text, String pattern) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat(pattern);
         return formatter.parse(text);
+    }
+
+    /**
+     * @param text 时间[字符型]/默认格式
+     * @return
+     * @throws ParseException
+     */
+    public static Date stringToDate(String text) throws ParseException {
+        return stringToDate(text, STD_PATTERN);
     }
 
     /**

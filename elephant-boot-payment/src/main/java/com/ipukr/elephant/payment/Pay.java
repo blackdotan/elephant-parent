@@ -1,6 +1,5 @@
 package com.ipukr.elephant.payment;
 
-import com.alipay.api.AlipayApiException;
 import com.ipukr.elephant.payment.domain.*;
 
 import java.util.List;
@@ -20,8 +19,9 @@ public interface Pay {
      *
      * @param order
      * @return
+     * @throws Exception
      */
-    PayOrder create(PayOrder order)throws Exception;
+    <T extends CreateOrder> T create(T order) throws Exception;
 
     /**
      * 获取订单
@@ -29,7 +29,7 @@ public interface Pay {
      * @param order
      * @return
      */
-    PayOrder find(PayOrder order)throws Exception;
+    <T extends QueryOrder> T find(T order) throws Exception;
 
 
     /**
@@ -38,14 +38,14 @@ public interface Pay {
      * @param order
      * @return
      */
-    PayOrder close(PayOrder order)throws Exception;
+    <T extends CloseOrder> boolean close(T order)throws Exception;
 
     /**
      * 转账
      * @param order
      * @return
      */
-    boolean transfer(TransferOrder order)throws Exception;
+    <T extends TransferOrder> boolean transfer(T order)throws Exception;
 
 
     /**
@@ -55,7 +55,7 @@ public interface Pay {
      * @return
      * @throws Exception
      */
-    PayOrder refund(PayOrder order) throws Exception;
+    <T extends RefundOrder> T refund(T order) throws Exception;
 
     /**
      * 验证回调是否合法
@@ -67,18 +67,27 @@ public interface Pay {
     boolean verify(Map params) throws Exception;
 
     /**
+     * 验证回调是否合法
+     * @param params 返回参数
+     * @param key 签名key
+     * @return
+     * @throws Exception
+     */
+    boolean verify(Map params, String key) throws Exception;
+
+    /**
      * 提现
      * @param order
      * @return
      */
-    boolean withdraw(WithdrawOrder order) throws Exception;
+    <T extends WithdrawOrder> boolean withdraw(T order) throws Exception;
 
 
     /**
      * 校验
      * @return
      */
-    boolean checkout(CheckoutOrder order) throws Exception;
+    <T extends CheckoutOrder> boolean checkout(T order) throws Exception;
 
     /**
      * 参数签名[微信]
@@ -88,4 +97,21 @@ public interface Pay {
      */
     Map signature(Map params) throws Exception;
 
+
+    /**
+     * 参数签名[微信]
+     * @param params 代签名参数
+     * @return 签名结果
+     * @throws Exception
+     */
+    String tosignature(Map params) throws Exception;
+
+    /**
+     * 参数签名
+     * @param params 代签名参数
+     * @param key 签名key
+     * @return
+     * @throws Exception
+     */
+    String tosignature(Map params, String key) throws Exception;
 }

@@ -21,20 +21,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>${spring.boot.version}</version>
             <scope>test</scope>
-        </dependency>
-
-        <!-- 阿里支付-->
-        <dependency>
-            <groupId>com.alipay</groupId>
-            <artifactId>sdk-java</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.wxpay</groupId>
-            <artifactId>WXPay-SDK-Java</artifactId>
-            <version>0.0.4</version>
         </dependency>
 
         <dependency>
@@ -42,26 +29,12 @@
             <artifactId>elephant-boot-utils</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.ipukr.elephant</groupId>
-            <artifactId>elephant-boot-httpclient</artifactId>
-            <version>${project.version}</version>
-        </dependency>
 
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.7</version>
-        </dependency>
-        <dependency>
-            <groupId>com.lianlianpay</groupId>
-            <artifactId>lianlianpay-security</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.lianpay.api</groupId>
-            <artifactId>api-util</artifactId>
-            <version>1.0.0</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.20</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

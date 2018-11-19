@@ -12,11 +12,11 @@ import org.springframework.http.HttpStatus;
 public class UnsupportedStateEx extends AbstractEx {
 
     public UnsupportedStateEx(String message) {
-        super(message);
+        super(HttpStatus.NOT_ACCEPTABLE, message);
     }
 
     public UnsupportedStateEx(String message, String... args) {
-        super(message, args);
+        super(HttpStatus.NOT_ACCEPTABLE, message, args);
     }
 
     public UnsupportedStateEx(HttpStatus status, String message) {
@@ -27,22 +27,27 @@ public class UnsupportedStateEx extends AbstractEx {
         super(status, message, args);
     }
 
+    @Deprecated
     public UnsupportedStateEx(Throwable cause) {
         super(cause);
     }
 
+    @Deprecated
     public UnsupportedStateEx(Throwable cause, String message) {
         super(cause, message);
     }
 
+    @Deprecated
     public UnsupportedStateEx(Throwable cause, String message, String... args) {
         super(cause, message, args);
     }
 
+    @Deprecated
     public UnsupportedStateEx(Throwable cause, HttpStatus status, String message) {
         super(cause, status, message);
     }
 
+    @Deprecated
     public UnsupportedStateEx(Throwable cause, HttpStatus status, String message, String... args) {
         super(cause, status, message, args);
     }

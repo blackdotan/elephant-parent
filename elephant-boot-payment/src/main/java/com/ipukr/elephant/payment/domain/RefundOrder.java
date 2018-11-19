@@ -7,5 +7,23 @@ package com.ipukr.elephant.payment.domain;
  * <p>
  * Created by ryan wu on 2018/9/6.
  */
-public class RefundOrder {
+public abstract class RefundOrder {
+    protected String no;
+    protected Float amount;
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
+    }
+
+    public Float getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Float amount) {
+        this.amount = amount;
+    }
 }

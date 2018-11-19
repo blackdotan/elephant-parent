@@ -12,11 +12,11 @@ import org.springframework.http.HttpStatus;
 public class AuthenticationEx extends AbstractEx {
 
     public AuthenticationEx(String message) {
-        super(message);
+        super(HttpStatus.FORBIDDEN, message);
     }
 
     public AuthenticationEx(String message, String... args) {
-        super(message, args);
+        super(HttpStatus.FORBIDDEN, message, args);
     }
 
     public AuthenticationEx(HttpStatus status, String message) {

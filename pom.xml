@@ -31,6 +31,7 @@
         <module>elephant-boot-payment-lianlian</module>
         <module>elephant-boot-payment-weixin</module>
         <module>elephant-boot-mybatis-plugin</module>
+        <module>elephant-boot-weixin</module>
     </modules>
 
     <properties>
@@ -121,6 +122,11 @@
                 <version>2017120116003</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.github.wxpay</groupId>
+                <artifactId>WXPay-SDK-Java</artifactId>
+                <version>0.0.4</version>
+            </dependency>
             <!-- Httpclient -->
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
@@ -147,7 +153,13 @@
                 <artifactId>proguard</artifactId>
                 <version>4.4</version>
             </dependency>
-
+            <!---->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.16.20</version>
+                <scope>provided</scope>
+            </dependency>
             <!--Excel文件处理-->
             <dependency>
                 <groupId>org.apache.poi</groupId>
@@ -289,7 +301,7 @@
     <repositories>
         <repository>
             <id>ipukr_repo</id>
-            <url>https://repo.ipukr.cn/nexus/content/groups/public/</url>
+            <url>https://repo.ipukr.cn/nexus/content/groups/develop/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -314,7 +326,7 @@
         <pluginRepository>
             <id>ipukr_repo</id>
             <name>Nexus</name>
-            <url>https://repo.ipukr.cn/nexus/content/groups/public/</url>
+            <url>https://repo.ipukr.cn/nexus/content/groups/develop/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>

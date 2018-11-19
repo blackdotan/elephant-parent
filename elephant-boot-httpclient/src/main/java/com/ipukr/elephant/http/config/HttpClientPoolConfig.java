@@ -1,7 +1,12 @@
 package com.ipukr.elephant.http.config;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+
+import java.io.InputStream;
 
 /**
  * 请描述类 <br>
@@ -10,13 +15,14 @@ import org.springframework.stereotype.Component;
  * <p>
  * Created by ryan wu on 2018/9/4.
  */
-@Component
-@ConfigurationProperties(prefix = "ipukr.elephant.httpclient")
+//@Component
+//@ConfigurationProperties(prefix = "ipukr.elephant.httpclient")
+@Getter
+@Setter
+@ToString
 public class HttpClientPoolConfig {
 
     private String schema;
-    private String hostname;
-    private Short port;
     private String protocol;
     private String proxyHostname;
     private Short proxyPort;
@@ -26,118 +32,117 @@ public class HttpClientPoolConfig {
     private Integer routeMax = 30;
     private String dns;
     private Integer connections;
+    private InputStream cert;
+    private String certtype;
+    private char[] certpasswd;
 
-    public String getSchema() {
-        return schema;
+
+    private HttpClientPoolConfig(Builder builder) {
+        setSchema(builder.schema);
+        setProtocol(builder.protocol);
+        setProxyHostname(builder.proxyHostname);
+        setProxyPort(builder.proxyPort);
+        setProxyUsername(builder.proxyUsername);
+        setProxyPassword(builder.proxyPassword);
+        setTimeout(builder.timeout);
+        setRouteMax(builder.routeMax);
+        setDns(builder.dns);
+        setConnections(builder.connections);
+        setCert(builder.cert);
+        setCerttype(builder.certtype);
+        setCertpasswd(builder.certpasswd);
     }
 
-    public void setSchema(String schema) {
-        this.schema = schema;
+
+    public final static Builder custom() {
+        return new Builder();
     }
 
-    public String getHostname() {
-        return hostname;
-    }
+    public static final class Builder {
+        private String schema = "https";
+        private String protocol = "TLSv1,TLSv1.1,TLSv1.2";
+        private String proxyHostname;
+        private Short proxyPort;
+        private String proxyUsername;
+        private String proxyPassword;
+        private Integer timeout = 20 * 1000;
+        private Integer routeMax = 30;
+        private String dns;
+        private Integer connections = 5;
+        private InputStream cert;
+        private String certtype;
+        private char[] certpasswd;
 
-    public void setHostname(String hostname) {
-        this.hostname = hostname;
-    }
+        public Builder() {
+        }
 
-    public Short getPort() {
-        return port;
-    }
+        public Builder schema(String val) {
+            schema = val;
+            return this;
+        }
 
-    public void setPort(Short port) {
-        this.port = port;
-    }
+        public Builder protocol(String val) {
+            protocol = val;
+            return this;
+        }
 
-    public String getProtocol() {
-        return protocol;
-    }
+        public Builder proxyHostname(String val) {
+            proxyHostname = val;
+            return this;
+        }
 
-    public void setProtocol(String protocol) {
-        this.protocol = protocol;
-    }
+        public Builder proxyPort(Short val) {
+            proxyPort = val;
+            return this;
+        }
 
-    public String getProxyHostname() {
-        return proxyHostname;
-    }
+        public Builder proxyUsername(String val) {
+            proxyUsername = val;
+            return this;
+        }
 
-    public void setProxyHostname(String proxyHostname) {
-        this.proxyHostname = proxyHostname;
-    }
+        public Builder proxyPassword(String val) {
+            proxyPassword = val;
+            return this;
+        }
 
-    public Short getProxyPort() {
-        return proxyPort;
-    }
+        public Builder timeout(Integer val) {
+            timeout = val;
+            return this;
+        }
 
-    public void setProxyPort(Short proxyPort) {
-        this.proxyPort = proxyPort;
-    }
+        public Builder routeMax(Integer val) {
+            routeMax = val;
+            return this;
+        }
 
-    public String getProxyUsername() {
-        return proxyUsername;
-    }
+        public Builder dns(String val) {
+            dns = val;
+            return this;
+        }
 
-    public void setProxyUsername(String proxyUsername) {
-        this.proxyUsername = proxyUsername;
-    }
+        public Builder connections(Integer val) {
+            connections = val;
+            return this;
+        }
 
-    public String getProxyPassword() {
-        return proxyPassword;
-    }
+        public Builder cert(InputStream val) {
+            cert = val;
+            return this;
+        }
 
-    public void setProxyPassword(String proxyPassword) {
-        this.proxyPassword = proxyPassword;
-    }
+        public Builder certtype(String val) {
+            certtype = val;
+            return this;
+        }
 
-    public Integer getTimeout() {
-        return timeout;
-    }
+        public Builder cpasswd(char[] val) {
+            certpasswd = val;
+            return this;
+        }
 
-    public void setTimeout(Integer timeout) {
-        this.timeout = timeout;
-    }
-
-    public Integer getRouteMax() {
-        return routeMax;
-    }
-
-    public void setRouteMax(Integer routeMax) {
-        this.routeMax = routeMax;
-    }
-
-    public String getDns() {
-        return dns;
-    }
-
-    public void setDns(String dns) {
-        this.dns = dns;
-    }
-
-    public Integer getConnections() {
-        return connections;
-    }
-
-    public void setConnections(Integer connections) {
-        this.connections = connections;
-    }
-
-    @Override
-    public String toString() {
-        return "HttpClientPoolConfig{" +
-                "schema='" + schema + '\'' +
-                ", hostname='" + hostname + '\'' +
-                ", port=" + port +
-                ", protocol='" + protocol + '\'' +
-                ", proxyHostname='" + proxyHostname + '\'' +
-                ", proxyPort=" + proxyPort +
-                ", proxyUsername='" + proxyUsername + '\'' +
-                ", proxyPassword='" + proxyPassword + '\'' +
-                ", timeout=" + timeout +
-                ", routeMax=" + routeMax +
-                ", dns='" + dns + '\'' +
-                ", connections=" + connections +
-                '}';
+        public HttpClientPoolConfig build() {
+            return new HttpClientPoolConfig(this);
+        }
     }
 }

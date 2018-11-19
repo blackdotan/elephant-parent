@@ -7,5 +7,5 @@ package com.ipukr.elephant.payment.domain;
  * <p>
  * Created by ryan wu on 2018/7/5.
  */
-public class CheckoutOrder {
+public abstract class CheckoutOrder {
 }

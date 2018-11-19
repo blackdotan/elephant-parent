@@ -12,11 +12,11 @@ import org.springframework.http.HttpStatus;
 public class IllegalFormatEx extends AbstractEx {
 
     public IllegalFormatEx(String message) {
-        super(message);
+        super(HttpStatus.BAD_REQUEST, message);
     }
 
     public IllegalFormatEx(String message, String... args) {
-        super(message, args);
+        super(HttpStatus.BAD_REQUEST, message, args);
     }
 
     public IllegalFormatEx(HttpStatus status, String message) {
@@ -27,22 +27,27 @@ public class IllegalFormatEx extends AbstractEx {
         super(status, message, args);
     }
 
+    @Deprecated
     public IllegalFormatEx(Throwable cause) {
         super(cause);
     }
 
+    @Deprecated
     public IllegalFormatEx(Throwable cause, String message) {
         super(cause, message);
     }
 
+    @Deprecated
     public IllegalFormatEx(Throwable cause, String message, String... args) {
         super(cause, message, args);
     }
 
+    @Deprecated
     public IllegalFormatEx(Throwable cause, HttpStatus status, String message) {
         super(cause, status, message);
     }
 
+    @Deprecated
     public IllegalFormatEx(Throwable cause, HttpStatus status, String message, String... args) {
         super(cause, status, message, args);
     }
