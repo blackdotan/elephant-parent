@@ -56,6 +56,7 @@ public class ModelAppendPlugin extends PluginAdapter {
                         columnAttr.append(ColumnUtils.retActualColumnName(column)).append(",");
                         selectAttrSuffix.append(ColumnUtils.retClazzNameFormat(column));
                     }
+                    columnAttr.deleteCharAt(columnAttr.length()-1);
                     String[] items = collections.split(",");
                     for (String item : items) {
                         String entity = item.split(":")[0];
@@ -102,6 +103,8 @@ public class ModelAppendPlugin extends PluginAdapter {
                         columnAttr.append(ColumnUtils.retActualColumnName(column)).append(",");
                         selectAttrSuffix.append(ColumnUtils.retClazzNameFormat(column));
                     }
+                    columnAttr.deleteCharAt(columnAttr.length()-1);
+
                     String[] items = associations.split(",");
                     for (String item : items) {
                         String entity = item.split(":")[0];
@@ -118,7 +121,7 @@ public class ModelAppendPlugin extends PluginAdapter {
                         StringBuffer buffer = new StringBuffer();
                         buffer.append(pck).append(".").append(dFullyQualifiedJavaType.getShortName()).append("Mapper");
                         buffer.append(".findAssociationBy")
-                                .append(introspectedTable.getFullyQualifiedTable().getDomainObjectName())
+                                .append(dFullyQualifiedJavaType.getFullyQualifiedName())
                                 .append(selectAttrSuffix.toString());
 
                         ele.addAttribute(new Attribute("select", buffer.toString()));
