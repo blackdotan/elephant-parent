@@ -75,8 +75,9 @@ public class ModelAppendPlugin extends PluginAdapter {
                         String pck = introspectedTable.getContext().getJavaClientGeneratorConfiguration().getTargetPackage();
                         StringBuffer buffer = new StringBuffer();
                         buffer.append(pck).append(".").append(dFullyQualifiedJavaType.getShortName()).append("Mapper");
-                        buffer.append(".findCollectionBy")
-                                .append(introspectedTable.getFullyQualifiedTable().getDomainObjectName())
+                        buffer.append(".findCollection")
+                                .append(dFullyQualifiedJavaType.getFullyQualifiedName())
+                                .append("By")
                                 .append(selectAttrSuffix.toString());
                         ele.addAttribute(new Attribute("select", buffer.toString()));
 
@@ -120,8 +121,9 @@ public class ModelAppendPlugin extends PluginAdapter {
                         String pck = introspectedTable.getContext().getJavaClientGeneratorConfiguration().getTargetPackage();
                         StringBuffer buffer = new StringBuffer();
                         buffer.append(pck).append(".").append(dFullyQualifiedJavaType.getShortName()).append("Mapper");
-                        buffer.append(".findAssociationBy")
+                        buffer.append(".findAssociation")
                                 .append(dFullyQualifiedJavaType.getFullyQualifiedName())
+                                .append("By")
                                 .append(selectAttrSuffix.toString());
 
                         ele.addAttribute(new Attribute("select", buffer.toString()));
