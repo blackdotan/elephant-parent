@@ -40,7 +40,7 @@ public class FindByIdsPlugin extends PluginAdapter {
             set.add(new FullyQualifiedJavaType(List.class.getName()));
             set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
             set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
-            set.add(new FullyQualifiedJavaType("com.github.miemiedev.mybatis.paginator.domain.PageBounds"));
+            set.add(new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"));
             interfaze.addImportedTypes(set);
             // 返回类型
             FullyQualifiedJavaType returnType = new FullyQualifiedJavaType(List.class.getName());
@@ -70,7 +70,7 @@ public class FindByIdsPlugin extends PluginAdapter {
 
             iMethod2.getParameters().clear();
             iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType(List.class.getName()), "ids", "@Param(\"ids\")"));
-            iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("PageBounds"), "bounds"));
+            iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("RowBounds"), "bounds"));
             iMethod2.addAnnotation("/**");
             iMethod2.addAnnotation(" * 根据主键数组，获取数据（分页）");
             iMethod2.addAnnotation(" **/");

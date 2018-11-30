@@ -16,7 +16,6 @@ import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
-import java.sql.JDBCType;
 import java.util.List;
 
 /**
@@ -56,7 +55,7 @@ public class FullsearchPlugin extends PluginAdapter {
 
             iMethod.addParameter(new Parameter(new FullyQualifiedJavaType(List.class.getName()), "keys", "@Param(\"keys\")"));
             iMethod.addParameter(new Parameter(new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()), "record", "@Param(\"record\")"));
-            iMethod.addParameter(new Parameter(new FullyQualifiedJavaType("PageBounds"), "bounds"));
+            iMethod.addParameter(new Parameter(new FullyQualifiedJavaType("RowBounds"), "bounds"));
             iMethod.addAnnotation("/**");
             iMethod.addAnnotation(" * 全文搜索");
             iMethod.addAnnotation(" **/");

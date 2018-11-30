@@ -1,10 +1,11 @@
 package com.ipukr.elephant.mybatis.plugins;
 
-
 import com.ipukr.elephant.mybatis.plugins.ext.ControllerJavaFileGenerator;
 import com.ipukr.elephant.mybatis.plugins.ext.ControllerJavaFileGeneratorV2;
-import org.mybatis.generator.api.*;
-import org.mybatis.generator.api.dom.java.*;
+import org.mybatis.generator.api.GeneratedJavaFile;
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.PluginAdapter;
+import org.mybatis.generator.api.dom.java.CompilationUnit;
 
 import java.util.ArrayList;
 import java.util.Iterator;

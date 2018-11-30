@@ -39,7 +39,7 @@ public class FindAccordingFieldInSetPlugin extends PluginAdapter {
         set.add(new FullyQualifiedJavaType("java.util.Set"));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
-        set.add(new FullyQualifiedJavaType("com.github.miemiedev.mybatis.paginator.domain.PageBounds"));
+        set.add(new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"));
         interfaze.addImportedTypes(set);
         // 返回类型
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType(List.class.getName());
@@ -66,7 +66,7 @@ public class FindAccordingFieldInSetPlugin extends PluginAdapter {
         iMethod2.getParameters().clear();
         iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("String"), "field", "@Param(\"field\")"));
         iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType(Set.class.getName()), "sets", "@Param(\"sets\")"));
-        iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("PageBounds"), "bounds"));
+        iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("RowBounds"), "bounds"));
         interfaze.addMethod(iMethod2);
 
         return true;

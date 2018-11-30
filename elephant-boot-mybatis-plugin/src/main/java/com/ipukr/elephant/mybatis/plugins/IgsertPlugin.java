@@ -27,7 +27,7 @@ import java.util.List;
  *
  * Created by wmw on 4/27/16.
  */
-public class IgsertPlugin extends PluginAdapter{
+public class IgsertPlugin extends PluginAdapter {
 
     public static final String METHOD_NAME = "igsert";
 

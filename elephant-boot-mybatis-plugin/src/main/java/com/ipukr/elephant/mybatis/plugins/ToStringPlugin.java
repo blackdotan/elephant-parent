@@ -1,17 +1,15 @@
 package com.ipukr.elephant.mybatis.plugins;
 
-import java.io.Serializable;
-import java.util.Iterator;
-import java.util.List;
-
-import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
+
+import java.util.List;
 
 /**
  * Generates a <tt>toString</tt> method that returns a string representation of all fields.
@@ -19,10 +17,7 @@ import org.mybatis.generator.internal.util.JavaBeansUtil;
  * @author Vladimir Lokhov
  *
  */
-public class ToStringPlugin extends PluginAdapter   {
-
-    public ToStringPlugin() {
-    }
+public class ToStringPlugin extends PluginAdapter {
 
     @Override
     public boolean validate(List<String> warnings) {
@@ -61,9 +56,7 @@ public class ToStringPlugin extends PluginAdapter   {
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.setName("toString");
-        if (introspectedTable.isJava5Targeted()) {
-            method.addAnnotation("@Override");
-        }
+        if (introspectedTable.isJava5Targeted()) method.addAnnotation("@Override");
 
         context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 

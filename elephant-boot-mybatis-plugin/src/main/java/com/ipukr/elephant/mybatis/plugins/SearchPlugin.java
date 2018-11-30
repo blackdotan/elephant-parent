@@ -26,7 +26,6 @@ public class SearchPlugin extends PluginAdapter {
 
     public static final String METHOD_NAME = "search";
 
-    @Override
     public boolean validate(List<String> list) {
         return true;
     }
@@ -65,7 +64,7 @@ public class SearchPlugin extends PluginAdapter {
 
         iMethod2.getParameters().clear();
         iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()), "record", "@Param(\"record\")"));
-        iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("PageBounds"), "bounds"));
+        iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("RowBounds"), "bounds"));
         iMethod2.addAnnotation("/**");
         iMethod2.addAnnotation(" * 模糊匹配（分页）");
         iMethod2.addAnnotation(" **/");

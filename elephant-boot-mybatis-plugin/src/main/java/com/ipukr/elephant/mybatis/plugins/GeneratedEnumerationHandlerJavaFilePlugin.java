@@ -1,13 +1,14 @@
 package com.ipukr.elephant.mybatis.plugins;
 
-
 import com.ipukr.elephant.mybatis.plugins.ext.EnumerationHandlerJavaFileGenerator;
 import com.ipukr.elephant.mybatis.plugins.utils.ColumnUtils;
 import com.ipukr.elephant.utils.StringUtils;
-import org.mybatis.generator.api.*;
+import org.mybatis.generator.api.GeneratedJavaFile;
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.config.ColumnOverride;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * Created by wmw on 1/12/17.
  */
-public class GeneratedEnumerationHandlerJavaFilePlugin extends PluginAdapter{
+public class GeneratedEnumerationHandlerJavaFilePlugin extends PluginAdapter {
 
     public static final String ENUMERATION_FLAT = "Enumerations";
 
@@ -41,8 +42,8 @@ public class GeneratedEnumerationHandlerJavaFilePlugin extends PluginAdapter{
             for (String col : cols.split(",")) {
                 IntrospectedColumn column = introspectedTable.getColumn(col);
                 if (column != null) {
-                    String enumeration = StringUtils.easyAppend("{}.domain.{}{}", iTargetPackage, iModel, ColumnUtils.toClazzNameFormat(column));
-                    String handler = StringUtils.easyAppend("{}.handler.{}{}Handler", iTargetPackage, iModel, ColumnUtils.toClazzNameFormat(column));
+                    String enumeration = StringUtils.easyAppend("{}.domain.{}{}", iTargetPackage, iModel, ColumnUtils.retClazzNameFormat(column));
+                    String handler = StringUtils.easyAppend("{}.handler.{}{}Handler", iTargetPackage, iModel, ColumnUtils.retClazzNameFormat(column));
                     if ( field.getName().equals(column.getJavaProperty())) {
                         field.setType(new FullyQualifiedJavaType(enumeration));
                     }
@@ -61,8 +62,8 @@ public class GeneratedEnumerationHandlerJavaFilePlugin extends PluginAdapter{
             for (String col : cols.split(",")) {
                 IntrospectedColumn column = introspectedTable.getColumn(col);
                 if (column != null) {
-                    String enumeration = StringUtils.easyAppend("{}.domain.{}{}", iTargetPackage, iModel, ColumnUtils.toClazzNameFormat(column));
-                    if (method.getName().equalsIgnoreCase(StringUtils.easyAppend("set{}", ColumnUtils.toClazzNameFormat(column)))) {
+                    String enumeration = StringUtils.easyAppend("{}.domain.{}{}", iTargetPackage, iModel, ColumnUtils.retClazzNameFormat(column));
+                    if (method.getName().equalsIgnoreCase(StringUtils.easyAppend("set{}", ColumnUtils.retClazzNameFormat(column)))) {
                         List<Parameter> parameters = method.getParameters();
                         parameters.remove(0);
                         Parameter parameter = new Parameter(new FullyQualifiedJavaType(enumeration), column.getJavaProperty());
@@ -83,8 +84,8 @@ public class GeneratedEnumerationHandlerJavaFilePlugin extends PluginAdapter{
             for (String col : cols.split(",")) {
                 IntrospectedColumn column = introspectedTable.getColumn(col);
                 if (column != null) {
-                    String enumeration = StringUtils.easyAppend("{}.domain.{}{}", iTargetPackage, iModel, ColumnUtils.toClazzNameFormat(column));
-                    if (method.getName().equalsIgnoreCase(StringUtils.easyAppend("get{}", ColumnUtils.toClazzNameFormat(column)))) {
+                    String enumeration = StringUtils.easyAppend("{}.domain.{}{}", iTargetPackage, iModel, ColumnUtils.retClazzNameFormat(column));
+                    if (method.getName().equalsIgnoreCase(StringUtils.easyAppend("get{}", ColumnUtils.retClazzNameFormat(column)))) {
                         method.setReturnType(new FullyQualifiedJavaType(enumeration));
                     }
                 }
@@ -126,8 +127,8 @@ public class GeneratedEnumerationHandlerJavaFilePlugin extends PluginAdapter{
                 // 遍历获取待处理Column
                 IntrospectedColumn column = introspectedTable.getColumn(col);
                 if (column != null) {
-                    String enumeration = StringUtils.easyAppend("{}.domain.{}{}", iTargetPackage, iModel, ColumnUtils.toClazzNameFormat(column));
-                    String handler = StringUtils.easyAppend("{}.handler.{}{}Handler", iTargetPackage, iModel, ColumnUtils.toClazzNameFormat(column));
+                    String enumeration = StringUtils.easyAppend("{}.domain.{}{}", iTargetPackage, iModel, ColumnUtils.retClazzNameFormat(column));
+                    String handler = StringUtils.easyAppend("{}.handler.{}{}Handler", iTargetPackage, iModel, ColumnUtils.retClazzNameFormat(column));
 
                     column.setFullyQualifiedJavaType(new FullyQualifiedJavaType(enumeration));
                     column.setTypeHandler(handler);
@@ -159,8 +160,8 @@ public class GeneratedEnumerationHandlerJavaFilePlugin extends PluginAdapter{
             for (String col : cols.split(",")) {
                 IntrospectedColumn column = introspectedTable.getColumn(col);
                 if (column != null) {
-                    String enumeration = StringUtils.easyAppend("{}.domain.{}{}", iTargetPackage, iModel, ColumnUtils.toClazzNameFormat(column));
-                    String handler = StringUtils.easyAppend("{}.handler.{}{}Handler", iTargetPackage, iModel, ColumnUtils.toClazzNameFormat(column));
+                    String enumeration = StringUtils.easyAppend("{}.domain.{}{}", iTargetPackage, iModel, ColumnUtils.retClazzNameFormat(column));
+                    String handler = StringUtils.easyAppend("{}.handler.{}{}Handler", iTargetPackage, iModel, ColumnUtils.retClazzNameFormat(column));
                     column.setFullyQualifiedJavaType(new FullyQualifiedJavaType(enumeration));
                     column.setTypeHandler(handler);
                 }
