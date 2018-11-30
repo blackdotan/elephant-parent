@@ -1,0 +1,4 @@
+ipukr.elephant.storage.qiniu.access_key: TIfWJ8n_YCiOfnA8O4eOx79VdgfduHQO0svjhO2K
+ipukr.elephant.storage.qiniu.secret_key: 960i9OllMoLEkUfkPPV0UpnE4c9Qg2DPIRFv_tN1
+ipukr.elephant.storage.qiniu.bucket: outsourcing
+ipukr.elephant.storage.qiniu.domain: https://oustorage.ipukr.cn/

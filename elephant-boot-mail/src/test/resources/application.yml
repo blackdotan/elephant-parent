@@ -1,0 +1,7 @@
+ipukr.elephant.mail.ssl.host: smtp.exmail.qq.com
+ipukr.elephant.mail.ssl.port: 25
+ipukr.elephant.mail.ssl.protocol: smtp
+ipukr.elephant.mail.ssl.auth: true
+ipukr.elephant.mail.ssl.username: msg@ipukr.cn
+ipukr.elephant.mail.ssl.password: "%H9N8x^7Oi%Nxm6w"
+ipukr.elephant.mail.ssl.from: msg@ipukr.cn

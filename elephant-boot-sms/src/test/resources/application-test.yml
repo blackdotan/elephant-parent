@@ -1,0 +1,7 @@
+ipukr.elephant.sms.aliyun:
+    product: Dysmsapi
+    domain: dysmsapi.aliyuncs.com
+    accessKeyId: LTAIe2O2YMLHgt2y
+    accessKeySecret: Gh0xyxDxwmGzPdXhNGqU6DxeMAl7BJ
+    templateId: SMS_123738450
+    sign: 云扬健身
