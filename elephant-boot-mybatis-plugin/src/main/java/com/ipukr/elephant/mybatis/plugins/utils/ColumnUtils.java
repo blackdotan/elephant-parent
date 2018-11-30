@@ -15,7 +15,15 @@ public class ColumnUtils {
      * @param column
      * @return
      */
-    public static final String toClazzNameFormat(IntrospectedColumn column) {
+    public static final String retClazzNameFormat(IntrospectedColumn column) {
         return column.getActualColumnName().replace("_", "");
+    }
+
+    /**
+     * @param column
+     * @return
+     */
+    public static final String retActualColumnName(IntrospectedColumn column) {
+        return column.getActualColumnName();
     }
 }

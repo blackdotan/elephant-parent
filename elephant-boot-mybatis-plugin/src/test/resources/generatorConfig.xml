@@ -38,11 +38,6 @@
         <plugin type="com.google.code.mybatis.generator.plugins.ModelBuilderPlugin">
             <property name="builderClassName" value="Builder"/>
         </plugin>
-        <plugin type="org.mybatis.generator.plugins.MapperAnnotationPlugin"/>
-        <plugin type="org.mybatis.generator.plugins.PageBoundsPlugin"/>
-        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
-        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
-        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/>
 
 
         <!--
@@ -51,9 +46,9 @@
             :修改连接配置
         -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://10.101.74.203:3306/xmba"
+                        connectionURL="jdbc:mysql://10.110.77.170:3306/xmba"
                         userId="root"
-                        password="root123@$^!">
+                        password="root123!">
         </jdbcConnection>
 
         <javaModelGenerator targetPackage="com.ipukr.elephant.entity" targetProject="MAVEN">

@@ -21,6 +21,8 @@ import java.util.Set;
  */
 @Deprecated
 public class SearchByPageBoundsPlugin extends PluginAdapter {
+
+    @Override
     public boolean validate(List<String> list) {
         return true;
     }

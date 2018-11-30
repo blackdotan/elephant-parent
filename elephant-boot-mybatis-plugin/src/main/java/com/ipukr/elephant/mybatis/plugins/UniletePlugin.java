@@ -56,7 +56,7 @@ public class UniletePlugin extends PluginAdapter {
                         new Parameter(column.getFullyQualifiedJavaType(), column.getJavaProperty(), "@Param(\"" + column.getJavaProperty() + "\")"));
             }
             iMethod.addAnnotation("/**");
-            iMethod.addAnnotation(" * 根据唯一主键删除记录数据");
+            iMethod.addAnnotation(" * 根据唯一主键删除记录数据（支持多主键）");
             iMethod.addAnnotation(" **/");
             interfaze.addMethod(iMethod);
         }

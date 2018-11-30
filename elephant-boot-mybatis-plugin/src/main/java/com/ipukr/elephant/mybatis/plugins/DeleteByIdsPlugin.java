@@ -5,7 +5,8 @@ import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
-import org.mybatis.generator.api.dom.java.*;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.xml.Attribute;
@@ -13,7 +14,6 @@ import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-import java.lang.reflect.*;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,7 +22,7 @@ import java.util.List;
  * 
  * Created by wmw on 4/27/16.
  */
-public class DeleteByIdsPlugin extends PluginAdapter{
+public class DeleteByIdsPlugin extends PluginAdapter {
 
     public static final String METHOD_NAME = "deleteByIds";
 

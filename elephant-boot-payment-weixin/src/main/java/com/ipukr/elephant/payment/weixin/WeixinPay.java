@@ -136,12 +136,10 @@ public class WeixinPay implements Pay {
                     .setHost("api.mch.weixin.qq.com")
                     .setPort(443)
                     .setPath("/pay/unifiedorder")
-//                    .setCharset(Consts.UTF_8)
                     .build();
 
             HttpUriRequest request = RequestBuilder.post(URI)
                     .addHeader("Content-Type", "text/xml")
-//                    .setCharset(Consts.UTF_8)
                     .setEntity(entity)
                     .build();
 

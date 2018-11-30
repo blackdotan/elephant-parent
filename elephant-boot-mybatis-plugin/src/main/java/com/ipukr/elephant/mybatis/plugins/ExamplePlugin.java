@@ -1,13 +1,10 @@
 package com.ipukr.elephant.mybatis.plugins;
 
-import com.ipukr.elephant.utils.StringUtils;
-import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.TextElement;
@@ -56,7 +53,7 @@ public class ExamplePlugin extends PluginAdapter {
         set.add(new FullyQualifiedJavaType(List.class.getName()));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
-        set.add(new FullyQualifiedJavaType("com.github.miemiedev.mybatis.paginator.domain.PageBounds"));
+        set.add(new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"));
         interfaze.addImportedTypes(set);
         // 返回类型
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType(List.class.getName());

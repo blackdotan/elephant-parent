@@ -1,21 +1,21 @@
 package com.ipukr.elephant.mybatis.plugins;
 
 import com.ipukr.elephant.mybatis.plugins.utils.FieldUtils;
-import com.ipukr.elephant.mybatis.plugins.utils.MethodUtils;
 import com.ipukr.elephant.utils.StringUtils;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
-import org.mybatis.generator.api.dom.java.*;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * 属性拼接 / 追加属性
@@ -41,7 +41,6 @@ public class UniquePlugin extends PluginAdapter {
 
         List<IntrospectedColumn> columns = FieldUtils.uniqueColumn(introspectedTable, LABEL);
         if( !columns.isEmpty() ) {
-
             // 方法1
             Method iMethod = new Method();
 

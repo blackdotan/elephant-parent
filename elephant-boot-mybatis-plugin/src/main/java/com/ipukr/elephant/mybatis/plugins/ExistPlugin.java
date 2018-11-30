@@ -23,7 +23,7 @@ import java.util.List;
  *
  * Created by wmw on 4/27/16.
  */
-public class ExistPlugin extends PluginAdapter{
+public class ExistPlugin extends PluginAdapter {
 
 
     @Override

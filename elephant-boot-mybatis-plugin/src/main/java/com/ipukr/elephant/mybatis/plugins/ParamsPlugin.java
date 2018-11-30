@@ -1,8 +1,6 @@
 package com.ipukr.elephant.mybatis.plugins;
 
-import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.*;
 

@@ -1,14 +1,27 @@
 package com.ipukr.elephant.sms;
 
+import com.ipukr.elephant.sms.config.AliyunSmsConfig;
+import com.ipukr.elephant.sms.third.AliyunSms;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Created by wmw on 12/13/16.
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = {AliyunSmsConfig.class, AliyunSms.class})
+@EnableConfigurationProperties
 public class SmsHelperTest {
+
+    @Autowired
     private Sms mSms;
+
     @Before
     public void init() throws Exception {
     }

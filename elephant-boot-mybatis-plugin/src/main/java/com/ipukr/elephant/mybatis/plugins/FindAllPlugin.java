@@ -1,7 +1,6 @@
 package com.ipukr.elephant.mybatis.plugins;
 
 import com.ipukr.elephant.utils.StringUtils;
-import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -14,7 +13,6 @@ import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -37,7 +35,7 @@ public class FindAllPlugin  extends PluginAdapter {
         set.add(new FullyQualifiedJavaType(List.class.getName()));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
-        set.add(new FullyQualifiedJavaType("com.github.miemiedev.mybatis.paginator.domain.PageBounds"));
+        set.add(new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"));
         interfaze.addImportedTypes(set);
         // 返回类型
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType(List.class.getName());
@@ -60,7 +58,7 @@ public class FindAllPlugin  extends PluginAdapter {
         iMethod2.setReturnType(returnType);
 
         iMethod2.getParameters().clear();
-        iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("PageBounds"), "bounds"));
+        iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("RowBounds"), "bounds"));
         iMethod2.addAnnotation("@Override");
         interfaze.addMethod(iMethod2);
         return true;

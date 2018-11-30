@@ -10,6 +10,7 @@ import com.aliyuncs.profile.IClientProfile;
 import com.ipukr.elephant.sms.Sms;
 import com.ipukr.elephant.sms.SmsResponse;
 import com.ipukr.elephant.sms.config.AliyunSmsConfig;
+import com.ipukr.elephant.utils.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/9/6.
@@ -38,8 +41,6 @@ public class AliyunSms implements Sms {
 
     private IAcsClient acsClient;
 
-    //组装请求对象-具体描述见控制台-文档部分内容
-    private SendSmsRequest request = new SendSmsRequest();
 
     @PostConstruct
     private void init() throws ClientException {
@@ -50,22 +51,34 @@ public class AliyunSms implements Sms {
         DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", config.getProduct(), config.getDomain());
         //
         acsClient = new DefaultAcsClient(profile);
-        // 必填:短信签名-可在短信控制台中找到
-        request.setSignName(config.getSign());
-        // 必填:短信模板-可在短信控制台中找到
-        request.setTemplateCode(config.getTemplateId());
     }
 
     @Override
-    public SmsResponse send(String mobiles, String code) {
+    public SmsResponse send(String mobile, String code) {
+        Map map = new HashMap(){
+            {
+                put("code", code);
+            }
+        };
+        return send(config.getTemplateId(), mobile, map);
+    }
+
+    @Override
+    public SmsResponse send(String templateId, String mobile, Map map) {
         //可自助调整超时时间
         System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
         System.setProperty("sun.net.client.defaultReadTimeout", "10000");
 
+        //组装请求对象-具体描述见控制台-文档部分内容
+        SendSmsRequest request = new SendSmsRequest();
+        // 必填:短信签名-可在短信控制台中找到
+        request.setSignName(config.getSign());
+        // 必填:短信模板-可在短信控制台中找到
+        request.setTemplateCode(templateId);
         //必填:待发送手机号
-        request.setPhoneNumbers(mobiles);
+        request.setPhoneNumbers(mobile);
         //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
-        request.setTemplateParam("{\"code\":\"" + code + "\"}");
+        request.setTemplateParam(JsonUtils.parserObj2String(map));
 
         //hint 此处可能会抛出异常，注意catch
         SendSmsResponse sendSmsResponse = null;
@@ -85,11 +98,6 @@ public class AliyunSms implements Sms {
             logger.error("发送短信失败，返回请求RequestId:{}，返回Code:{}，返回Message:{}", sendSmsResponse.getRequestId(), sendSmsResponse.getCode(), sendSmsResponse.getMessage());
             return SmsResponse.custom().status(SmsResponse.Status.Fail).msg(sendSmsResponse.getMessage()).build();
         }
-    }
-
-    @Override
-    public SmsResponse send(Integer templateId, String mobiles, String... args) {
-        return null;
     }
 
 }

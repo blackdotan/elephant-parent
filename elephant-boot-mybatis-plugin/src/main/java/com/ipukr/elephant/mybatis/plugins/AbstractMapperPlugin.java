@@ -2,14 +2,12 @@ package com.ipukr.elephant.mybatis.plugins;
 
 //import com.pukr.artchetype.template.api.AbstractMapper;
 import com.ipukr.elephant.common.template.AbstractMapper;
-import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
 
 import java.util.Iterator;
 import java.util.List;

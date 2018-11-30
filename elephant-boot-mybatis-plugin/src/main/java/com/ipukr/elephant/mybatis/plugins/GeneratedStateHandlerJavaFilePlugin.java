@@ -3,7 +3,6 @@ package com.ipukr.elephant.mybatis.plugins;
 import com.ipukr.elephant.mybatis.plugins.ext.StateToEnumHandlerJavaFileGenerator;
 import com.ipukr.elephant.mybatis.plugins.ext.StateToEnumJavaFileGenerator;
 import com.ipukr.elephant.utils.StringUtils;
-import org.apache.ibatis.metadata.Column;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -21,7 +20,7 @@ import java.util.List;
  * Created by wmw on 1/12/17.
  */
 @Deprecated
-public class GeneratedStateHandlerJavaFilePlugin extends PluginAdapter{
+public class GeneratedStateHandlerJavaFilePlugin extends PluginAdapter {
 
     public static final String ENUMERATION_FLAT = "Enumerations";
 

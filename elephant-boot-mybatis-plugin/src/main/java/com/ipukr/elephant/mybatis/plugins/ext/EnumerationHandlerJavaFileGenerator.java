@@ -55,7 +55,7 @@ public class EnumerationHandlerJavaFileGenerator extends AbstractJavaGenerator {
         String iTargetPackage = context.getJavaModelGeneratorConfiguration().getTargetPackage();
         String iModel = introspectedTable.getFullyQualifiedTable().getDomainObjectName();
 
-        String model = StringUtils.easyAppend("{}{}", iModel, ColumnUtils.toClazzNameFormat(column));
+        String model = StringUtils.easyAppend("{}{}", iModel, ColumnUtils.retClazzNameFormat(column));
         String clazz = StringUtils.easyAppend("{}.domain.{}", iTargetPackage, model);
 
         // 实例化 TopLevelEnumeration
@@ -108,7 +108,7 @@ public class EnumerationHandlerJavaFileGenerator extends AbstractJavaGenerator {
 
 
 
-        String model = StringUtils.easyAppend("{}{}Handler", iModel, ColumnUtils.toClazzNameFormat(column));
+        String model = StringUtils.easyAppend("{}{}Handler", iModel, ColumnUtils.retClazzNameFormat(column));
         String clazz = StringUtils.easyAppend("{}.handler.{}", iTargetPackage, model);
 
         // 初始化创建
@@ -116,7 +116,7 @@ public class EnumerationHandlerJavaFileGenerator extends AbstractJavaGenerator {
         handler.setVisibility(JavaVisibility.PUBLIC);
 
         // import
-        String model_ = StringUtils.easyAppend("{}{}", iModel, ColumnUtils.toClazzNameFormat(column));
+        String model_ = StringUtils.easyAppend("{}{}", iModel, ColumnUtils.retClazzNameFormat(column));
         String clazz_ = StringUtils.easyAppend("{}.domain.{}", iTargetPackage, model_);
         FullyQualifiedJavaType importClazz = new FullyQualifiedJavaType(clazz_);
 
