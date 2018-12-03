@@ -11,6 +11,8 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.annotation.PostConstruct;
@@ -28,15 +30,9 @@ import java.util.List;
 //@Component
 public class QiniuStorage implements Storage {
 
-//    @Autowired
+    private static final Logger logger = LoggerFactory.getLogger(QiniuStorage.class);
+
     private QiniuStorageConfig config;
-//    @PostConstruct
-//    private void init() {
-//        Configuration cfg = new Configuration();
-//        upload = new UploadManager(cfg);
-//        //...生成上传凭证，然后准备上传
-//        auth = Auth.create(config.getAccessKey(), config.getSecretKey());
-//    }
 
     private UploadManager upload;
 
@@ -44,6 +40,11 @@ public class QiniuStorage implements Storage {
 
     public QiniuStorage(QiniuStorageConfig config) {
         this.config = config;
+        this.init();
+    }
+
+    private void init() {
+        logger.debug("初始化组件 {}, config={}", QiniuStorage.class.getCanonicalName(), config.toString());
         Configuration cfg = new Configuration();
         upload = new UploadManager(cfg);
         //...生成上传凭证，然后准备上传

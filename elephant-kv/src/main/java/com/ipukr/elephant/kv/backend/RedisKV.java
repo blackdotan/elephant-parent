@@ -20,39 +20,28 @@ public class RedisKV implements KV {
 
     private static final Logger logger = LoggerFactory.getLogger(RedisKV.class);
 
-//    @Autowired
-//    private IpukrRedisConfig iconfig;
-//    @PostConstruct
-//    public void doInit() {
-//        JedisPoolConfig config = new JedisPoolConfig();
-//        config.setMaxTotal(iconfig.getMaxTotal());
-//        config.setMaxIdle(iconfig.getMaxIdle());
-//        config.setMaxWaitMillis(iconfig.getTimeout());
-//        config.setTestOnBorrow(iconfig.getTestOnBorrow());
-//        logger.info("初始化Redis服务 config={}", config.toString());
-//        if(iconfig.getAuth()==null || iconfig.getAuth().equals("")){
-//            pool = new JedisPool(config, iconfig.getAddress(), iconfig.getPort(), iconfig.getTimeout());
-//        }else{
-//            pool = new JedisPool(config, iconfig.getAddress(), iconfig.getPort(), iconfig.getTimeout(), iconfig.getAuth(), iconfig.getDb());
-//        }
-//    }
+    private IpukrRedisConfig iconfig;
 
     private JedisPool pool;
 
     public RedisKV(IpukrRedisConfig iconfig) {
+        this.iconfig = iconfig;
+        this.init();
+    }
+
+    private void init() {
+        logger.debug("初始化组件 {}, config={}", RedisKV.class.getCanonicalName(), iconfig.toString());
         JedisPoolConfig config = new JedisPoolConfig();
         config.setMaxTotal(iconfig.getMaxTotal());
         config.setMaxIdle(iconfig.getMaxIdle());
         config.setMaxWaitMillis(iconfig.getTimeout());
         config.setTestOnBorrow(iconfig.getTestOnBorrow());
-        logger.info("初始化Redis服务 config={}", config.toString());
         if(iconfig.getAuth()==null || iconfig.getAuth().equals("")){
             pool = new JedisPool(config, iconfig.getAddress(), iconfig.getPort(), iconfig.getTimeout());
         }else{
             pool = new JedisPool(config, iconfig.getAddress(), iconfig.getPort(), iconfig.getTimeout(), iconfig.getAuth(), iconfig.getDb());
         }
     }
-
 
 
 

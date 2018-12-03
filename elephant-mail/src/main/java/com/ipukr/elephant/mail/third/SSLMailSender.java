@@ -4,6 +4,8 @@ import com.ipukr.elephant.mail.MailSender;
 import com.ipukr.elephant.mail.config.SSLMailSenderConfig;
 import com.ipukr.elephant.mail.constanst.MailConstanst;
 import com.sun.mail.util.MailSSLSocketFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.mail.*;
@@ -20,6 +22,8 @@ import java.util.Properties;
  */
 public class SSLMailSender implements MailSender{
 
+    private static final Logger logger = LoggerFactory.getLogger(SSLMailSender.class);
+
     private SSLMailSenderConfig config;
 
     private String host;
@@ -28,6 +32,7 @@ public class SSLMailSender implements MailSender{
     private String username;
     private String password;
     private Boolean debug;
+
     private Session session;
 
     public SSLMailSender(SSLMailSenderConfig config) {
@@ -36,6 +41,7 @@ public class SSLMailSender implements MailSender{
     }
 
     private void init() {
+        logger.debug("初始化组件 {}, config={}", SSLMailSender.class.getCanonicalName(), config.toString());
         host  = config.getHost();
         protocol = config.getProtocol();
         auth = config.getAuth();
@@ -69,12 +75,12 @@ public class SSLMailSender implements MailSender{
         session.setDebug(debug);
     }
 
-    public void send(String from, List<String> tos, List<String> ccs, String subject, String content) throws MessagingException {
+    public void send(List<String> tos, List<String> ccs, String subject, String content) throws MessagingException {
         Transport ts = session.getTransport();
         ts.connect(host, username, password);
 
         MimeMessage message = new MimeMessage(session);
-        message.setFrom(new InternetAddress(from));
+        message.setFrom(new InternetAddress(username));
         if(tos==null || tos.size()==0){
             throw new RuntimeException("Error While Ent MimeMessage Tos is null or empty");
         }
@@ -100,13 +106,13 @@ public class SSLMailSender implements MailSender{
 
 
     @Override
-    public void send(String from, String to, String subject, String content) throws MessagingException {
-        send(from, Arrays.asList(to),null ,subject,content);
+    public void send(String to, String subject, String content) throws MessagingException {
+        send(Arrays.asList(to),null ,subject,content);
     }
 
     @Override
-    public void send(String from, List<String> tos, String subject, String content) throws MessagingException {
-        send(from, tos, null, subject, content);
+    public void send(List<String> tos, String subject, String content) throws MessagingException {
+        send(tos, null, subject, content);
     }
 
 

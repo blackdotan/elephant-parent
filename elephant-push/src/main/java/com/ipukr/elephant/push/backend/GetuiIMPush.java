@@ -47,7 +47,7 @@ public class GetuiIMPush implements IPush{
      * 初始化方法
      */
     private void init() {
-        logger.info("初始化个推服务 config={}", config.toString());
+        logger.debug("初始化组件 {}, config={}", GetuiIMPush.class.getCanonicalName(), config.toString());
         mIGtPush = new IGtPush(config.getAppkey(), config.getMaster());
     }
 

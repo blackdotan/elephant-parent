@@ -22,7 +22,8 @@ public class SSLMailSenderConfig {
     private Boolean auth;
     private String username;
     private String password;
-    private Boolean debug = false;
+    private String from;
+    private Boolean debug;
 
     private SSLMailSenderConfig(Builder builder) {
         setHost(builder.host);
@@ -31,6 +32,7 @@ public class SSLMailSenderConfig {
         setAuth(builder.auth);
         setUsername(builder.username);
         setPassword(builder.password);
+        setFrom(builder.from);
         setDebug(builder.debug);
     }
 
@@ -45,7 +47,8 @@ public class SSLMailSenderConfig {
         private Boolean auth;
         private String username;
         private String password;
-        private Boolean debug;
+        private String from;
+        private Boolean debug = false;
 
         private Builder() {
         }
@@ -77,6 +80,11 @@ public class SSLMailSenderConfig {
 
         public Builder password(String val) {
             password = val;
+            return this;
+        }
+
+        public Builder from(String val) {
+            from = val;
             return this;
         }
 

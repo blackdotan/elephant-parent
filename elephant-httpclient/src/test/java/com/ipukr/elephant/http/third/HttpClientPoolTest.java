@@ -29,6 +29,10 @@ public class HttpClientPoolTest {
 
     private HttpClientPool pool;
 
+    /**
+     * 初始化配置
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
         HttpClientPoolConfig config = new HttpClientPoolConfig.Builder()
@@ -37,8 +41,12 @@ public class HttpClientPoolTest {
         pool = new HttpClientPool(config);
     }
 
+    /**
+     * 测试HTTP请求
+     * @throws Exception
+     */
     @Test
-    public void testName() throws Exception {
+    public void test() throws Exception {
         URI URI = new URIBuilder()
                 .setScheme("https")
                 .setHost("www.baidu.com")

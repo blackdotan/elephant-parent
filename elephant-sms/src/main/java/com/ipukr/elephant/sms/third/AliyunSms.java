@@ -26,24 +26,18 @@ public class AliyunSms implements Sms {
 
     private Logger logger = LoggerFactory.getLogger(AliyunSms.class);
 
-//    @Autowired
     private AliyunSmsConfig config;
 
-//    @PostConstruct
-//    private void init() throws ClientException {
-//        logger.info("初始化阿里云短信服务 config={}", config.toString());
-//        //
-//        IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", config.getAccessKeyId(), config.getAccessKeySecret());
-//        //
-//        DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", config.getProduct(), config.getDomain());
-//        //
-//        acsClient = new DefaultAcsClient(profile);
-//    }
+    private IAcsClient acsClient;
+
 
     public AliyunSms(AliyunSmsConfig config) throws ClientException {
         this.config = config;
+        this.init();
+    }
 
-        logger.info("初始化阿里云短信服务 config={}", config.toString());
+    private void init() throws ClientException {
+        logger.debug("初始化组件 {}, config={}", AliyunSms.class, config.toString());
         //
         IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", config.getAccessKeyId(), config.getAccessKeySecret());
         //
@@ -52,7 +46,7 @@ public class AliyunSms implements Sms {
         acsClient = new DefaultAcsClient(profile);
     }
 
-    private IAcsClient acsClient;
+
 
 
     @Override

@@ -65,13 +65,14 @@ public class WeixinPay implements Pay {
      * @throws Exception
      */
     private void init() throws Exception {
+        logger.debug("初始化组件 {}, config={}", WeixinPay.class.getCanonicalName(), config.toString());
         HttpClientPoolConfig.Builder builder = new HttpClientPoolConfig.Builder()
                 .schema("https")
                 .protocol("TLSv1,TLSv1.1,TLSv1.2")
                 .connections(20);
         if (config.getCertification() != null && !config.getCertification().equals("")) {
             File file = ResourceUtils.getFile(config.getCertification());
-            logger.info("加载微信证书路径: {}", file.getAbsolutePath());
+            logger.debug("{}, 加载微信证书路径: {}", WeixinPay.class.getCanonicalName(), file.getAbsolutePath());
             InputStream ins = new FileInputStream(file);
             byte[] bytes = new byte[ins.available()];
             IOUtils.read(ins, bytes);
@@ -87,6 +88,8 @@ public class WeixinPay implements Pay {
 
     /**
      *
+     *
+     * 参考链接：https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_1
      * @param order
      * @param <T>
      * @return
@@ -196,9 +199,6 @@ public class WeixinPay implements Pay {
             data.put("out_trade_no", order.getNo());
             data.put("out_refund_no", order.getNo());
 
-//            Map<String, String> resp = wxpay.refund(data);
-//            ((WeixinRefundOrder) order).setSuccess(resp.get("return_code").equals("SUCCESS"));
-//            ((WeixinRefundOrder) order).setMessage(resp.get("return_msg"));
             return order;
         } else {
             throw new IllegalArgumentEx("微信退款失败，传入参数类型不是{}", WeixinRefundOrder.class.getName());

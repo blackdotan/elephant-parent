@@ -28,24 +28,14 @@
     </modules>
 
     <properties>
+        <!-- Log -->
+        <slf4j.version>1.7.7</slf4j.version>
+        <log4j.version>1.2.17</log4j.version>
         <spring.boot.version>2.0.3.RELEASE</spring.boot.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter</artifactId>
-                <version>${spring.boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
-                <version>${spring.boot.version}</version>
-                <scope>test</scope>
-            </dependency>
-
-
 
             <!-- Guava -->
             <dependency>
@@ -114,7 +104,7 @@
                 <artifactId>sdk-java</artifactId>
                 <version>2017120116003</version>
             </dependency>
-
+            <!-- 微信支付 -->
             <dependency>
                 <groupId>com.github.wxpay</groupId>
                 <artifactId>WXPay-SDK-Java</artifactId>
@@ -126,7 +116,6 @@
                 <artifactId>httpclient</artifactId>
                 <version>4.5.6</version>
             </dependency>
-
             <!-- 七牛存储 -->
             <dependency>
                 <groupId>com.qiniu</groupId>
@@ -146,14 +135,14 @@
                 <artifactId>proguard</artifactId>
                 <version>4.4</version>
             </dependency>
-            <!---->
+            <!-- 辅助工具 -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>1.16.20</version>
                 <scope>provided</scope>
             </dependency>
-            <!--Excel文件处理-->
+            <!-- Excel文件处理 -->
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi</artifactId>
@@ -164,10 +153,29 @@
                 <artifactId>poi-ooxml</artifactId>
                 <version>3.17</version>
             </dependency>
+            <!-- 二维码工具 -->
             <dependency>
                 <groupId>com.google.zxing</groupId>
                 <artifactId>core</artifactId>
                 <version>3.3.3</version>
+            </dependency>
+
+
+            <!-- 日志框架 -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>${log4j.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

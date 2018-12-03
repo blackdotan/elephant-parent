@@ -49,6 +49,7 @@ public class AliPay implements Pay {
     }
 
     private void init() {
+        logger.debug("初始化组件 {}, config={}", AliPay.class.getCanonicalName(), config.toString());
         client = new DefaultAlipayClient(config.getUrl(),
                 config.getAppId(),
                 config.getAppPrivateKey(),

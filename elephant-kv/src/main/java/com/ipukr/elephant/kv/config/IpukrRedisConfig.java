@@ -17,12 +17,12 @@ import lombok.ToString;
 @ToString
 public class IpukrRedisConfig {
 
-    private Integer maxTotal = 300;
-    private Integer maxIdle = 100;
-    private Integer maxWait = 10;
-    private Integer maxActive = 300;
-    private Boolean testOnBorrow = false;
-    private Integer timeout =  6000;
+    private Integer maxTotal;
+    private Integer maxIdle;
+    private Integer maxWait;
+    private Integer maxActive;
+    private Boolean testOnBorrow;
+    private Integer timeout;
     private String address;
     private Integer port;
     private String auth;
@@ -46,12 +46,12 @@ public class IpukrRedisConfig {
     }
 
     public static final class Builder {
-        private Integer maxTotal;
-        private Integer maxIdle;
-        private Integer maxWait;
-        private Integer maxActive;
-        private Boolean testOnBorrow;
-        private Integer timeout;
+        private Integer maxTotal = 300;
+        private Integer maxIdle = 100;
+        private Integer maxWait = 10;
+        private Integer maxActive = 300;
+        private Boolean testOnBorrow = false;
+        private Integer timeout =  6000;
         private String address;
         private Integer port;
         private String auth;
