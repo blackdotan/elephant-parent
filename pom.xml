@@ -4,34 +4,27 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.3.RELEASE</version>
-        <relativePath/>
-    </parent>
-
     <groupId>com.ipukr.elephant</groupId>
-    <artifactId>elephant-boot-parent</artifactId>
+    <artifactId>elephant-parent</artifactId>
     <packaging>pom</packaging>
-    <version>2.2.1</version>
+    <version>2.3.0</version>
 
     <modules>
-        <module>elephant-boot-utils</module>
-        <module>elephant-boot-common</module>
-        <module>elephant-boot-kv</module>
-        <module>elephant-boot-push</module>
-        <module>elephant-boot-mail</module>
-        <module>elephant-boot-cloud-storage</module>
-        <module>elephant-boot-httpclient</module>
-        <module>elephant-boot-payment</module>
-        <module>elephant-boot-sms</module>
-        <module>elephant-boot-qr</module>
-        <module>elephant-boot-payment-alipay</module>
-        <module>elephant-boot-payment-lianlian</module>
-        <module>elephant-boot-payment-weixin</module>
-        <module>elephant-boot-mybatis-plugin</module>
-        <module>elephant-boot-weixin</module>
+        <module>elephant-utils</module>
+        <module>elephant-common</module>
+        <module>elephant-kv</module>
+        <module>elephant-push</module>
+        <module>elephant-mail</module>
+        <module>elephant-cloud-storage</module>
+        <module>elephant-httpclient</module>
+        <module>elephant-sms</module>
+        <module>elephant-qr</module>
+        <module>elephant-payment</module>
+        <module>elephant-payment-alipay</module>
+        <module>elephant-payment-lianlian</module>
+        <module>elephant-payment-weixin</module>
+        <module>elephant-mybatis-plugin</module>
+        <module>elephant-weixin</module>
     </modules>
 
     <properties>
@@ -131,7 +124,7 @@
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
-                <version>4.5.3</version>
+                <version>4.5.6</version>
             </dependency>
 
             <!-- 七牛存储 -->
