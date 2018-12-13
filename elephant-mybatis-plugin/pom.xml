@@ -20,12 +20,20 @@
     </properties>
 
     <dependencies>
+        <!-- Test-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.10</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>${jdbc.groupId}</groupId>
+            <artifactId>${jdbc.artifactId}</artifactId>
+            <version>${jdbc.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Mybatis Generator -->
         <dependency>
             <groupId>org.mybatis.generator</groupId>
             <artifactId>mybatis-generator-core</artifactId>
@@ -36,6 +44,8 @@
             <artifactId>mybatis-generator-plugins</artifactId>
             <version>1.0.0</version>
         </dependency>
+
+
         <dependency>
             <groupId>com.ipukr.elephant</groupId>
             <artifactId>elephant-common</artifactId>
@@ -47,6 +57,7 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!-- 代码混淆 -->
         <dependency>
             <groupId>com.github.wvengen</groupId>
             <artifactId>proguard-maven-plugin</artifactId>
@@ -90,7 +101,7 @@
                 <dependencies>
                     <dependency>
                         <groupId>com.ipukr.elephant</groupId>
-                        <artifactId>elephant-boot-mybatis-plugin</artifactId>
+                        <artifactId>elephant-mybatis-plugin</artifactId>
                         <version>${project.version}</version>
                     </dependency>
                     <dependency>
@@ -185,5 +196,7 @@
             </plugin>
         </plugins>
     </build>
+
+
 
 </project>

@@ -44,7 +44,6 @@ public class ExamplePlugin extends PluginAdapter {
         iMethod1.addAnnotation("/**");
         iMethod1.addAnnotation(" * 随机一条数据");
         iMethod1.addAnnotation(" **/");
-        iMethod1.addAnnotation("@Override");
         interfaze.addMethod(iMethod1);
 
 
@@ -53,7 +52,7 @@ public class ExamplePlugin extends PluginAdapter {
         set.add(new FullyQualifiedJavaType(List.class.getName()));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
-        set.add(new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"));
+
         interfaze.addImportedTypes(set);
         // 返回类型
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType(List.class.getName());

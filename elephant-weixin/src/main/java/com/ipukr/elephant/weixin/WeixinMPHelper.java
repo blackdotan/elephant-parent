@@ -12,7 +12,6 @@ import com.ipukr.elephant.weixin.response.WxSendTemplateMessageResponse;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Consts;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -20,7 +19,6 @@ import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 
-import javax.annotation.PostConstruct;
 import java.net.URI;
 
 /**
@@ -90,6 +88,7 @@ public class WeixinMPHelper {
      */
     public WxUserInfo getUserInfo(WxCode2SessionResponse wc2sr, String encrypted, String iv) throws Exception {
         WxUserInfo iWxUserInfo = WxUtil.getUserInfo(encrypted, wc2sr.getSessionKey(), iv);
+        iWxUserInfo.setWc2sr(wc2sr);
         return iWxUserInfo;
     }
 

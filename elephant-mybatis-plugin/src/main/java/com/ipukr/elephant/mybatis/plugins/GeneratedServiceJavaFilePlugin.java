@@ -14,6 +14,7 @@ import java.util.List;
 /**
  * Created by wmw on 1/12/17.
  */
+@Deprecated
 public class GeneratedServiceJavaFilePlugin extends PluginAdapter {
 
     public static final String ENABLE_SERVICE_LABEL = "Services";

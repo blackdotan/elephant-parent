@@ -58,7 +58,6 @@ public class IgsertPlugin extends PluginAdapter {
         iMethod.addAnnotation("/**");
         iMethod.addAnnotation(" * 插入数据，主键冲突忽略修改");
         iMethod.addAnnotation(" **/");
-        iMethod.addAnnotation("@Override");
         interfaze.addMethod(iMethod);
 
         return true;

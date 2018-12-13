@@ -33,10 +33,16 @@ public class SConditionPlugin extends PluginAdapter {
 
     @Override
     public boolean clientSelectByPrimaryKeyMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
+        // 自定义分页插件
+        String pagination = introspectedTable.getContext().getProperty("pagination");
+        if (pagination == null) {
+            pagination = "com.github.miemiedev.mybatis.paginator.domain.PageBounds";
+        }
         // 引入包
         Set set = new HashSet<FullyQualifiedJavaType>();
         set.add(FullyQualifiedJavaType.getNewListInstance());
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
+        set.add(new FullyQualifiedJavaType(pagination));
         interfaze.addImportedTypes(set);
         // 返回类型
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType(List.class.getName());
@@ -55,7 +61,6 @@ public class SConditionPlugin extends PluginAdapter {
         iMethod3.addAnnotation("/**");
         iMethod3.addAnnotation(" * 模糊匹配 + 条件，获取数据");
         iMethod3.addAnnotation(" **/");
-        iMethod3.addAnnotation("@Override");
         interfaze.addMethod(iMethod3);
 
         Method iMethod4 = new Method();
@@ -67,11 +72,10 @@ public class SConditionPlugin extends PluginAdapter {
         iMethod4.getParameters().clear();
         iMethod4.addParameter(new Parameter(new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()), "record", "@Param(\"record\")"));
         iMethod4.addParameter(new Parameter(new FullyQualifiedJavaType(String.class.getName()), "condition", "@Param(\"condition\")"));
-        iMethod4.addParameter(new Parameter(new FullyQualifiedJavaType("RowBounds"), "bounds"));
+        iMethod4.addParameter(new Parameter(new FullyQualifiedJavaType(pagination), "bounds"));
         iMethod4.addAnnotation("/**");
         iMethod4.addAnnotation(" * 模糊匹配 + 条件，获取数据（分页）");
         iMethod4.addAnnotation(" **/");
-        iMethod4.addAnnotation("@Override");
         interfaze.addMethod(iMethod4);
 
 

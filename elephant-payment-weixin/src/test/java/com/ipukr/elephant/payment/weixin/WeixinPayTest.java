@@ -1,6 +1,7 @@
 package com.ipukr.elephant.payment.weixin;
 
 import com.github.wxpay.sdk.WXPayUtil;
+import com.ipukr.elephant.payment.domain.RefundOrder;
 import com.ipukr.elephant.payment.weixin.config.WeixinPayConfig;
 import com.ipukr.elephant.payment.weixin.domain.WeixinCreateOrder;
 import com.ipukr.elephant.payment.weixin.domain.WeixinRefundOrder;
@@ -55,12 +56,10 @@ public class WeixinPayTest {
                 .build();
         WeixinCreateOrder pOrder = pay.create(wco);
         System.out.println(pOrder.toString());
+
+        // 小程序返回参数 & App返回参数 处理
         Date date = DateUtils.now();
-
-
         Map map = pOrder.getResmap();
-
-        // App 返回参数
         Map result = new HashMap();
         result.put("appid", map.get("appid"));
         result.put("partnerid", map.get("mch_id"));
@@ -69,9 +68,6 @@ public class WeixinPayTest {
         result.put("timestamp", String.valueOf(date.getTime()));
         result.put("package", "Sign=WXPay");
         result.put("sign", pay.tosignature(result));
-
-        // 小程序返回参数
-
     }
 
     /**
@@ -84,12 +80,8 @@ public class WeixinPayTest {
                 .amount(2.0F)
                 .no("975005819370209280")
                 .build();
-        pay.refund(order);
-        if(order.getSuccess()) {
-            System.out.println("退款成功");
-        } else {
-            System.out.println("退款失败");
-        }
+        RefundOrder ret = pay.refund(order);
+        System.out.println(ret.toString());
     }
 
     /**
@@ -98,6 +90,7 @@ public class WeixinPayTest {
      */
     @Test
     public void verify() throws Exception {
+        // 微信返回参数示例
         String text =
                 "<xml><appid><![CDATA[wx7c044c92ffbee262]]></appid>\n" +
                         "<bank_type><![CDATA[CFT]]></bank_type>\n" +

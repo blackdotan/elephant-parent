@@ -38,7 +38,6 @@ public class CountPlugin extends PluginAdapter {
         set.add(new FullyQualifiedJavaType(List.class.getName()));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
-        set.add(new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"));
         interfaze.addImportedTypes(set);
         // 返回类型
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType(Integer.class.getName());
@@ -53,7 +52,6 @@ public class CountPlugin extends PluginAdapter {
         iMethod.addAnnotation("/**");
         iMethod.addAnnotation(" * 统计匹配的记录数据");
         iMethod.addAnnotation(" **/");
-        iMethod.addAnnotation("@Override");
         interfaze.addMethod(iMethod);
 
         return true;

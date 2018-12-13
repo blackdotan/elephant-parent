@@ -30,12 +30,17 @@ public class FindAllPlugin  extends PluginAdapter {
 
     @Override
     public boolean clientSelectByPrimaryKeyMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
+        // 自定义分页插件
+        String pagination = introspectedTable.getContext().getProperty("pagination");
+        if (pagination == null) {
+            pagination = "com.github.miemiedev.mybatis.paginator.domain.PageBounds";
+        }
         // 引入类型
         Set set = new HashSet<FullyQualifiedJavaType>();
         set.add(new FullyQualifiedJavaType(List.class.getName()));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
-        set.add(new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"));
+        set.add(new FullyQualifiedJavaType(pagination));
         interfaze.addImportedTypes(set);
         // 返回类型
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType(List.class.getName());
@@ -48,7 +53,6 @@ public class FindAllPlugin  extends PluginAdapter {
         iMethod.setVisibility(method.getVisibility());
         iMethod.setReturnType(returnType);
         iMethod.getParameters().clear();
-        iMethod.addAnnotation("@Override");
         interfaze.addMethod(iMethod);
 
         Method iMethod2 = new Method();
@@ -58,8 +62,7 @@ public class FindAllPlugin  extends PluginAdapter {
         iMethod2.setReturnType(returnType);
 
         iMethod2.getParameters().clear();
-        iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("RowBounds"), "bounds"));
-        iMethod2.addAnnotation("@Override");
+        iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType(pagination), "bounds"));
         interfaze.addMethod(iMethod2);
         return true;
     }

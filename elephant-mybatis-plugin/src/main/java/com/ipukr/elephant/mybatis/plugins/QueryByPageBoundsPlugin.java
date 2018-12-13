@@ -17,12 +17,18 @@ import java.util.Set;
 @Deprecated
 public class QueryByPageBoundsPlugin extends PluginAdapter {
 
+    @Override
     public boolean validate(List<String> list) {
         return true;
     }
 
     @Override
     public boolean clientSelectByPrimaryKeyMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
+        // 自定义分页插件
+        String pagination = introspectedTable.getContext().getProperty("pagination");
+        if (pagination == null) {
+            pagination = "com.github.miemiedev.mybatis.paginator.domain.PageBounds";
+        }
         Method iMethod = new Method();
 
         iMethod.setName("query");
@@ -36,14 +42,14 @@ public class QueryByPageBoundsPlugin extends PluginAdapter {
 
         iMethod.getParameters().clear();
         iMethod.addParameter(new Parameter(new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()), "record", "@Param(\"record\")"));
-        iMethod.addParameter(new Parameter(new FullyQualifiedJavaType("PageBounds"), "bounds"));
+        iMethod.addParameter(new Parameter(new FullyQualifiedJavaType(pagination), "bounds"));
 
         interfaze.addMethod(iMethod);
 
         Set set = new HashSet<FullyQualifiedJavaType>();
         set.add(FullyQualifiedJavaType.getNewListInstance());
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
-        set.add(new FullyQualifiedJavaType("com.github.miemiedev.mybatis.paginator.domain.PageBounds"));
+        set.add(new FullyQualifiedJavaType(pagination));
         interfaze.addImportedTypes(set);
         return true;
     }

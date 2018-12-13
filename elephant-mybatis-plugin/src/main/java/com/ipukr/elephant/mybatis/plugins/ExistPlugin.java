@@ -48,7 +48,6 @@ public class ExistPlugin extends PluginAdapter {
         iMethod.addAnnotation("/**");
         iMethod.addAnnotation(" * 判断匹配记录是否存在");
         iMethod.addAnnotation(" **/");
-        iMethod.addAnnotation("@Override");
         interfaze.addMethod(iMethod);
 
         Method iMethod2 = new Method();
@@ -67,7 +66,6 @@ public class ExistPlugin extends PluginAdapter {
         iMethod2.addAnnotation("/**");
         iMethod2.addAnnotation(" * 判断匹配主键是否存在");
         iMethod2.addAnnotation(" **/");
-        iMethod2.addAnnotation("@Override");
         interfaze.addMethod(iMethod2);
 
         return true;

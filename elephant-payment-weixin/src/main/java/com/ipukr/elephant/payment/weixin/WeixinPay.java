@@ -11,7 +11,6 @@ import com.ipukr.elephant.payment.domain.*;
 import com.ipukr.elephant.payment.weixin.config.WeixinPayConfig;
 import com.ipukr.elephant.payment.weixin.domain.WeixinCreateOrder;
 import com.ipukr.elephant.payment.weixin.domain.WeixinRefundOrder;
-import com.ipukr.elephant.payment.weixin.response.CreateOrderResponse;
 import com.ipukr.elephant.payment.weixin.utils.WXTools;
 import com.ipukr.elephant.utils.DateUtils;
 import com.ipukr.elephant.utils.JsonUtils;
@@ -22,19 +21,16 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ResourceUtils;
 
-import javax.annotation.PostConstruct;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URI;
-import java.net.URLEncoder;
 import java.util.*;
 
 /**
@@ -102,8 +98,8 @@ public class WeixinPay implements Pay {
             String fee = Integer.toString(((Number) Math.max(order.getAmount() * 100, 1)).intValue());
             Long start = DateUtils.now().getTime();
             Map<String, String> data = new HashMap<String, String>();
-            data.put("appid", ((WeixinCreateOrder) order).getAppid() == null ? config.getAppid() : ((WeixinCreateOrder) order).getAppid());
-            data.put("mch_id", ((WeixinCreateOrder) order).getMchid() == null ? config.getMchid() : ((WeixinCreateOrder) order).getMchid());
+            data.put("appid", ((WeixinCreateOrder) order).getAppid() == null || ((WeixinCreateOrder) order).getAppid().equals("") ? config.getAppid() : ((WeixinCreateOrder) order).getAppid());
+            data.put("mch_id", ((WeixinCreateOrder) order).getMchid() == null || ((WeixinCreateOrder) order).getMchid().equals("") ? config.getMchid() : ((WeixinCreateOrder) order).getMchid());
             data.put("device_info", "");
             data.put("body", order.getBody());
             data.put("out_trade_no", order.getNo());
@@ -111,7 +107,7 @@ public class WeixinPay implements Pay {
             data.put("total_fee", fee);
             data.put("sign_type", "MD5");
             data.put("product_id", "12");
-            data.put("notify_url", config.getNotify());
+            data.put("notify_url", ((WeixinCreateOrder) order).getCallback() == null || ((WeixinCreateOrder) order).getCallback().equals("") ? config.getNotify():((WeixinCreateOrder) order).getCallback());
             data.put("nonce_str", WXTools.noncestr());
             if (((WeixinCreateOrder) order).getOpenid()!=null
                     && !((WeixinCreateOrder) order).getOpenid().equals("")) {
@@ -123,7 +119,7 @@ public class WeixinPay implements Pay {
             // 调用微信下单接口
             HttpClient client = pool.getConnection();
 
-            String content = WXTools.maptoxml(data, tosignature(data, ((WeixinCreateOrder) order).getSignkey() == null ? config.getSignature() : ((WeixinCreateOrder) order).getSignkey()));
+            String content = WXTools.maptoxml(data, tosignature(data, ((WeixinCreateOrder) order).getSignkey() == null || ((WeixinCreateOrder) order).getSignkey().equals("") ? config.getSignature() : ((WeixinCreateOrder) order).getSignkey()));
 
             StringEntity entity  = new StringEntity(content, Consts.UTF_8.toString());
             entity.setContentEncoding(Consts.UTF_8.toString());

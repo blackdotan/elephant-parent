@@ -16,7 +16,9 @@ import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 全文搜索 / 追加属性
@@ -36,6 +38,17 @@ public class FullsearchPlugin extends PluginAdapter {
 
     @Override
     public boolean clientSelectByPrimaryKeyMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
+        // 自定义分页插件
+        String pagination = introspectedTable.getContext().getProperty("pagination");
+        if (pagination == null) {
+            pagination = "com.github.miemiedev.mybatis.paginator.domain.PageBounds";
+        }
+        Set set = new HashSet<FullyQualifiedJavaType>();
+        set.add(new FullyQualifiedJavaType(List.class.getName()));
+        set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
+        set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
+        set.add(new FullyQualifiedJavaType(pagination));
+        interfaze.addImportedTypes(set);
 
         // 返回类型
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
@@ -55,11 +68,10 @@ public class FullsearchPlugin extends PluginAdapter {
 
             iMethod.addParameter(new Parameter(new FullyQualifiedJavaType(List.class.getName()), "keys", "@Param(\"keys\")"));
             iMethod.addParameter(new Parameter(new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()), "record", "@Param(\"record\")"));
-            iMethod.addParameter(new Parameter(new FullyQualifiedJavaType("RowBounds"), "bounds"));
+            iMethod.addParameter(new Parameter(new FullyQualifiedJavaType(pagination), "bounds"));
             iMethod.addAnnotation("/**");
             iMethod.addAnnotation(" * 全文搜索");
             iMethod.addAnnotation(" **/");
-            iMethod.addAnnotation("@Override");
             interfaze.addMethod(iMethod);
         }
 

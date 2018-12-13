@@ -12,7 +12,12 @@
 
 # 七牛存储
 
-> elephant-cloud-storage
+    <dependency>
+        <groupId>com.ipukr.elephant</groupId>
+        <artifactId>elephant-cloud-storage</artifactId>
+        <version>2.3.0</version>
+    <dependency>
+
 
 ```
     private QiniuStorage mStorage;
@@ -67,7 +72,11 @@
 
 # Httpclient使用
 
-> elephant-httpclient
+    <dependency>
+        <groupId>com.ipukr.elephant</groupId>
+        <artifactId>elephant-httpclient</artifactId>
+        <version>2.3.0</version>
+    </dependency>
 
 Httpclient组件主要是简化httpclient的代码，
 
@@ -112,7 +121,12 @@ Httpclient组件主要是简化httpclient的代码，
 
 # KV缓存
 
-> elephant-kv
+    <dependency>
+        <groupId>com.ipukr.elephant</groupId>
+        <artifactId>elephant-kv</artifactId>
+        <version>2.3.0</version>
+    </dependency>
+
 
 ```
 
@@ -171,8 +185,12 @@ Httpclient组件主要是简化httpclient的代码，
 
 # 邮件功能
 
+    <dependency>
+        <groupId>com.ipukr.elephant</groupId>
+        <artifactId>elephant-mail</artifactId>
+        <version>2.3.0</version>
+    </dependency>
 
-> elephant-mail
 
 ```
     private MailSender sender;
@@ -199,7 +217,12 @@ Httpclient组件主要是简化httpclient的代码，
 
 # 推送功能
 
-> elephant-push
+    <dependency>
+        <groupId>com.ipukr.elephant</groupId>
+        <artifactId>elephant-push</artifactId>
+        <version>2.3.0</version>
+    </dependency>
+
 
 ```
     private IPush mIPush;
@@ -243,6 +266,14 @@ Httpclient组件主要是简化httpclient的代码，
 
 # 短信功能
 
+    <dependency>
+        <groupId>com.ipukr.elephant</groupId>
+        <artifactId>elephant-sms</artifactId>
+        <version>2.3.0</version>
+    </dependency>
+
+
+
 ```
     private Sms mSms;
 
@@ -278,8 +309,12 @@ Httpclient组件主要是简化httpclient的代码，
 
 # 微信工具
 
+    <dependency>
+        <groupId>com.ipukr.elephant</groupId>
+        <artifactId>elephant-weixin</artifactId>
+        <version>2.3.0</version>
+    </dependency>
 
-> elephant-weixin
 
 ```
     private WeixinMPHelper helper;
@@ -325,15 +360,24 @@ Httpclient组件主要是简化httpclient的代码，
 
 ## 阿里支付
 
-> elephant-payment-alipay
-
+    <dependency>
+        <groupId>com.ipukr.elephant</groupId>
+        <artifactId>elephant-payment-alipay</artifactId>
+        <version>2.3.0</version>
+    </dependency>
 
 
 ## 微信支付
 
-> elephant-payment-weixin
+    <dependency>
+        <groupId>com.ipukr.elephant</groupId>
+        <artifactId>elephant-payment-weixin</artifactId>
+        <version>2.3.0</version>
+    </dependency>
+
 
 ```
+
     private WeixinPay pay;
 
     @Before
@@ -365,12 +409,10 @@ Httpclient组件主要是简化httpclient的代码，
                 .build();
         WeixinCreateOrder pOrder = pay.create(wco);
         System.out.println(pOrder.toString());
+
+        // 小程序返回参数 & App返回参数 处理
         Date date = DateUtils.now();
-
-
         Map map = pOrder.getResmap();
-
-        // App 返回参数
         Map result = new HashMap();
         result.put("appid", map.get("appid"));
         result.put("partnerid", map.get("mch_id"));
@@ -379,9 +421,6 @@ Httpclient组件主要是简化httpclient的代码，
         result.put("timestamp", String.valueOf(date.getTime()));
         result.put("package", "Sign=WXPay");
         result.put("sign", pay.tosignature(result));
-
-        // 小程序返回参数
-
     }
 
     /**
@@ -394,12 +433,8 @@ Httpclient组件主要是简化httpclient的代码，
                 .amount(2.0F)
                 .no("975005819370209280")
                 .build();
-        pay.refund(order);
-        if(order.getSuccess()) {
-            System.out.println("退款成功");
-        } else {
-            System.out.println("退款失败");
-        }
+        RefundOrder ret = pay.refund(order);
+        System.out.println(ret.toString());
     }
 
     /**
@@ -408,6 +443,7 @@ Httpclient组件主要是简化httpclient的代码，
      */
     @Test
     public void verify() throws Exception {
+        // 微信返回参数示例
         String text =
                 "<xml><appid><![CDATA[wx7c044c92ffbee262]]></appid>\n" +
                         "<bank_type><![CDATA[CFT]]></bank_type>\n" +
@@ -435,11 +471,16 @@ Httpclient组件主要是简化httpclient的代码，
 
 # 代码生成
 
-> elephant-mybatis-plugin
+    <dependency>
+        <groupId>com.ipukr.elephant</groupId>
+        <artifactId>elephant-mybatis-plugin</artifactId>
+        <version>2.3.0</version>
+    </dependency>
+
 
 基于Mybatis Generator项目实现的代码生成扩展插件
 
-1. 自动生成基础CRUD SQL语句，
+1. 自动生成基础CRUD SQL语句
 2. 自动生成Mybatis关联配置等
 
 参考链接：http://www.mybatis.org/generator/

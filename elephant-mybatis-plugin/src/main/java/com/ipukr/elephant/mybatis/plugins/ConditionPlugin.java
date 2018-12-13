@@ -34,13 +34,17 @@ public class ConditionPlugin extends PluginAdapter {
 
     @Override
     public boolean clientSelectByPrimaryKeyMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
-
+        // 自定义分页插件
+        String pagination = introspectedTable.getContext().getProperty("pagination");
+        if (pagination == null) {
+            pagination = "com.github.miemiedev.mybatis.paginator.domain.PageBounds";
+        }
         // 引入类型
         Set set = new HashSet<FullyQualifiedJavaType>();
         set.add(new FullyQualifiedJavaType(List.class.getName()));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
-        set.add(new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"));
+        set.add(new FullyQualifiedJavaType(pagination));
         interfaze.addImportedTypes(set);
         // 返回类型
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType(List.class.getName());
@@ -57,9 +61,7 @@ public class ConditionPlugin extends PluginAdapter {
         iMethod.addAnnotation("/**");
         iMethod.addAnnotation(" * 条件查询 eg: 1 = 1 ");
         iMethod.addAnnotation(" **/");
-        iMethod.addAnnotation("@Override");
         interfaze.addMethod(iMethod);
-
 
 
         Method iMethod2 = new Method();
@@ -70,11 +72,10 @@ public class ConditionPlugin extends PluginAdapter {
 
         iMethod2.getParameters().clear();
         iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("String"), "condition", "@Param(\"condition\")"));
-        iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType("RowBounds"), "bounds"));
+        iMethod2.addParameter(new Parameter(new FullyQualifiedJavaType(pagination), "bounds"));
         iMethod2.addAnnotation("/**");
         iMethod2.addAnnotation(" * 条件查询（分页）eg：1 = 1");
         iMethod2.addAnnotation(" **/");
-        iMethod2.addAnnotation("@Override");
         interfaze.addMethod(iMethod2);
 
 

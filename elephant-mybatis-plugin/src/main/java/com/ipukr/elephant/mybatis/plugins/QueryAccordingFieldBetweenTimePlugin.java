@@ -24,13 +24,18 @@ import java.util.Set;
 public class QueryAccordingFieldBetweenTimePlugin extends PluginAdapter {
     public static final String METHOD_NAME = "queryAccordingFieldBetweenTime";
 
-
+    @Override
     public boolean validate(List<String> list) {
         return true;
     }
 
     @Override
     public boolean clientSelectByPrimaryKeyMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
+        // 自定义分页插件
+        String pagination = introspectedTable.getContext().getProperty("pagination");
+        if (pagination == null) {
+            pagination = "com.github.miemiedev.mybatis.paginator.domain.PageBounds";
+        }
         Method iMethod = new Method();
         iMethod.setName(METHOD_NAME);
         iMethod.setVisibility(method.getVisibility());
@@ -45,14 +50,14 @@ public class QueryAccordingFieldBetweenTimePlugin extends PluginAdapter {
         iMethod.addParameter(new Parameter(new FullyQualifiedJavaType("String"), "field", "@Param(\"field\")"));
         iMethod.addParameter(new Parameter(new FullyQualifiedJavaType("Date"), "start", "@Param(\"start\")"));
         iMethod.addParameter(new Parameter(new FullyQualifiedJavaType("Date"), "stop", "@Param(\"stop\")"));
-        iMethod.addParameter(new Parameter(new FullyQualifiedJavaType("RowBounds"), "bounds"));
+        iMethod.addParameter(new Parameter(new FullyQualifiedJavaType(pagination), "bounds"));
 
         interfaze.addMethod(iMethod);
         Set set = new HashSet<FullyQualifiedJavaType>();
         set.add(FullyQualifiedJavaType.getNewListInstance());
         set.add(new FullyQualifiedJavaType("java.util.Date"));
         set.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
-        set.add(new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"));
+        set.add(new FullyQualifiedJavaType(pagination));
         interfaze.addImportedTypes(set);
         return true;
     }

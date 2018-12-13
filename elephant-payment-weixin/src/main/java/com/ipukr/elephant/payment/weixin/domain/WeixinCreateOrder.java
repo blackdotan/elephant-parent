@@ -40,7 +40,10 @@ public class WeixinCreateOrder extends CreateOrder {
      * 用户标识
      * */
     private String openid;
-
+    /**
+     * 回调地址
+     */
+    private String callback;
 
     /**
      * 支付是否成功
@@ -51,13 +54,15 @@ public class WeixinCreateOrder extends CreateOrder {
      * */
     private String message;
     /**
-     *
+     * 返回结果
      * */
     private Map<String, String> resmap;
     /**
-     *
+     * 返回结果
      * */
     private String response;
+
+
 
 
     public WeixinCreateOrder() {
@@ -77,6 +82,7 @@ public class WeixinCreateOrder extends CreateOrder {
         setMessage(builder.message);
         setResmap(builder.resmap);
         setResponse(builder.response);
+        setCallback(builder.response);
     }
 
     public String getTradeType() {
@@ -167,10 +173,13 @@ public class WeixinCreateOrder extends CreateOrder {
         private String signkey;
         private String tradeType;
         private String openid;
+        private String callback;
+
         private Boolean success;
         private String message;
         private Map<String, String> resmap;
         private String response;
+
 
         public Builder() {
         }
@@ -212,6 +221,11 @@ public class WeixinCreateOrder extends CreateOrder {
 
         public Builder openid(String val) {
             openid = val;
+            return this;
+        }
+
+        public Builder callback(String val) {
+            callback = val;
             return this;
         }
 

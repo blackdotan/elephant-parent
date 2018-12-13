@@ -50,7 +50,6 @@ public class DeleteByIdsPlugin extends PluginAdapter {
             iMethod.addAnnotation("/**");
             iMethod.addAnnotation(" * 根据主键数组，删除数据");
             iMethod.addAnnotation(" **/");
-            iMethod.addAnnotation("@Override");
             interfaze.addMethod(iMethod);
         }
 

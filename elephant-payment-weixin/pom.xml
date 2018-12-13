@@ -56,7 +56,7 @@
         <!-- 微信支付 -->
         <dependency>
             <groupId>com.github.wxpay</groupId>
-            <artifactId>WXPay-SDK-Java</artifactId>
+            <artifactId>wxpay-sdk</artifactId>
         </dependency>
         <dependency>
             <groupId>com.ipukr.elephant</groupId>

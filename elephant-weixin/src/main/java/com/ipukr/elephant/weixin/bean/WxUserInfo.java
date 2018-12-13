@@ -1,5 +1,10 @@
 package com.ipukr.elephant.weixin.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ipukr.elephant.weixin.response.WxCode2SessionResponse;
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 请描述类 <br>
  *
@@ -7,6 +12,8 @@ package com.ipukr.elephant.weixin.bean;
  * <p>
  * Created by ryan wu on 2018/10/31.
  */
+@Getter
+@Setter
 public class WxUserInfo {
 
 
@@ -26,60 +33,6 @@ public class WxUserInfo {
     private String province;
     private String country;
     private String avatarUrl;
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public int getGender() {
-        return gender;
-    }
-
-    public void setGender(int gender) {
-        this.gender = gender;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getAvatarUrl() {
-        return avatarUrl;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
+    @JsonIgnore
+    private WxCode2SessionResponse wc2sr;
 }

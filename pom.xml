@@ -107,8 +107,8 @@
             <!-- 微信支付 -->
             <dependency>
                 <groupId>com.github.wxpay</groupId>
-                <artifactId>WXPay-SDK-Java</artifactId>
-                <version>0.0.4</version>
+                <artifactId>wxpay-sdk</artifactId>
+                <version>3.0.9</version>
             </dependency>
             <!-- Httpclient -->
             <dependency>
