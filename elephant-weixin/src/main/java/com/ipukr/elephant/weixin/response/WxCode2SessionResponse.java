@@ -75,4 +75,15 @@ public class WxCode2SessionResponse {
     public void setErrMsg(String errMsg) {
         this.errMsg = errMsg;
     }
+
+    @Override
+    public String toString() {
+        return "WxCode2SessionResponse{" +
+                "openid='" + openid + '\'' +
+                ", sessionKey='" + sessionKey + '\'' +
+                ", unionid='" + unionid + '\'' +
+                ", errcode=" + errcode +
+                ", errMsg='" + errMsg + '\'' +
+                '}';
+    }
 }

@@ -9,6 +9,7 @@ import com.ipukr.elephant.weixin.response.WxCode2SessionResponse;
 import com.ipukr.elephant.weixin.request.WxTemplateMessageRequest;
 import com.ipukr.elephant.weixin.bean.WxUserInfo;
 import com.ipukr.elephant.weixin.response.WxSendTemplateMessageResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Consts;
@@ -29,6 +30,7 @@ import java.net.URI;
  * Created by ryan wu on 2018/11/19.
  */
 //@Component
+@Slf4j
 public class WeixinMPHelper {
 
     private HttpClientPool pool;
