@@ -15,7 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * 生成 枚举 属性
  * Created by wmw on 1/12/17.
  */
 public class GeneratedEnumerationHandlerJavaFilePlugin extends PluginAdapter {
@@ -41,14 +40,10 @@ public class GeneratedEnumerationHandlerJavaFilePlugin extends PluginAdapter {
             String iModel = introspectedTable.getFullyQualifiedTable().getDomainObjectName();
 
             for (String col : cols.split(",")) {
-                // 获取待处理每个字段
                 IntrospectedColumn column = introspectedTable.getColumn(col);
                 if (column != null) {
-                    // 枚举类
                     String enumeration = StringUtils.easyAppend("{}.domain.{}{}", iTargetPackage, iModel, ColumnUtils.retClazzNameFormat(column));
-                    // 枚举处理类
                     String handler = StringUtils.easyAppend("{}.handler.{}{}Handler", iTargetPackage, iModel, ColumnUtils.retClazzNameFormat(column));
-                    // 修改属性类型为枚举类型
                     if ( field.getName().equals(column.getJavaProperty())) {
                         field.setType(new FullyQualifiedJavaType(enumeration));
                     }

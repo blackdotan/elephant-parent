@@ -12,12 +12,11 @@ import java.lang.annotation.*;
  * if (method.isAnnotationPresent(RequireAccessToken.class)) {
  *      System.out.println("用户需要Token");
  * }
- * @see com.ipukr.ants.session.domain.RequireAccessToken
+ *
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Deprecated
 public @interface RequireAccessToken {
 
 }
