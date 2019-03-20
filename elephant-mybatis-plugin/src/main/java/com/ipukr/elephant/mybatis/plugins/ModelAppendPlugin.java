@@ -76,7 +76,7 @@ public class ModelAppendPlugin extends PluginAdapter {
                         StringBuffer buffer = new StringBuffer();
                         buffer.append(pck).append(".").append(dFullyQualifiedJavaType.getShortName()).append("Mapper");
                         buffer.append(".findCollection")
-                                .append(dFullyQualifiedJavaType.getFullyQualifiedName())
+                                .append(dFullyQualifiedJavaType.getShortName())
                                 .append("By")
                                 .append(selectAttrSuffix.toString());
                         ele.addAttribute(new Attribute("select", buffer.toString()));
@@ -122,7 +122,7 @@ public class ModelAppendPlugin extends PluginAdapter {
                         StringBuffer buffer = new StringBuffer();
                         buffer.append(pck).append(".").append(dFullyQualifiedJavaType.getShortName()).append("Mapper");
                         buffer.append(".findAssociation")
-                                .append(dFullyQualifiedJavaType.getFullyQualifiedName())
+                                .append(dFullyQualifiedJavaType.getShortName())
                                 .append("By")
                                 .append(selectAttrSuffix.toString());
 

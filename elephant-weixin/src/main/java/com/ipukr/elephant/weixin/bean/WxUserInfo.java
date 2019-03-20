@@ -34,5 +34,6 @@ public class WxUserInfo {
     private String country;
     private String avatarUrl;
     @JsonIgnore
+    @Deprecated
     private WxCode2SessionResponse wc2sr;
 }

@@ -39,8 +39,8 @@ public class EnumerationHandlerJavaFileGenerator extends AbstractJavaGenerator {
     public List<CompilationUnit> getCompilationUnits() {
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
 
-        boolean isOverrideEnumeration = properties.getProperty("OverrideEnumeration")!=null &&
-                properties.getProperty("OverrideEnumeration").equalsIgnoreCase("TRUE");
+        boolean isOverrideEnumeration = properties.getProperty("Override")!=null &&
+                properties.getProperty("Override").equalsIgnoreCase("TRUE");
 
         if (isOverrideEnumeration) {
             answer.add(this.generateEnumerationJavaFile(this.column));
@@ -106,8 +106,6 @@ public class EnumerationHandlerJavaFileGenerator extends AbstractJavaGenerator {
         String iModel = introspectedTable.getFullyQualifiedTable().getDomainObjectName();
 
 
-
-
         String model = StringUtils.easyAppend("{}{}Handler", iModel, ColumnUtils.retClazzNameFormat(column));
         String clazz = StringUtils.easyAppend("{}.handler.{}", iTargetPackage, model);
 
@@ -151,6 +149,50 @@ public class EnumerationHandlerJavaFileGenerator extends AbstractJavaGenerator {
         imports.add(new FullyQualifiedJavaType(clazz_));
         handler.addImportedTypes(imports);
 
+        return handler;
+    }
+
+    public CompilationUnit generateDomainJavaFile(IntrospectedColumn column, FullyQualifiedJavaType iDomainClass, Set<FullyQualifiedJavaType> imports) {
+        String iTargetPackage = context.getJavaModelGeneratorConfiguration().getTargetPackage();
+        String iModel = introspectedTable.getFullyQualifiedTable().getDomainObjectName();
+
+        String model = StringUtils.easyAppend("{}{}", iModel, ColumnUtils.retClazzNameFormat(column));
+        String clazz = StringUtils.easyAppend("{}.domain.{}", iTargetPackage, model);
+
+        // 实例化 TopLevelEnumeration
+        FullyQualifiedJavaType iFullyQualifiedJavaType = new FullyQualifiedJavaType(clazz);
+        TopLevelClass domain = new TopLevelClass(iFullyQualifiedJavaType);
+        domain.setVisibility(JavaVisibility.PUBLIC);
+
+        domain.addImportedTypes(imports);
+
+        return domain;
+    }
+
+    public CompilationUnit generateHandlerJavaFile(IntrospectedColumn column, FullyQualifiedJavaType iModelClass, FullyQualifiedJavaType iSupperClass, Set<FullyQualifiedJavaType> imports) {
+        // 拼接类名
+        String iTargetPackage = context.getJavaModelGeneratorConfiguration().getTargetPackage();
+        String iModel = introspectedTable.getFullyQualifiedTable().getDomainObjectName();
+
+        String model = StringUtils.easyAppend("{}{}Handler", iModel, ColumnUtils.retClazzNameFormat(column));
+        String clazz = StringUtils.easyAppend("{}.handler.{}", iTargetPackage, model);
+
+        // 初始化创建
+        TopLevelClass handler = new TopLevelClass(clazz);
+        handler.setVisibility(JavaVisibility.PUBLIC);
+        handler.setSuperClass(iSupperClass);
+
+        // method
+        Method method = new Method("getGeneric");
+        FullyQualifiedJavaType retClazz = new FullyQualifiedJavaType("java.lang.Class");
+        retClazz.addTypeArgument(iModelClass);
+        method.setReturnType(retClazz);
+        method.addAnnotation("@Override");
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.addBodyLine(StringUtils.easyAppend("return {}.class;", iModelClass.getShortName()));
+        handler.addMethod(method);
+
+        handler.addImportedTypes(imports);
         return handler;
     }
 }

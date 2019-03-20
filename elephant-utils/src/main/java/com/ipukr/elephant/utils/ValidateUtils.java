@@ -9,22 +9,22 @@ public class ValidateUtils {
     /**
      * 正则表达式：验证用户名
      */
-    public static final String REGEX_USERNAME = "^[a-zA-Z0-9]{5,20}$";
+    public static final String REGEX_USERNAME = "^[A-Za-z0-9_\\-\\u4e00-\\u9fa5]{3,15}$";
 
-    /**
-     * 正则表达式：验证密码
-     */
-    public static final String REGEX_PASSWORD = "^[a-zA-Z0-9]{5,20}$";
+//    /**
+//     * 正则表达式：验证密码
+//     */
+//    public static final String REGEX_PASSWORD = "^[a-zA-Z0-9]{5,20}$";
 
     /**
      * 正则表达式：验证手机号
      */
-    public static final String REGEX_MOBILE = "^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+    public static final String REGEX_MOBILE = "^0?(13|14|15|17|18|19)[0-9]{9}$";
 
     /**
      * 正则表达式：验证邮箱
      */
-    public static final String REGEX_EMAIL = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+    public static final String REGEX_EMAIL = "^\\w[-\\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\\.)+[A-Za-z]{2,14}$";
 
     /**
      * 正则表达式：验证汉字
@@ -63,7 +63,8 @@ public class ValidateUtils {
      * @return 校验通过返回true，否则返回false
      */
     public static boolean isPassword(String password) {
-        return Pattern.matches(REGEX_PASSWORD, password);
+//        return Pattern.matches(REGEX_PASSWORD, password);
+        return password!=null && !password.equals("") && password.length()>=5;
     }
 
     /**

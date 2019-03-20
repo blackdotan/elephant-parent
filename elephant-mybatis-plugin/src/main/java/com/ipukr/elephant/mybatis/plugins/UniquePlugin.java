@@ -35,7 +35,6 @@ public class UniquePlugin extends PluginAdapter {
 
     @Override
     public boolean clientSelectByPrimaryKeyMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
-
         // 返回类型
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
 
