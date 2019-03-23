@@ -56,8 +56,8 @@ public class WxUtil {
         cipher.init(Cipher.DECRYPT_MODE, spec, parameters);
         byte[] resultByte = cipher.doFinal(dataByte);
         String reult = new String(resultByte, "UTF-8");
-
         return JsonUtils.parserString2Obj(reult, WxUserInfo.class);
+
 
     }
 
