@@ -32,15 +32,8 @@
         <plugin type="com.ipukr.elephant.mybatis.plugins.AbstractMapperPlugin"></plugin>
         <plugin type="com.ipukr.elephant.mybatis.plugins.QConditionPlugin"></plugin>
         <plugin type="com.ipukr.elephant.mybatis.plugins.SConditionPlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.SConditionPlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.GeneratedCharactersArrayHandlerJavaFilePlugin">
-            <property name="Override" value="true"></property><!-- 重复生成时，如果不覆盖枚举类，value="false" -->
-        </plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.GeneratedDomainArrayHandlerJavaFilePlugin">
-            <property name="Override" value="true"></property><!-- 重复生成时，如果不覆盖枚举类，value="false" -->
-        </plugin>
         <plugin type="com.ipukr.elephant.mybatis.plugins.GeneratedEnumerationHandlerJavaFilePlugin">
-            <property name="Override" value="true"/><!-- 重复生成时，如果不覆盖枚举类，value="false" -->
+            <property name="OverrideEnumeration" value="true"/>
         </plugin>
         <!-- 官方插件 -->
         <plugin type="com.google.code.mybatis.generator.plugins.ModelBuilderPlugin">
@@ -79,11 +72,82 @@
                delimitIdentifiers="true" delimitAllColumns="true"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-            <!--<property name="Unique" value="Taxpayer_Id,Name"></property>-->
+            <property name="Unique" value="Taxpayer_Id,Name"></property>
             <property name="Enumerations" value="State"></property>
-            <property name="CharactersArray" value="Name"></property>
-            <property name="DomainArray" value="Taxpayer_Id"></property>
             <generatedKey column="Id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+        <table tableName="Company_Customize" domainObjectName="CompanyCustomize"
+               delimitIdentifiers="true" delimitAllColumns="true"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <property name="Unique" value="Company_Id,Taxpayer_Id"></property>
+            <generatedKey column="Id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="Customize_Text" jdbcType="VARCHAR" javaType="java.util.List" typeHandler="com.xinkean.xmba.entity.handler.CustomizeTextHandler" />
+        </table>
+
+
+        <table tableName="Company_Tenure" domainObjectName="CompanyTenure"
+               delimitIdentifiers="true" delimitAllColumns="true"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <property name="Models" value="Company:company,SecurityGuard:guard,SecurityChestCardManufacture:card"></property>
+            <property name="Enumerations" value="State"></property>
+
+            <generatedKey column="Id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="State" jdbcType="INTEGER" javaType="com.ipukr.elephant.entity.domain.CompanyTenureState" typeHandler="com.xinkean.xmba.entity.handler.CompanyTenureStateHandler"/>
+            <columnOverride column="Check_State" jdbcType="INTEGER" javaType="com.ipukr.elephant.entity.domain.CompanyTenureCheckState" typeHandler="com.xinkean.xmba.entity.handler.CompanyTenureCheckStateHandler"/>
+        </table>
+
+        <table tableName="Local_Police_Station" domainObjectName="LocalPoliceStation"
+               delimitIdentifiers="true" delimitAllColumns="true"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <property name="Enumerations" value="State"></property>
+
+            <generatedKey column="Id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+        <table tableName="Police" domainObjectName="Police"
+               delimitIdentifiers="true" delimitAllColumns="true"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <property name="Lists" value="SecurityGuardVerification:verifications"></property>
+            <property name="Enumerations" value="State"></property>
+
+            <property name="Models" value="LocalPoliceStation:policeStation"></property>
+            <generatedKey column="Id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+        <table tableName="Security_Chest_Card_Manufacture" domainObjectName="SecurityChestCardManufacture"
+               delimitIdentifiers="true" delimitAllColumns="true"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <property name="Unique" value="Company_Id,Company_Tenure_Id,Security_Guard_Id"></property>
+            <property name="Models" value="Company:company,CompanyTenure:tenure,SecurityGuard:guard"></property>
+            <property name="Enumerations" value="State"></property>
+            <generatedKey column="Id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+        <table tableName="Security_Guard" domainObjectName="SecurityGuard"
+               delimitIdentifiers="true" delimitAllColumns="true"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <property name="Enumerations" value="State,Check_State"></property>
+            <property name="Unique" value="No"></property>
+            <generatedKey column="Id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="State" jdbcType="INTEGER" javaType="com.ipukr.elephant.entity.domain.SecurityGuardState" typeHandler="com.xinkean.xmba.entity.handler.SecurityGuardStateHandler"/>
+            <columnOverride column="Check_State" jdbcType="INTEGER" javaType="com.ipukr.elephant.entity.domain.SecurityGuardCheckState" typeHandler="com.xinkean.xmba.entity.handler.SecurityGuardCheckStateHandler"/>
+        </table>
+
+        <table tableName="Security_Guard_Verification" domainObjectName="SecurityGuardVerification"
+               delimitIdentifiers="true" delimitAllColumns="true"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <property name="Models" value="Police:police,CompanyTenure:tenure,SecurityGuard:guard"></property>
+            <property name="Enumerations" value="State"></property>
+            <generatedKey column="Id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="State" jdbcType="INTEGER" javaType="com.ipukr.elephant.entity.domain.SecurityGuardVerificationState" typeHandler="com.xinkean.xmba.entity.handler.SecurityGuardVerificationStateHandler"/>
         </table>
 
     </context>

@@ -212,7 +212,6 @@ public interface AbstractMapper<T, K extends java.io.Serializable> {
      * @return
      */
     List<T> qcondition(@Param("record") T record, @Param("condition") String condition);
-
     /**
      * 条件匹配
      * @param record
@@ -238,16 +237,15 @@ public interface AbstractMapper<T, K extends java.io.Serializable> {
      * @return
      */
     List<T> scondition(@Param("record") T record, @Param("condition") String condition, PageBounds bounds );
-
     /**
-     * 数据抽样 / 随机获取一条记录
+     * 数据抽样, 随机获取一条记录
      *
      * @return Domain对象
      */
     T example();
 
     /**
-     * 数据抽样 / 素锦获取n条记录
+     * 数据接口抽样
      *
      * @param n 返回记录数
      * @return Domain对象列表
@@ -267,18 +265,4 @@ public interface AbstractMapper<T, K extends java.io.Serializable> {
      * @return
      */
     int upsert(@Param("record") T record);
-
-    /**
-     * 批量插入 / 主键冲突更新
-     * @param records
-     * @return
-     */
-    int batupsert(@Param("records") List<T> records);
-
-    /**
-     * 批量插入 / 主键冲突忽略
-     * @param records
-     * @return
-     */
-    int batigsert(@Param("records") List<T> records);
 }

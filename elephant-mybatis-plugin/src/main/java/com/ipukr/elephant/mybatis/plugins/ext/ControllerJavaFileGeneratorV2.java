@@ -43,7 +43,6 @@ public class ControllerJavaFileGeneratorV2 extends BaseControllerJavaFileGenerat
         this.introspectedTable = introspectedTable;
         this.properties = properties;
 
-
         this.iBasePackage = properties.getProperty(BASE_PACKAGE);
         this.iCommand = introspectedTable.getTableConfigurationProperty(CONTROLLER_FLAG);
         this.iEntityClazz = introspectedTable.getBaseRecordType();

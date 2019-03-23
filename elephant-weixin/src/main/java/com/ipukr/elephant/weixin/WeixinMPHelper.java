@@ -92,11 +92,6 @@ public class WeixinMPHelper {
         return iWxUserInfo;
     }
 
-    public WxUserInfo getUserInfo(String encrypted, String sessionKey, String iv) throws Exception {
-        WxUserInfo iWxUserInfo = WxUtil.getUserInfo(encrypted, sessionKey, iv);
-        return iWxUserInfo;
-    }
-
     /**
      * 获取授权Token
      * @param appid
