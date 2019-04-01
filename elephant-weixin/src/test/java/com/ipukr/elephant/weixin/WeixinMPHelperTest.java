@@ -1,8 +1,10 @@
 package com.ipukr.elephant.weixin;
 
 import com.ipukr.elephant.utils.DateUtils;
+import com.ipukr.elephant.weixin.bean.WxUserInfo;
 import com.ipukr.elephant.weixin.request.WxTemplateMessageRequest;
 import com.ipukr.elephant.weixin.response.WxAccessTokenResponse;
+import com.ipukr.elephant.weixin.response.WxCode2SessionResponse;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -55,5 +57,23 @@ public class WeixinMPHelperTest {
                 .data(data)
                 .build();
         helper.sendTemplateMessage(access.getAccess(), template);
+    }
+
+    @Test
+    public void getUserInfo() throws Exception {
+        WeixinMPHelper weixinMPHelper = new WeixinMPHelper();
+        String appid = "wx179b8946f36e74b7";
+        String secret = "fe29379d72b43a30749431542c74fa8f";
+        WxAccessTokenResponse  wxAccessTokenResponse = weixinMPHelper.getAccessToken(appid,secret);
+        System.out.println(wxAccessTokenResponse);
+
+        String code = "081hOSw82ShXvK0k4ex82G5Rw82hOSwt";
+        WxCode2SessionResponse wxCode2SessionResponse = weixinMPHelper.jscode2session(appid, secret, code);
+        System.out.println(wxCode2SessionResponse);
+
+        String encrypted = "t5edfWIC7gshWoscBzmGkj2F2AtdVjxt4YwrZeNp07hDUkWfuRFg5kt+d8MDFvPWk2jZT8DLgeW5AzuVBLVpQ7q1UniJl/8BGMqDiDQcFa6GXSoUjxQPL9JgM/71ZywZBAknDIfShPXXy87l5aLf2koGXWrFEs+M0hs9tRr6XlY2zBgCeQJuwdSA+httnfroDiRCy/losePCYLT8vyHAMV0lCnIwIVE5PitGQclowmr1eR1bRdHFpMmrcI0htljWAcUBqp/hxVH2vQpsHS2e/329Mr0cP9wgilBegf08NnylKr1Knk1zaqfzNCLzBsUrcpVjMIM0/NLsXpOPe/vrfTxhfrKsJxPs5ozZ4g7nI9nUDxB0NWZABfJE2ywKQmQoEkm2hO+UvYgZGkB3eFxAGOwHaNFqFR9IYtvHdQe+VPGseVUj7fQOy+bair2O57vBXQWDqvEZqMv/8HCNC2fUkiyK672uJQ5BFkzGy30y2B8=";
+        String iv = "A+4LgVd52tLf9bJL2AGR/w==";
+        WxUserInfo wxUserInfo = weixinMPHelper.getUserInfo(wxCode2SessionResponse, encrypted,iv);
+        System.out.println(wxUserInfo);
     }
 }

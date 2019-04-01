@@ -84,8 +84,8 @@ public class FullsearchPlugin extends PluginAdapter {
     @Override
     public boolean sqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
         String iBaseColumnList = introspectedTable.getBaseColumnListId();
-        String iTable =  introspectedTable.getTableConfiguration().getTableName();
-
+//        String iTable =  introspectedTable.getTableConfiguration().getTableName();
+        String iTable = introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime();
         // 实体
         List<IntrospectedColumn> columns = FieldUtils.uniqueColumn(introspectedTable, LABEL);
         if ( columns.size() > 0 ) {
