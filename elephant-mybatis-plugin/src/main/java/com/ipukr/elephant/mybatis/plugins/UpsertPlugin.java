@@ -108,7 +108,7 @@ public class UpsertPlugin extends PluginAdapter {
 
         StringBuffer update = new StringBuffer();
 
-        for (IntrospectedColumn column : introspectedTable.getAllColumns()) {
+        for (IntrospectedColumn column : introspectedTable.getNonPrimaryKeyColumns()) {
             update
                     .append(MyBatis3FormattingUtilities.getAliasedEscapedColumnName(column))
                     .append(" = values(")
