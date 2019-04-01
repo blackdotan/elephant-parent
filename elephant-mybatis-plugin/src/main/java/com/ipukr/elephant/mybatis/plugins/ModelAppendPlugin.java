@@ -145,8 +145,8 @@ public class ModelAppendPlugin extends PluginAdapter {
      */
     @Override
     public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        String table =  introspectedTable.getTableConfiguration().getTableName();
-
+//        String table =  introspectedTable.getTableConfiguration().getTableName();
+        String table = introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime();
         if(table.matches(".*%.*")) {
             return true;
         } else {

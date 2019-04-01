@@ -69,7 +69,7 @@ public class UniletePlugin extends PluginAdapter {
     @Override
     public boolean sqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
         String iBaseColumnList = introspectedTable.getBaseColumnListId();
-        String iTable =  introspectedTable.getTableConfiguration().getTableName();
+        String iTable = introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime();//数据库表名
 
         // 实体
         List<IntrospectedColumn> columns = FieldUtils.uniqueColumn(introspectedTable, LABEL);
