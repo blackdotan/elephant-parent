@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ipukr.elephant.weixin.response.WxCode2SessionResponse;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * 请描述类 <br>
@@ -15,7 +14,6 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@ToString
 public class WxUserInfo {
 
 
@@ -35,6 +33,6 @@ public class WxUserInfo {
     private String province;
     private String country;
     private String avatarUrl;
-//    @JsonIgnore
+    @JsonIgnore
     private WxCode2SessionResponse wc2sr;
 }

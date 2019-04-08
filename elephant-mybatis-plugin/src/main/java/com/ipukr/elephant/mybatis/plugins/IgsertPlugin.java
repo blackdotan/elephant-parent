@@ -1,6 +1,7 @@
 package com.ipukr.elephant.mybatis.plugins;
 
 import com.ipukr.elephant.mybatis.plugins.utils.MethodUtils;
+import com.ipukr.elephant.mybatis.plugins.utils.MyBatisUtilities;
 import com.ipukr.elephant.utils.StringUtils;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.IntrospectedColumn;
@@ -29,7 +30,8 @@ import java.util.List;
  */
 public class IgsertPlugin extends PluginAdapter {
 
-    public static final String METHOD_NAME = "igsert";
+    public static final String IGSERT_METHOD_NAME = "igsert";
+    public static final String BATIGSERT_METHOD_NAME = "batigsert";
 
     /**
      * @param list
@@ -48,118 +50,105 @@ public class IgsertPlugin extends PluginAdapter {
 
     @Override
     public boolean clientDeleteByPrimaryKeyMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
-        Method iMethod = new Method();
+        Method method1 = new Method();
 
-        iMethod.setName(METHOD_NAME);
-        iMethod.setVisibility(method.getVisibility());
-        iMethod.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        iMethod.getParameters().clear();
-        iMethod.addParameter(new Parameter(new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()), "record", "@Param(\"record\")"));
-        iMethod.addAnnotation("/**");
-        iMethod.addAnnotation(" * 插入数据，主键冲突忽略修改");
-        iMethod.addAnnotation(" **/");
-        interfaze.addMethod(iMethod);
+        method1.setName(IGSERT_METHOD_NAME);
+        method1.setVisibility(method.getVisibility());
+        method1.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        method1.getParameters().clear();
+        method1.addParameter(new Parameter(new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()), "record", "@Param(\"record\")"));
+        method1.addAnnotation("/**");
+        method1.addAnnotation(" * 插入数据，主键冲突忽略修改");
+        method1.addAnnotation(" **/");
+        interfaze.addMethod(method1);
+
+
+        Method method2 = new Method();
+
+        method2.setName(BATIGSERT_METHOD_NAME);
+        method2.setVisibility(method.getVisibility());
+        method2.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        method2.getParameters().clear();
+
+        FullyQualifiedJavaType p1 = new FullyQualifiedJavaType(List.class.getName());
+        p1.addTypeArgument(new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()));
+        method2.addParameter(new Parameter(p1, "records", "@Param(\"records\")"));
+
+        method2.addAnnotation("/**");
+        method2.addAnnotation(" * 批量插入数据，主键冲突忽略修改");
+        method2.addAnnotation(" **/");
+        interfaze.addMethod(method2);
 
         return true;
     }
 
-
-
     @Override
     public boolean sqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
-        String tableName = introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime();//数据库表名
-        String baseColumn = introspectedTable.getBaseColumnListId();
+        getnIgsertSqlMapDocumentGenerated(document, introspectedTable);
+        getnBatigsertSqlMapDocumentGenerated(document, introspectedTable);
+        return true;
+    }
+
+
+    public void getnIgsertSqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
+        String tableName = introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime();
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
 
-
-        Iterator<IntrospectedColumn> it = introspectedTable.getPrimaryKeyColumns().iterator();
-
-        XmlElement parentElement = document.getRootElement();
         XmlElement insertElement = new XmlElement("insert");
 
-        insertElement.addAttribute(new Attribute("id", METHOD_NAME));
+        insertElement.addAttribute(new Attribute("id", IGSERT_METHOD_NAME));
         insertElement.addAttribute(new Attribute("parameterType", type.getFullyQualifiedName()));
 
-
-        String delimiterBegin = introspectedTable.getContext().getBeginningDelimiter();
-        String delimiterEnd = introspectedTable.getContext().getEndingDelimiter();
-
-
         // Insert SQL 字段组装
-        XmlElement keys = new XmlElement("trim");
-        keys.addAttribute(new Attribute("prefix", "("));
-        keys.addAttribute(new Attribute("suffix", ")"));
-        keys.addAttribute(new Attribute("suffixOverrides", ","));
+        XmlElement keys = MyBatisUtilities.retConditionColumnElementList(introspectedTable, "record.", true);
 
         // Insert SQL Values组装
-        XmlElement values = new XmlElement("trim");
-        values.addAttribute(new Attribute("prefix", "values ("));
-        values.addAttribute(new Attribute("suffix", ")"));
-        values.addAttribute(new Attribute("suffixOverrides", ","));
-
-        for (IntrospectedColumn column : introspectedTable.getAllColumns()) {
-            MethodUtils.generateColumnEqXmlElement(column, "record.");
-
-            // 字段
-            XmlElement conditionElement = new XmlElement("if");
-            conditionElement.addAttribute(new Attribute("test", "record." + column.getJavaProperty() + " != null"));
-            conditionElement.addElement(new TextElement(MyBatis3FormattingUtilities.getAliasedEscapedColumnName(column) + ","));
-            keys.addElement(conditionElement);
-
-            // VALUES
-            XmlElement conditionElement2 = new XmlElement("if");
-            conditionElement2.addAttribute(new Attribute("test", "record." + column.getJavaProperty() + " != null"));
-            conditionElement2.addElement(new TextElement(MyBatis3FormattingUtilities.getParameterClause(column, "record.") + ","));
-            values.addElement(conditionElement2);
-
-        }
+        XmlElement values = MyBatisUtilities.retConditionValueElementList(introspectedTable, "record.", true);
 
         // FIX Generate Key
-        GeneratedKey gk = introspectedTable.getGeneratedKey();
-        if (gk != null) {
-            IntrospectedColumn introspectedColumn = introspectedTable
-                    .getColumn(gk.getColumn());
-            // if the column is null, then it's a configuration error. The
-            // warning has already been reported
-            if (introspectedColumn != null) {
-                if (gk.isJdbcStandard()) {
-                    insertElement.addAttribute(new Attribute("useGeneratedKeys", "true")); //$NON-NLS-1$ //$NON-NLS-2$
-                    insertElement.addAttribute(new Attribute("keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
-                } else {
-                    insertElement.addElement(getSelectKey(introspectedColumn, gk));
-                }
-            }
-        }
+        MyBatisUtilities.fixGenerateKey(introspectedTable, insertElement);
 
         String sql = StringUtils.easyAppend("insert ignore into {} ", tableName);
         insertElement.addElement(new TextElement(sql));
         insertElement.addElement(keys);
+        insertElement.addElement(new TextElement(" VALUES "));
         insertElement.addElement(values);
 
-        parentElement.addElement(insertElement);
-        return true;
+        document.getRootElement().addElement(insertElement);
     }
 
-    /**
-     * Copy From org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.InsertSelectiveElementGenerator
-     *
-     * @param introspectedColumn
-     * @param generatedKey
-     * @return
-     */
-    protected XmlElement getSelectKey(IntrospectedColumn introspectedColumn, GeneratedKey generatedKey) {
-        String identityColumnType = introspectedColumn
-                .getFullyQualifiedJavaType().getFullyQualifiedName();
 
-        XmlElement answer = new XmlElement("selectKey"); //$NON-NLS-1$
-        answer.addAttribute(new Attribute("resultType", identityColumnType)); //$NON-NLS-1$
-        answer.addAttribute(new Attribute("keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
-        answer.addAttribute(new Attribute("order", //$NON-NLS-1$
-                generatedKey.getMyBatis3Order()));
+    public void getnBatigsertSqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
+        String tableName = introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime();
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
 
-        answer.addElement(new TextElement(generatedKey
-                .getRuntimeSqlStatement()));
+        XmlElement insertElement = new XmlElement("insert");
 
-        return answer;
+        insertElement.addAttribute(new Attribute("id", BATIGSERT_METHOD_NAME));
+        insertElement.addAttribute(new Attribute("parameterType", type.getFullyQualifiedName()));
+
+        // Insert SQL 字段组装
+        XmlElement keys = MyBatisUtilities.retConditionColumnElementList(introspectedTable, null, false);
+
+        // Insert SQL Values组装
+        XmlElement values = MyBatisUtilities.retConditionValueElementList(introspectedTable, "record.", false);
+
+        XmlElement foreach = MyBatisUtilities.retForeachElement("records", "record", ",");
+        foreach.addElement(values);
+
+        // FIX Generate Key
+        MyBatisUtilities.fixGenerateKey(introspectedTable, insertElement);
+
+        String sql = StringUtils.easyAppend("insert ignore into {} ", tableName);
+        insertElement.addElement(new TextElement(sql));
+        insertElement.addElement(keys);
+        insertElement.addElement(new TextElement(" VALUE "));
+        insertElement.addElement(foreach);
+
+        document.getRootElement().addElement(insertElement);
     }
+
+
+
+
 }

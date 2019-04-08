@@ -12,6 +12,7 @@ import java.util.Set;
  * @param <T> Entity对象(eg: User, Book)
  * @param <K> 主键数据类型(eg: Integer, String)
  */
+@Deprecated
 public interface AbstractMapper<T, K extends java.io.Serializable> {
     /**
      * 根据主键列表删除
