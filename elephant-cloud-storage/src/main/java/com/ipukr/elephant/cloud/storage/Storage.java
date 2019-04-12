@@ -1,5 +1,6 @@
 package com.ipukr.elephant.cloud.storage;
 
+import com.ipukr.elephant.cloud.storage.domain.QiniuUploadResponse;
 import com.qiniu.common.QiniuException;
 
 import java.io.File;
@@ -38,7 +39,7 @@ public interface Storage {
      * @param file 上传文件
      * @throws IOException IO异常
      */
-    boolean upload(File file) throws IOException;
+    QiniuUploadResponse upload(File file) throws Exception;
 
     /**
      * 上传文件
@@ -47,7 +48,7 @@ public interface Storage {
      * @param rename 重命名
      * @throws IOException IO异常
      */
-    boolean upload(File file, String rename) throws IOException;
+    QiniuUploadResponse upload(File file, String rename) throws Exception;
 
     /**
      * 批量上传文件
@@ -55,7 +56,7 @@ public interface Storage {
      * @param files 上传文件
      * @throws IOException IO异常
      */
-    boolean upload(List<File> files) throws IOException;
+    List<QiniuUploadResponse> upload(List<File> files) throws Exception;
 
     /**
      * 上传文件
@@ -64,6 +65,6 @@ public interface Storage {
      * @param filename 重命名
      * @throws IOException IO异常
      */
-    boolean upload(byte[] bytes, String filename) throws Exception;
+    QiniuUploadResponse upload(byte[] bytes, String filename) throws Exception;
 
 }

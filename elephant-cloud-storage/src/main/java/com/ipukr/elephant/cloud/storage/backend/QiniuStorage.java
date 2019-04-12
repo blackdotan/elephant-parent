@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.ipukr.elephant.cloud.storage.Storage;
 import com.ipukr.elephant.cloud.storage.config.QiniuStorageConfig;
 
+import com.ipukr.elephant.cloud.storage.domain.QiniuUploadResponse;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.storage.Configuration;
@@ -16,10 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.annotation.PostConstruct;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -64,38 +62,48 @@ public class QiniuStorage implements Storage {
      * @throws IOException
      */
     @Override
-    public boolean upload(File file) throws IOException {
+    public QiniuUploadResponse upload(File file) throws Exception {
         String type = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf("."));
-        return this.upload(file, file.getName().concat(type));
+        return upload(IOUtils.toByteArray(new FileInputStream(file)), file.getName().concat(type));
     }
 
     @Override
-    public boolean upload(File file, String rename) throws IOException {
+    public QiniuUploadResponse upload(File file, String rename) throws Exception {
         String auth =  auth();
-        Response response = upload.put(IOUtils.toByteArray(new FileInputStream(file)), rename, auth);
-        return response.statusCode == 200;
+        return upload(IOUtils.toByteArray(new FileInputStream(file)), rename);
     }
 
     @Override
-    public boolean upload(List<File> files) throws IOException {
+    public List<QiniuUploadResponse> upload(List<File> files) throws Exception {
         String auth =  auth();
-        List<String> arr = new ArrayList<>();
+        List<QiniuUploadResponse> arr = new ArrayList<QiniuUploadResponse>();
         boolean bool = true;
         for(File file : files) {
             String type = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf("."));
             String name = file.getName().concat(type);
-            arr.add(name);
-            Response response = upload.put(IOUtils.toByteArray(new FileInputStream(file)), name, auth);
-            bool = bool &&  response.statusCode == 200;
+            QiniuUploadResponse response = upload(IOUtils.toByteArray(new FileInputStream(file)), file.getName().concat(type));
+            arr.add(response);
         }
-        return bool;
+        return arr;
     }
 
     @Override
-    public boolean upload(byte[] bytes, String filename) throws Exception {
+    public QiniuUploadResponse upload(byte[] bytes, String filename) throws Exception {
         String auth =  auth();
         Response response = upload.put(bytes, filename, auth);
-        return response.statusCode == 200;
+        QiniuUploadResponse.QiniuUploadResponseBuilder builder = QiniuUploadResponse.builder();
+
+        if (response.statusCode == 200) {
+            DefaultPutRet dpret = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
+            builder.success(true)
+                    .filename(filename)
+                    .hash(dpret.hash)
+                    .key(dpret.key)
+                    .build();
+        } else {
+            builder.success(false);
+        }
+        return builder.build();
     }
 
     @Override

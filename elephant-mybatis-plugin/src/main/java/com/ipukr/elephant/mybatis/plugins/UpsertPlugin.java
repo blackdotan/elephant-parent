@@ -1,7 +1,6 @@
 package com.ipukr.elephant.mybatis.plugins;
 
 import com.ipukr.elephant.mybatis.plugins.utils.MethodUtils;
-import com.ipukr.elephant.mybatis.plugins.utils.MyBatisUtilities;
 import com.ipukr.elephant.utils.StringUtils;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.IntrospectedColumn;
@@ -15,7 +14,6 @@ import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 import org.mybatis.generator.config.GeneratedKey;
 
@@ -31,8 +29,12 @@ import java.util.List;
  */
 public class UpsertPlugin extends PluginAdapter {
 
+<<<<<<<<< Temporary merge branch 1
     public static final String UPSERT_METHOD_NAME = "upsert";
     public static final String BATUPSERT_METHOD_NAME = "batupsert";
+=========
+    public static final String METHOD_NAME = "upsert";
+>>>>>>>>> Temporary merge branch 2
 
     /**
      * @param list
@@ -51,16 +53,17 @@ public class UpsertPlugin extends PluginAdapter {
 
     @Override
     public boolean clientDeleteByPrimaryKeyMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
-        Method method1 = new Method();
-        method1.setName(UPSERT_METHOD_NAME);
-        method1.setVisibility(method.getVisibility());
-        method1.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        method1.getParameters().clear();
-        method1.addParameter(new Parameter(new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()), "record", "@Param(\"record\")"));
-        method1.addAnnotation("/**");
-        method1.addAnnotation(" * 插入数据，主键冲突更新");
-        method1.addAnnotation(" **/");
-        interfaze.addMethod(method1);
+        Method iMethod = new Method();
+
+        iMethod.setName(METHOD_NAME);
+        iMethod.setVisibility(method.getVisibility());
+        iMethod.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        iMethod.getParameters().clear();
+        iMethod.addParameter(new Parameter(new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()), "record", "@Param(\"record\")"));
+        iMethod.addAnnotation("/**");
+        iMethod.addAnnotation(" * 插入数据，主键冲突更新");
+        iMethod.addAnnotation(" **/");
+        interfaze.addMethod(iMethod);
 
 
 
