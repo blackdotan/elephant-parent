@@ -1,6 +1,7 @@
 package com.ipukr.elephant.mybatis.plugins;
 
 import com.ipukr.elephant.mybatis.plugins.utils.MethodUtils;
+import com.ipukr.elephant.mybatis.plugins.utils.MyBatisUtilities;
 import com.ipukr.elephant.utils.StringUtils;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.IntrospectedColumn;
@@ -29,12 +30,9 @@ import java.util.List;
  */
 public class UpsertPlugin extends PluginAdapter {
 
-<<<<<<<<< Temporary merge branch 1
     public static final String UPSERT_METHOD_NAME = "upsert";
     public static final String BATUPSERT_METHOD_NAME = "batupsert";
-=========
-    public static final String METHOD_NAME = "upsert";
->>>>>>>>> Temporary merge branch 2
+
 
     /**
      * @param list
@@ -55,7 +53,7 @@ public class UpsertPlugin extends PluginAdapter {
     public boolean clientDeleteByPrimaryKeyMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
         Method iMethod = new Method();
 
-        iMethod.setName(METHOD_NAME);
+        iMethod.setName(UPSERT_METHOD_NAME);
         iMethod.setVisibility(method.getVisibility());
         iMethod.setReturnType(FullyQualifiedJavaType.getIntInstance());
         iMethod.getParameters().clear();
