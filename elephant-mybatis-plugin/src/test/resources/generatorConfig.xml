@@ -28,7 +28,7 @@
         <plugin type="com.ipukr.elephant.mybatis.plugins.UpsertPlugin"></plugin>
         <plugin type="com.ipukr.elephant.mybatis.plugins.UniquePlugin"></plugin>
         <plugin type="com.ipukr.elephant.mybatis.plugins.UniletePlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.ModelAppendPlugin"></plugin>
+        <plugin type="com.ipukr.elephant.mybatis.plugins.GeneratedModelAppendPlugin"></plugin>
         <plugin type="com.ipukr.elephant.mybatis.plugins.AbstractMapperPlugin"></plugin>
         <plugin type="com.ipukr.elephant.mybatis.plugins.QConditionPlugin"></plugin>
         <plugin type="com.ipukr.elephant.mybatis.plugins.SConditionPlugin"></plugin>

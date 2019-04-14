@@ -21,6 +21,7 @@ import java.util.*;
 /**
  * Created by wmw on 1/12/17.
  */
+@Deprecated
 public class ControllerJavaFileGenerator extends BaseControllerJavaFileGenerator {
 
     public static final String BASE_PACKAGE = "BasePackage";

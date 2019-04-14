@@ -16,6 +16,15 @@ public interface Sms {
     public SmsResponse send(String mobile, String code);
 
     /**
+     *
+     * @param templateId
+     * @param mobile
+     * @param code
+     * @return
+     */
+    public SmsResponse send(String templateId, String mobile, String code);
+
+    /**
      * 发送短信验证码
      * @param templateId 模板ID
      * @param mobile 手机号

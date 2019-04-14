@@ -47,8 +47,6 @@ public class AliyunSms implements Sms {
     }
 
 
-
-
     @Override
     public SmsResponse send(String mobile, String code) {
         Map map = new HashMap(){
@@ -57,6 +55,11 @@ public class AliyunSms implements Sms {
             }
         };
         return send(config.getTemplateId(), mobile, map);
+    }
+
+    @Override
+    public SmsResponse send(String templateId, String mobile, String code) {
+        return send(templateId, mobile, code);
     }
 
     @Override

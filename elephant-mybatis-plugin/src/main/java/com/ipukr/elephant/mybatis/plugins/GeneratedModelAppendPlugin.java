@@ -21,9 +21,9 @@ import java.util.*;
  *
  * Created by ryan on 上午3:23.
  */
-public class ModelAppendPlugin extends PluginAdapter {
+public class GeneratedModelAppendPlugin extends PluginAdapter {
 
-    private static Logger logger = LoggerFactory.getLogger(ModelAppendPlugin.class);
+    private static Logger logger = LoggerFactory.getLogger(GeneratedModelAppendPlugin.class);
 
     public static final String MODELS_NAME = "Models";
 
@@ -41,7 +41,6 @@ public class ModelAppendPlugin extends PluginAdapter {
     @Override
     public boolean sqlMapResultMapWithoutBLOBsElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
         super.sqlMapResultMapWithoutBLOBsElementGenerated(element, introspectedTable);
-
         {
             // Collections
             String collections = introspectedTable.getTableConfigurationProperty(COLLECTIONS_NAME);

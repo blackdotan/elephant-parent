@@ -16,6 +16,7 @@ import java.util.List;
  * Created by wmw on 1/7/17.
  */
 public class AbstractMapperPlugin extends PluginAdapter {
+
     @Override
     public boolean validate(List<String> list) {
         return true;

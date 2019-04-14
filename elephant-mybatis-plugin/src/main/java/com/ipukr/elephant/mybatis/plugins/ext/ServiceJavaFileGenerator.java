@@ -13,6 +13,7 @@ import java.util.*;
 /**
  * Created by wmw on 1/12/17.
  */
+@Deprecated
 public class ServiceJavaFileGenerator extends AbstractJavaGenerator {
 
     public static final String BASE_PACKAGE = "BasePackage";
