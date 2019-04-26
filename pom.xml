@@ -23,7 +23,6 @@
         <module>elephant-payment-alipay</module>
         <module>elephant-payment-lianlian</module>
         <module>elephant-payment-weixin</module>
-        <module>elephant-mybatis-plugin</module>
         <module>elephant-weixin</module>
     </modules>
 

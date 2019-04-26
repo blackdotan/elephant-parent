@@ -47,16 +47,19 @@ public class AliyunSms implements Sms {
     }
 
 
-
-
     @Override
     public SmsResponse send(String mobile, String code) {
+        return send(config.getTemplateId(), mobile, code);
+    }
+
+    @Override
+    public SmsResponse send(String templateId, String mobile, String code) {
         Map map = new HashMap(){
             {
                 put("code", code);
             }
         };
-        return send(config.getTemplateId(), mobile, map);
+        return send(templateId, mobile, map);
     }
 
     @Override

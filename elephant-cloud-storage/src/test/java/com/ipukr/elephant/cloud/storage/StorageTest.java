@@ -2,12 +2,15 @@ package com.ipukr.elephant.cloud.storage;
 
 import com.ipukr.elephant.cloud.storage.backend.QiniuStorage;
 import com.ipukr.elephant.cloud.storage.config.QiniuStorageConfig;
+import com.ipukr.elephant.cloud.storage.domain.QiniuUploadResponse;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * Created by ryan on 下午2:58.
@@ -59,5 +62,18 @@ public class StorageTest {
     public void testaddress() throws Exception {
         String domain = mStorage.address("Hekki.jpg");
         System.out.println(domain);
+    }
+
+    @Test
+    public void testupload() throws Exception {
+        String filepath = StorageTest.class.getResource("/").getPath().concat("test.jpg");
+
+        FileInputStream ins = new FileInputStream(filepath);
+
+        QiniuUploadResponse response = mStorage.upload(IOUtils.toByteArray(ins), "test.jpg");
+        System.out.println(mStorage.domain());
+        System.out.println(response.toString());
+
+
     }
 }

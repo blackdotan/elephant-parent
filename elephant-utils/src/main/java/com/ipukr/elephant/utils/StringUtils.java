@@ -52,6 +52,7 @@ public class StringUtils {
     }
 
     /**
+     * 字符串 隐藏 节选内容
      * @param number
      * @param i
      * @param j
@@ -69,6 +70,38 @@ public class StringUtils {
             return builder.toString();
         }
         return number;
+    }
+
+    /**
+     * 将字符串的首字母转大写
+     * @param str 需要转换的字符串
+     * @return
+     */
+    public static String toUpperWithFirstCharacter(String str) {
+        // 进行字母的ascii编码前移，效率要高于截取字符串进行转换的操作
+        char[] cs = str.toCharArray();
+        if ( cs[0] >= 97 && cs[0] <=122) {
+            cs[0] -= 32;
+            return String.valueOf(cs);
+        } else {
+            return str;
+        }
+    }
+
+    /**
+     * 将字符串的首字母转大写
+     * @param str 需要转换的字符串
+     * @return
+     */
+    public static String toLowerWithFirstCharacter(String str) {
+        // 进行字母的ascii编码前移，效率要高于截取字符串进行转换的操作
+        char[] cs = str.toCharArray();
+        if ( cs[0] >= 65 && cs[0] <= 90) {
+            cs[0] -= 32;
+            return String.valueOf(cs);
+        } else {
+            return str;
+        }
     }
 
 }

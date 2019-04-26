@@ -91,6 +91,8 @@ public class QiniuStorage implements Storage {
     public QiniuUploadResponse upload(byte[] bytes, String filename) throws Exception {
         String auth =  auth();
         Response response = upload.put(bytes, filename, auth);
+
+
         QiniuUploadResponse.QiniuUploadResponseBuilder builder = QiniuUploadResponse.builder();
 
         if (response.statusCode == 200) {
