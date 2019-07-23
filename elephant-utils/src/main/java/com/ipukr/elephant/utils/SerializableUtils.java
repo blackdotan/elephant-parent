@@ -6,6 +6,11 @@ import java.io.*;
  * Created by wmw on 6/2/16.
  */
 public class SerializableUtils {
+    /**
+     * 序列表对象
+     * @param value
+     * @return
+     */
     public static byte[] serialize(Object value){
         if (value == null) {
             throw new NullPointerException("Can't serialize null");
@@ -38,6 +43,11 @@ public class SerializableUtils {
         return result;
     }
 
+    /**
+     * 反序列化
+     * @param in
+     * @return
+     */
     public static Object deserialize(byte[] in) {
         Object result = null;
         ByteArrayInputStream bis = null;

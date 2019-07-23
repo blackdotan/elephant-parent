@@ -5,7 +5,7 @@ import com.ipukr.elephant.cloud.storage.Storage;
 import com.ipukr.elephant.cloud.storage.config.QiniuStorageConfig;
 
 import com.ipukr.elephant.cloud.storage.domain.QiniuUploadResponse;
-import com.qiniu.common.QiniuException;
+import com.ipukr.elephant.cloud.storage.domain.UploadResponse;
 import com.qiniu.http.Response;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
@@ -15,11 +15,8 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.activation.MimetypesFileTypeMap;
-import javax.annotation.PostConstruct;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -62,33 +59,33 @@ public class QiniuStorage implements Storage {
      * @throws IOException
      */
     @Override
-    public QiniuUploadResponse upload(File file) throws Exception {
+    public UploadResponse upload(File file) throws Exception {
         String type = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf("."));
         return upload(IOUtils.toByteArray(new FileInputStream(file)), file.getName().concat(type));
     }
 
     @Override
-    public QiniuUploadResponse upload(File file, String rename) throws Exception {
+    public UploadResponse upload(File file, String rename) throws Exception {
         String auth =  auth();
         return upload(IOUtils.toByteArray(new FileInputStream(file)), rename);
     }
 
     @Override
-    public List<QiniuUploadResponse> upload(List<File> files) throws Exception {
+    public List<UploadResponse> upload(List<File> files) throws Exception {
         String auth =  auth();
-        List<QiniuUploadResponse> arr = new ArrayList<QiniuUploadResponse>();
+        List<UploadResponse> arr = new ArrayList<UploadResponse>();
         boolean bool = true;
         for(File file : files) {
             String type = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf("."));
             String name = file.getName().concat(type);
-            QiniuUploadResponse response = upload(IOUtils.toByteArray(new FileInputStream(file)), file.getName().concat(type));
+            UploadResponse response = upload(IOUtils.toByteArray(new FileInputStream(file)), file.getName().concat(type));
             arr.add(response);
         }
         return arr;
     }
 
     @Override
-    public QiniuUploadResponse upload(byte[] bytes, String filename) throws Exception {
+    public UploadResponse upload(byte[] bytes, String filename) throws Exception {
         String auth =  auth();
         Response response = upload.put(bytes, filename, auth);
 

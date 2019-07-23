@@ -11,4 +11,4 @@ PUKR_APPLICATION_HOME=`cd "$PRGDIR/.." >/dev/null; pwd`
 cd $PUKR_APPLICATION_HOME
 #mvn clean javadoc:jar source:jar install deploy -DskipTests -U -Dclassifiers=pg
 
-mvn clean package install -DskipTests -e -X -U
+mvn clean package install -DskipTests -e -X -U -N

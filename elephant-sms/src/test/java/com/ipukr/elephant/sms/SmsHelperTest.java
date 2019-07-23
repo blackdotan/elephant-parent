@@ -15,7 +15,7 @@ public class SmsHelperTest {
 
     @Before
     public void setUp() throws Exception {
-        AliyunSmsConfig config = new AliyunSmsConfig.Builder()
+        AliyunSmsConfig config = AliyunSmsConfig.builder()
                 .accessKeyId("LTAIe2O2YMLHgt2y")
                 .accessKeySecret("Gh0xyxDxwmGzPdXhNGqU6DxeMAl7BJ")
                 .domain("dysmsapi.aliyuncs.com")

@@ -5,6 +5,7 @@ import lombok.Data;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -29,32 +30,31 @@ public class ZipUtils {
         return filename.matches("^.+\\.(zip|rar)$");
     }
 
+
+    /**
+     * @param ins
+     * @return
+     * @throws IOException
+     */
+    public static List<FileModel> unzip(InputStream ins) throws IOException {
+        Charset gbk = Charset.forName("gbk");
+        return unzip(ins, gbk);
+    }
+
     /**
      * 解压获取所有文件
      * @param ins
      * @return
      * @throws IOException
      */
-    public static List<FileModel> unzip(InputStream ins) throws IOException {
+    public static List<FileModel> unzip(InputStream ins, Charset charset) throws IOException {
         List<FileModel> models = new ArrayList<>();
-        ZipInputStream zins = new ZipInputStream(ins);
+        ZipInputStream zins = new ZipInputStream(ins, charset);
 //        BufferedInputStream bs = new BufferedInputStream(zins);
         ZipEntry ze;
         byte[] bytes = null;
         while ((ze = zins.getNextEntry()) != null) {
             if (!ze.isDirectory()) {
-//                ByteArrayInputStream baous = new ByteArrayInputStream(zins);
-//                String name = ze.getName();
-//                byte[] buffer = new byte[1024];
-//                int read = zins.read(buffer);
-//                while (read > -1) {
-//                    read = zins.read(buffer);
-//                }
-//
-//                models.add(FileModel.builder()
-//                        .name(name)
-//                        .bytes(buffer)
-//                        .build());
                 ByteArrayOutputStream baous = new ByteArrayOutputStream();
                 String name = ze.getName();
                 IOUtils.copy(zins, baous);

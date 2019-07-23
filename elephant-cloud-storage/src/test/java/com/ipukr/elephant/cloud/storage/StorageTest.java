@@ -3,6 +3,7 @@ package com.ipukr.elephant.cloud.storage;
 import com.ipukr.elephant.cloud.storage.backend.QiniuStorage;
 import com.ipukr.elephant.cloud.storage.config.QiniuStorageConfig;
 import com.ipukr.elephant.cloud.storage.domain.QiniuUploadResponse;
+import com.ipukr.elephant.cloud.storage.domain.UploadResponse;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -70,7 +71,7 @@ public class StorageTest {
 
         FileInputStream ins = new FileInputStream(filepath);
 
-        QiniuUploadResponse response = mStorage.upload(IOUtils.toByteArray(ins), "test.jpg");
+        UploadResponse response = mStorage.upload(IOUtils.toByteArray(ins), "test.jpg");
         System.out.println(mStorage.domain());
         System.out.println(response.toString());
 

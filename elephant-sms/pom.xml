@@ -12,6 +12,13 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>elephant-sms</artifactId>
 
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+	</properties>
+
     <dependencies>
         <!-- 测试工具 -->
         <dependency>
@@ -59,6 +66,8 @@
             <artifactId>dysmsapi</artifactId>
             <version>1.0.0</version>
         </dependency>
+
+
     </dependencies>
 
     <build>

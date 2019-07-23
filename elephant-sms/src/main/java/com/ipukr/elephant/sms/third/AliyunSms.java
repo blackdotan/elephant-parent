@@ -47,24 +47,35 @@ public class AliyunSms implements Sms {
     }
 
 
+    /**
+     * 方法弃用
+     * @see AliyunSms#send(String, String, String)
+     * @param mobile 手机号
+     * @param code   验证码
+     * @return
+     */
     @Override
+    @Deprecated
     public SmsResponse send(String mobile, String code) {
         return send(config.getTemplateId(), mobile, code);
     }
+//
+//    @Override
+//    public SmsResponse send(String templateId, String mobile, String code) {
+//        Map map = new HashMap(){
+//            {
+//                put("code", code);
+//            }
+//        };
+//        return send(templateId, mobile, map);
+//    }
 
     @Override
     public SmsResponse send(String templateId, String mobile, String code) {
-        Map map = new HashMap(){
-            {
-                put("code", code);
-            }
-        };
+        Map map = new HashMap(){{
+            put("code", code);
+        }};
         return send(templateId, mobile, map);
-    }
-
-    @Override
-    public SmsResponse send(String templateId, String mobile, String code) {
-        return send(templateId, mobile, code);
     }
 
     @Override

@@ -12,13 +12,10 @@ import lombok.ToString;
  * Created by ryan wu on 2019/4/12.
  */
 @Data
-@Builder
-@ToString
-public class QiniuUploadResponse {
-    private boolean success;
-    private String filename;
-    private String hash;
-    private String key;
+public class QiniuUploadResponse extends UploadResponse {
 
-
+	@Builder
+	public QiniuUploadResponse(boolean success, String filename, String hash, String key, String domain, String prefix, String subfix, String url) {
+		super(success, filename, hash, key, domain, prefix, subfix, url);
+	}
 }
