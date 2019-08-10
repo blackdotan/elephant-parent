@@ -6,7 +6,7 @@
     <dependency>
         <groupId>com.ipukr.elephant</groupId>
         <artifactId>elephant-parent</artifactId>
-        <version>2.3.0</version>
+        <version>2.4.1</version>
     <dependency>
 
 
@@ -15,7 +15,7 @@
     <dependency>
         <groupId>com.ipukr.elephant</groupId>
         <artifactId>elephant-cloud-storage</artifactId>
-        <version>2.3.0</version>
+        <version>2.4.1</version>
     <dependency>
 
 
@@ -75,7 +75,7 @@
     <dependency>
         <groupId>com.ipukr.elephant</groupId>
         <artifactId>elephant-httpclient</artifactId>
-        <version>2.3.0</version>
+        <version>2.4.1</version>
     </dependency>
 
 Httpclient组件主要是简化httpclient的代码，
@@ -124,7 +124,7 @@ Httpclient组件主要是简化httpclient的代码，
     <dependency>
         <groupId>com.ipukr.elephant</groupId>
         <artifactId>elephant-kv</artifactId>
-        <version>2.3.0</version>
+        <version>2.4.1</version>
     </dependency>
 
 
@@ -188,7 +188,7 @@ Httpclient组件主要是简化httpclient的代码，
     <dependency>
         <groupId>com.ipukr.elephant</groupId>
         <artifactId>elephant-mail</artifactId>
-        <version>2.3.0</version>
+        <version>2.4.1</version>
     </dependency>
 
 
@@ -220,7 +220,7 @@ Httpclient组件主要是简化httpclient的代码，
     <dependency>
         <groupId>com.ipukr.elephant</groupId>
         <artifactId>elephant-push</artifactId>
-        <version>2.3.0</version>
+        <version>2.4.1</version>
     </dependency>
 
 
@@ -269,7 +269,7 @@ Httpclient组件主要是简化httpclient的代码，
     <dependency>
         <groupId>com.ipukr.elephant</groupId>
         <artifactId>elephant-sms</artifactId>
-        <version>2.3.0</version>
+        <version>2.4.1</version>
     </dependency>
 
 
@@ -312,7 +312,7 @@ Httpclient组件主要是简化httpclient的代码，
     <dependency>
         <groupId>com.ipukr.elephant</groupId>
         <artifactId>elephant-weixin</artifactId>
-        <version>2.3.0</version>
+        <version>2.4.1</version>
     </dependency>
 
 
@@ -363,7 +363,7 @@ Httpclient组件主要是简化httpclient的代码，
     <dependency>
         <groupId>com.ipukr.elephant</groupId>
         <artifactId>elephant-payment-alipay</artifactId>
-        <version>2.3.0</version>
+        <version>2.4.1</version>
     </dependency>
 
 
@@ -372,7 +372,7 @@ Httpclient组件主要是简化httpclient的代码，
     <dependency>
         <groupId>com.ipukr.elephant</groupId>
         <artifactId>elephant-payment-weixin</artifactId>
-        <version>2.3.0</version>
+        <version>2.4.1</version>
     </dependency>
 
 
@@ -474,9 +474,11 @@ Httpclient组件主要是简化httpclient的代码，
     <dependency>
         <groupId>com.ipukr.elephant</groupId>
         <artifactId>elephant-mybatis-plugin</artifactId>
-        <version>2.3.0</version>
+        <version>2.4.1</version>
     </dependency>
 
+
+已迁移，参考scrat-mybatis-plugin项目
 
 基于Mybatis Generator项目实现的代码生成扩展插件
 
