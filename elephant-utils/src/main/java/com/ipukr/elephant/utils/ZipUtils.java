@@ -38,6 +38,7 @@ public class ZipUtils {
      */
     public static List<FileModel> unzip(InputStream ins) throws IOException {
         Charset gbk = Charset.forName("gbk");
+//        String fileEncode = EncodeUtil.getEncode(filePath,true);
         return unzip(ins, gbk);
     }
 
