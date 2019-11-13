@@ -3,7 +3,7 @@ package com.ipukr.elephant.common.exception;
 import org.springframework.http.HttpStatus;
 
 /**
- * 非法格式 <br>
+ * 400 BAD REQUEST - [POST/PUT/PATCH]：非法格式  <br>
  *
  * @author ryan wu
  * <p>

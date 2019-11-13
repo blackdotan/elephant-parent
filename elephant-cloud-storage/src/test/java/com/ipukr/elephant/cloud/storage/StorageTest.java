@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Calendar;
 
 /**
  * Created by ryan on 下午2:58.
@@ -26,12 +27,20 @@ public class StorageTest {
      */
     @Before
     public void setUp() throws Exception {
+//        QiniuStorageConfig config = QiniuStorageConfig.custom()
+//                .accessKey("TIfWJ8n_YCiOfnA8O4eOx79VdgfduHQO0svjhO2K")
+//                .secretKey("960i9OllMoLEkUfkPPV0UpnE4c9Qg2DPIRFv_tN1")
+//                .domain("https://oustorage.ipukr.cn/")
+//                .bucket("outsourcing")
+//                .build();
         QiniuStorageConfig config = QiniuStorageConfig.custom()
-                .accessKey("TIfWJ8n_YCiOfnA8O4eOx79VdgfduHQO0svjhO2K")
-                .secretKey("960i9OllMoLEkUfkPPV0UpnE4c9Qg2DPIRFv_tN1")
-                .domain("https://oustorage.ipukr.cn/")
-                .bucket("outsourcing")
+                .accessKey("d2ebnExkOvLaTXtV0n_i2UuUfKA13aLPp0W8nZE7")
+                .secretKey("Vc-GKDLDBNcQOJXA6FfcuAaxmFYaSl4UKFKn4Qxn")
+                .domain("http://res.baoanejia.com")
+                .bucket("images")
                 .build();
+
+
         mStorage = new QiniuStorage(config);
     }
 
@@ -67,14 +76,14 @@ public class StorageTest {
 
     @Test
     public void testupload() throws Exception {
-        String filepath = StorageTest.class.getResource("/").getPath().concat("test.jpg");
-
+//        String filepath = StorageTest.class.getResource("/").getPath().concat("test.jpg");
+        String filepath = "/Users/ryan/Workspace/Pukr/outsourcing/xinkean/ebaoan/build/app/outputs/apk/release/app-release.apk";
         FileInputStream ins = new FileInputStream(filepath);
-
-        UploadResponse response = mStorage.upload(IOUtils.toByteArray(ins), "test.jpg");
-        System.out.println(mStorage.domain());
-        System.out.println(response.toString());
-
-
+        String relative = "downloading/ebaoan/".concat("" + Calendar.getInstance().getTime().getTime()).concat("/app-release.apk");
+        String uri = mStorage.domain().concat("/").concat(relative);
+        UploadResponse response = mStorage.upload(IOUtils.toByteArray(ins), relative);
+        System.out.println(relative);
+        System.out.println(uri);
+        System.out.println(response.isSuccess());
     }
 }

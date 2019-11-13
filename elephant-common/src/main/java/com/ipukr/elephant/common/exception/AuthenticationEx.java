@@ -3,7 +3,8 @@ package com.ipukr.elephant.common.exception;
 import org.springframework.http.HttpStatus;
 
 /**
- * 认证异常 <br>
+ *
+ * 401 Unauthorized - [*]：认证异常（Token不存在、用户未登录、账号密码错误） <br>
  *
  * @author ryan.
  *         <p>
@@ -12,11 +13,11 @@ import org.springframework.http.HttpStatus;
 public class AuthenticationEx extends AbstractEx {
 
     public AuthenticationEx(String message) {
-        super(HttpStatus.FORBIDDEN, message);
+        super(HttpStatus.UNAUTHORIZED, message);
     }
 
     public AuthenticationEx(String message, String... args) {
-        super(HttpStatus.FORBIDDEN, message, args);
+        super(HttpStatus.UNAUTHORIZED, message, args);
     }
 
     public AuthenticationEx(HttpStatus status, String message) {

@@ -10,7 +10,7 @@ import org.springframework.util.MultiValueMap;
 import java.util.List;
 
 /**
- * 请描述类 <br>
+ * 列表对象 <br>
  *
  * @author ryan wu
  * <p>
@@ -22,18 +22,65 @@ public class PaginationResponseEntity<T> extends HttpEntity {
 
     private PaginationResponseBody body;
 
-    public PaginationResponseEntity(List<T> data, HttpStatus statusCode) {
-        this(data, new HttpHeaders(), statusCode);
+    /**
+     * @param data
+     * @param statusCode
+     */
+    public PaginationResponseEntity(List<T> data,
+                                    HttpStatus statusCode) {
+        this(data, true, "请求成功", new HttpHeaders(), statusCode);
     }
 
-    public PaginationResponseEntity(MultiValueMap<String, String> headers, HttpStatus statusCode) {
+    /**
+     * @param data
+     * @param success
+     * @param msg
+     * @param statusCode
+     */
+    public PaginationResponseEntity(List<T> data,
+                                    Boolean success,
+                                    String msg,
+                                    HttpStatus statusCode) {
+        this(data, success, msg, new HttpHeaders(), statusCode);
+    }
+
+    /**
+     * @param headers
+     * @param statusCode
+     */
+    public PaginationResponseEntity(MultiValueMap<String, String> headers,
+                                    HttpStatus statusCode) {
         super(headers);
         this.statusCode = statusCode;
     }
 
-    public PaginationResponseEntity(List<T> data, MultiValueMap<String, String> headers, HttpStatus statusCode) {
+    /**
+     * @param data
+     * @param headers
+     * @param statusCode
+     */
+    public PaginationResponseEntity(List<T> data,
+                                    MultiValueMap<String, String> headers,
+                                    HttpStatus statusCode) {
+        this(data, true, "请求成功", headers, statusCode);
+    }
+
+    /**
+     * @param data
+     * @param success
+     * @param msg
+     * @param headers
+     * @param statusCode
+     */
+    public PaginationResponseEntity(List<T> data,
+                                    Boolean success,
+                                    String msg,
+                                    MultiValueMap<String, String> headers,
+                                    HttpStatus statusCode) {
         body = new PaginationResponseBody();
         body.setData(data);
+        body.setSuccess(success);
+        body.setMsg(msg);
         if(data instanceof PageList) {
             Paginator paginator = ((PageList) data).getPaginator();
             body.setCount(paginator.getTotalCount());
@@ -41,15 +88,14 @@ public class PaginationResponseEntity<T> extends HttpEntity {
             body.setPageSize(paginator.getLimit());
             body.setPageCount(paginator.getTotalPages());
         }
-
         this.statusCode = statusCode;
     }
+
 
     @Override
     public Object getBody() {
         return body;
     }
-
 
 
     /**
@@ -71,6 +117,11 @@ public class PaginationResponseEntity<T> extends HttpEntity {
         return new BodyBuilder(HttpStatus.OK);
     }
 
+    /**
+     * @param data
+     * @param <T>
+     * @return
+     */
     public static <T> PaginationResponseEntity ok(List<T> data){
         return new PaginationResponseEntity(data, HttpStatus.OK);
     }
@@ -105,6 +156,14 @@ public class PaginationResponseEntity<T> extends HttpEntity {
 
 
     public static class PaginationResponseBody {
+        /**
+         *
+         */
+        private String msg;
+        /**
+         *
+         */
+        private Boolean success;
         /**
          * 页面大小
          */
@@ -168,6 +227,22 @@ public class PaginationResponseEntity<T> extends HttpEntity {
 
         public void setData(List data) {
             this.data = data;
+        }
+
+        public String getMsg() {
+            return msg;
+        }
+
+        public void setMsg(String msg) {
+            this.msg = msg;
+        }
+
+        public Boolean getSuccess() {
+            return success;
+        }
+
+        public void setSuccess(Boolean success) {
+            this.success = success;
         }
     }
 
