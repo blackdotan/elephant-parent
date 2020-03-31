@@ -5,6 +5,7 @@ import com.ipukr.elephant.dssclient.domain.DPDevice;
 import com.ipukr.elephant.dssclient.domain.DPOrganization;
 import com.ipukr.elephant.dssclient.domain.res.DPSnapshot;
 
+import javax.xml.bind.JAXBException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -23,19 +24,21 @@ public interface Client {
 	 * 获取组织树
 	 * @return
 	 */
-	DPOrganization group() throws IOException;
+	DPOrganization group() throws IOException, JAXBException;
 
 	/**
 	 * 通过设备id获取当前id下所有快照
-	 * @param DevID
+	 * @param device
 	 * @return
+	 * @throws IOException
+	 * @throws JAXBException
 	 */
-	List<DPSnapshot> snapshot(DPDevice device) throws IOException;
+	List<DPSnapshot> snapshot(DPDevice device) throws IOException, JAXBException;
 
 	/**
 	 * 通过设备id+通道id获取快照
-	 * @param DevID
-	 * @param DevChannel
+	 * @param device
+	 * @param channel
 	 * @return
 	 */
 	DPSnapshot snapshot(DPDevice device, DPChannel channel);
@@ -44,13 +47,13 @@ public interface Client {
 	 * 通过 实时通道ID 请求实时码流
 	 * @return
 	 */
-	Integer getReal(String RealDevChannelID, OutputStream ous);
+	Integer getReal(DPChannel channel, OutputStream ous);
 
 	/**
 	 * 关闭实时码流
 	 * @return
 	 */
-	boolean closeReal(Integer nRealSeq);
+	boolean closeReal(DPChannel channel);
 
 	/** 注销
 	 * @return

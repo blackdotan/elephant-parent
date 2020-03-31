@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Versioninfo>
+	<Module name="PlatformSDK" path="/BASPlatform/DSSModule/PlatformSDK/Branches/P_2017.11.16_PlatformSDK_3.1.X" version="1631333">
+		<Module name="DssBaseLib" path="/BASPlatform/DSSModule/DssBaseLib/Branches/P_2014.09.23_DssBaseLib_Stable1.3.X" version="1565771">
+			<External name="openssl" path="^/DSSModule/Bin/3rdParty/openssl" version="1462730"/>
+		</Module>
+		<Module name="DssProto" path="/BASPlatform/DSSModule/DssProto/Branches/P_2014.09.23_DssProto_Stable1.3.X" version="1575709">
+			<Module name="DssBaseLib" path="/BASPlatform/DSSModule/DssBaseLib/Branches/P_2014.09.23_DssBaseLib_Stable1.3.X" version="1565771">
+				<External name="openssl" path="^/DSSModule/Bin/3rdParty/openssl" version="1462730"/>
+			</Module>
+		</Module>
+		<External name="VAXPlayer" path="^/DSSModule/Bin/3rdParty/VAXPlayer" version="1361422"/>
+		<External name="StreamAnalyzer" path="^/DSSModule/Bin/3rdParty/StreamParser" version="293800"/>
+		<External name="amrcodec" path="^/DSSModule/Bin/3rdParty/amrcodec" version="368659"/>
+		<External name="IVSDrawer" path="^/DSSModule/Bin/3rdParty/IVSDrawer" version="1191710"/>
+		<External name="Sip" path="^/DSSModule/Bin/3rdParty/Sip" version="706264"/>
+		<External name="MediaParser" path="^/DSSModule/Bin/3rdParty/MediaParser" version="441123"/>
+		<External name="Infra" path="^/DSSModule/Bin/3rdParty/Infra" version="368657"/>
+		<External name="Memory" path="http://10.6.5.2/svnpl/Renascence/Include/Trunk/Memory" version="282672"/>
+		<External name="H264Parser" path="^/DSSModule/Bin/3rdParty/H264Parser" version="371340"/>
+		<External name="H265Parser" path="^/DSSModule/Bin/3rdParty/H265Parser" version="299793"/>
+		<External name="NetSdk" path="^/DSSModule/Bin/3rdParty/NetSdk" version="1311734"/>
+		<External name="vcredist" path="^/DSSModule/Bin/3rdParty/vcredist" version="290263"/>
+		<External name="Component" path="http://10.6.5.2/svnpl/Renascence/Include/Trunk/Component" version="285791"/>
+		<External name="jpegInfo" path="^/DSSModule/Bin/3rdParty/jpegInfo" version="371500"/>
+	</Module>
+</Versioninfo>

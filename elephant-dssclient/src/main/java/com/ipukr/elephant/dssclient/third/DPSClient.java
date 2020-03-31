@@ -1,19 +1,15 @@
 package com.ipukr.elephant.dssclient.third;
 
 import com.dh.DpsdkCore.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.ipukr.elephant.dssclient.Client;
 import com.ipukr.elephant.dssclient.config.DPSClientConfig;
 import com.ipukr.elephant.dssclient.domain.DPChannel;
 import com.ipukr.elephant.dssclient.domain.DPDevice;
 import com.ipukr.elephant.dssclient.domain.DPOrganization;
-import com.ipukr.elephant.dssclient.domain.Organization;
 import com.ipukr.elephant.dssclient.domain.res.DPSnapshot;
-import com.ipukr.elephant.utils.JsonUtils;
-import org.json.JSONObject;
-import org.json.XML;
+import com.ipukr.elephant.utils.JaxbUtils;
 
+import javax.xml.bind.JAXBException;
 import java.io.*;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
@@ -47,18 +43,18 @@ public class DPSClient implements Client {
 			System.out.println();
 		}
 	};
+
 	private void init() {
 		int nRet = -1;
 		Return_Value_Info_t res = new Return_Value_Info_t();
-		nRet = IDpsdkCore.DPSDK_Create(dpsdk_sdk_type_e.DPSDK_CORE_SDK_SERVER,res);
+		nRet = IDpsdkCore.DPSDK_Create(dpsdk_sdk_type_e.DPSDK_CORE_SDK_SERVER, res);
 
 		m_nDLLHandle = res.nReturnValue;
 //		String dpsdklog = "D:\\dpsdkjavalog";
 //		nRet = IDpsdkCore.DPSDK_SetLog(m_nDLLHandle, dpsdklog.getBytes());
 //		String dumpfile = "D:\\dpsdkjavadump";
 //		nRet = IDpsdkCore.DPSDK_StartMonitor(m_nDLLHandle, dumpfile.getBytes());
-		if(m_nDLLHandle > 0)
-		{
+		if (m_nDLLHandle > 0) {
 //			//设置设备状态上报监听函数
 //			nRet = IDpsdkCore.DPSDK_SetDPSDKDeviceStatusCallback(m_nDLLHandle, fDeviceStatus);
 //			//设置NVR通道状态上报监听函数
@@ -76,6 +72,7 @@ public class DPSClient implements Client {
 		System.out.print("创建DPSDK, 返回 m_nDLLHandle = ");
 		System.out.println(m_nDLLHandle);
 	}
+
 	private boolean login() {
 		Login_Info_t loginInfo = new Login_Info_t();
 		loginInfo.szIp = config.m_strIp.getBytes();
@@ -87,13 +84,11 @@ public class DPSClient implements Client {
 		//// 登陆类型，1为PC客户端, 2为手机客户端
 		loginInfo.iType = 1;
 
-		int nRet = IDpsdkCore.DPSDK_Login(m_nDLLHandle,loginInfo,10000);
-		if(nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS)
-		{
+		int nRet = IDpsdkCore.DPSDK_Login(m_nDLLHandle, loginInfo, 10000);
+		if (nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS) {
 			System.out.printf("登录成功，nRet = %d\n", nRet);
 			return true;
-		}else
-		{
+		} else {
 			System.out.printf("登录失败，nRet = %d\n", nRet);
 		}
 		System.out.println();
@@ -103,20 +98,20 @@ public class DPSClient implements Client {
 	private DPOrganization organization;
 
 	@Override
-	public DPOrganization group() throws IOException {
+	public DPOrganization group() throws IOException, JAXBException {
 		Return_Value_Info_t nGroupLen = new Return_Value_Info_t();
-		int nRet = IDpsdkCore.DPSDK_LoadDGroupInfo(m_nDLLHandle, nGroupLen, 180000 );
-		if(nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS) {
+		int nRet = IDpsdkCore.DPSDK_LoadDGroupInfo(m_nDLLHandle, nGroupLen, 180000);
+		if (nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS) {
 //			System.out.printf("加载所有组织树成功，nRet = %d， nDepCount = %d", nRet, nGroupLen.nReturnValue);
 			byte[] szGroupBuf = new byte[nGroupLen.nReturnValue];
 			int nRst = IDpsdkCore.DPSDK_GetDGroupStr(m_nDLLHandle, szGroupBuf, nGroupLen.nReturnValue, 10000);
 
-			if(nRst == dpsdk_retval_e.DPSDK_RET_SUCCESS) {
+			if (nRst == dpsdk_retval_e.DPSDK_RET_SUCCESS) {
 //				System.out.println(new String(szGroupBuf));
 				String xml = new String(szGroupBuf);
 				BufferedInputStream bis = new BufferedInputStream(new ByteArrayInputStream(szGroupBuf));
 
-				XmlMapper mapper = new XmlMapper();
+//				XmlMapper mapper = new XmlMapper();
 //				JSONObject jsonObject = XML.toJSONObject(xml .replace("\r", "").replace("\t", ""));
 
 //				String str = JsonUtils.parserObj2String(jsonObject.toString());
@@ -125,7 +120,8 @@ public class DPSClient implements Client {
 //				Organization iOrganizatio = mapper.readValue(xml, Organization.class);
 //				System.out.println(JsonUtils.parserObj2String(iOrganizatio));
 
-				this.organization = mapper.readValue(xml, DPOrganization.class);
+				this.organization = JaxbUtils.xmlToBean(bis, DPOrganization.class);
+//				this.organization = mapper.readValue(xml, DPOrganization.class);
 //						.replace("\r", "")
 //						.replace("\n", "")
 //						.replace("\t", "");
@@ -150,7 +146,7 @@ public class DPSClient implements Client {
 	}
 
 	@Override
-	public List<DPSnapshot> snapshot(DPDevice device) throws IOException {
+	public List<DPSnapshot> snapshot(DPDevice device) throws IOException, JAXBException {
 		if (this.organization == null) {
 			this.group();
 		}
@@ -181,37 +177,40 @@ public class DPSClient implements Client {
 
 	@Override
 	public DPSnapshot snapshot(DPDevice device, DPChannel channel) {
-        String szJson = "{ \"method\":\"dev.snap\",\"params\":{\"DevID\":" + device.getId() + ",\"DevChannel\":" + channel.getOffset() + ",\"PicNum\":4,\"SnapType\":2,\"CmdSrc\":1},\"id\":88 }";
-        //模块
-        int mdltype = dpsdk_mdl_type_e.DPSDK_MDL_DMS;
-        //传输类型
-        int trantype = generaljson_trantype_e.GENERALJSON_TRAN_REQUEST;
-        //通过Json协议发送命令,返回结果通过DPSDK_SetGeneralJsonTransportCallback回调
-        int nRet = IDpsdkCore.DPSDK_GeneralJsonTransport(m_nDLLHandle, szJson.getBytes(), mdltype, trantype, 30*1000);
-        StringBuilder sb=new StringBuilder();
-        if(nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS)
-        {
+		String szJson = "{ \"method\":\"dev.snap\",\"params\":{\"DevID\":" + device.getId() + ",\"DevChannel\":" + channel.getOffset() + ",\"PicNum\":4,\"SnapType\":2,\"CmdSrc\":1},\"id\":88 }";
+		//模块
+		int mdltype = dpsdk_mdl_type_e.DPSDK_MDL_DMS;
+		//传输类型
+		int trantype = generaljson_trantype_e.GENERALJSON_TRAN_REQUEST;
+		//通过Json协议发送命令,返回结果通过DPSDK_SetGeneralJsonTransportCallback回调
+		int nRet = IDpsdkCore.DPSDK_GeneralJsonTransport(m_nDLLHandle, szJson.getBytes(), mdltype, trantype, 30 * 1000);
+		StringBuilder sb = new StringBuilder();
+		if (nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS) {
 			IDpsdkCore.DPSDK_SetGeneralJsonTransportCallback(m_nDLLHandle, new fDPSDKGeneralJsonTransportCallback() {
 				public void invoke(int nPDLLHandle, byte[] szJson) {
 					sb.append(new String(szJson));
 					System.out.println(new String(szJson));
 				}
 			});
-            System.out.printf("DPSDK_GeneralJsonTransport:成功，nRet = %d", nRet);
-        }else
-        {
-            System.out.printf("DPSDK_GeneralJsonTransport:失败，nRet = %d", nRet);
-        }
-        System.out.println();
+			System.out.printf("DPSDK_GeneralJsonTransport:成功，nRet = %d", nRet);
+		} else {
+			System.out.printf("DPSDK_GeneralJsonTransport:失败，nRet = %d", nRet);
+		}
+		System.out.println();
 		return DPSnapshot.builder().channel(channel).data(sb.toString()).build();
 //		return sb.toString();
 	}
 
+	/**
+	 * @param channel
+	 * @param ous
+	 * @return
+	 */
 	@Override
-	public Integer getReal(String RealDevChannelID, OutputStream ous) {
+	public Integer getReal(DPChannel channel, OutputStream ous) {
 		Return_Value_Info_t nRealSeq = new Return_Value_Info_t();
 		Get_RealStream_Info_t getInfo = new Get_RealStream_Info_t();
-		getInfo.szCameraId = RealDevChannelID.getBytes();// 通道ID
+		getInfo.szCameraId = channel.getId().getBytes();// 通道ID
 		getInfo.nStreamType = dpsdk_stream_type_e.DPSDK_CORE_STREAMTYPE_MAIN;// 码流类型（1.主码流  2.辅码流）
 		getInfo.nRight = dpsdk_check_right_e.DPSDK_CORE_NOT_CHECK_RIGHT; //0.检查  1.不检查权限，请求视频流，无需加载组织结构
 		getInfo.nMediaType = dpsdk_media_type_e.DPSDK_CORE_MEDIATYPE_VIDEO;// 媒体类型：1.视频 2.音频 3.视频+音频
@@ -220,63 +219,65 @@ public class DPSClient implements Client {
 //		fMediaDataCallback m_MediaCB = new DPSDKMediaDataCallback();//请求实时码流，成功后视频码流进入m_MediaCB函数中
 
 
-		fMediaDataCallback m_MediaCB = new fMediaDataCallback(){
-			public void invoke(int nPDLLHandle, int nSeq, int nMediaType, byte[] szNodeId, int nParamVal, byte[] szData, int nDataLen){
+		fMediaDataCallback m_MediaCB = new fMediaDataCallback() {
+			@Override
+			public void invoke(int nPDLLHandle, int nSeq, int nMediaType, byte[] szNodeId, int nParamVal, byte[] szData, int nDataLen) {
 				System.out.printf("视频流：DPSDKMediaDataCallback nSeq = %d, nMediaType = %d, nDataLen = %d", nSeq, nMediaType, nDataLen);
 				System.out.println();
-				try{
+				try {
 					if (nDataLen == 0) {
 						ous.flush();
 					}
 					ous.write(szData);
-				}catch(IOException e){
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		};
 
-		int nRet = IDpsdkCore.DPSDK_GetRealStream(m_nDLLHandle, nRealSeq, getInfo, m_MediaCB , 10000);
+		int nRet = IDpsdkCore.DPSDK_GetRealStream(m_nDLLHandle, nRealSeq, getInfo, m_MediaCB, 10000);
 
-		if(nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS)
-		{
-
+		if (nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS) {
 			System.out.printf("打开实时视频成功，nRet = %d， nSeq = %d", nRet, nRealSeq.nReturnValue);
 			System.out.println();
-		}else
-		{
+		} else {
 			System.out.printf("打开实时视频失败，nRet = %d", nRet);
 		}
-		System.out.println();
-		if(nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS)
+		if (nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS) {
 			return nRealSeq.nReturnValue;
-		else
+		} else {
 			return -1;
+		}
 	}
 
+	/**
+	 * @param channel
+	 * @return
+	 */
 	@Override
-	public boolean closeReal(Integer nRealSeq) {
-		int nRet = IDpsdkCore.DPSDK_CloseRealStreamBySeq(m_nDLLHandle, nRealSeq, 10000);
-
-		if(nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS)
-		{
-			System.out.printf("关闭实时视频成功，nRet = %d， nSeq = %d", nRet, nRealSeq);
-		}else
-		{
-			System.out.printf("关闭实时视频失败，nRet = %d", nRet);
+	public boolean closeReal(DPChannel channel) {
+		int nsequence = channel.getNsequence();
+		if (nsequence != -1) {
+			int nRet = IDpsdkCore.DPSDK_CloseRealStreamBySeq(m_nDLLHandle, nsequence, 10000);
+			if (nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS) {
+				System.out.printf("关闭实时视频成功，nRet = %d， nSeq = %d", nRet, nsequence);
+				return true;
+			} else {
+				System.out.printf("关闭实时视频失败，nRet = %d", nRet);
+				return false;
+			}
+		} else {
+			return true;
 		}
-		System.out.println();
-		return true;
 	}
 
 	@Override
 	public boolean logout() {
 		int nRet = IDpsdkCore.DPSDK_Logout(m_nDLLHandle, 10000);
-		if(nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS)
-		{
+		if (nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS) {
 			System.out.printf("登出成功，nRet = %d", nRet);
 			return true;
-		}else
-		{
+		} else {
 			System.out.printf("登出失败，nRet = %d", nRet);
 		}
 		System.out.println();
@@ -286,12 +287,10 @@ public class DPSClient implements Client {
 	@Override
 	public boolean destroy() {
 		int nRet = IDpsdkCore.DPSDK_Destroy(m_nDLLHandle);
-		if(nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS)
-		{
+		if (nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS) {
 			System.out.printf("释放内存成功，nRet = %d", nRet);
 			return true;
-		}else
-		{
+		} else {
 			System.out.printf("释放内存失败，nRet = %d", nRet);
 		}
 		System.out.println();
