@@ -1,6 +1,13 @@
 package com.ipukr.elephant.dssclient;
 
+import com.ipukr.elephant.dssclient.domain.DPChannel;
+import com.ipukr.elephant.dssclient.domain.DPDevice;
+import com.ipukr.elephant.dssclient.domain.DPOrganization;
+import com.ipukr.elephant.dssclient.domain.res.DPSnapshot;
+
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 /**
@@ -13,28 +20,46 @@ import java.util.List;
 public interface Client {
 
 	/**
-	 * 组织树
+	 * 获取组织树
 	 * @return
 	 */
-	List<Object> tree();
+	DPOrganization group() throws IOException;
 
 	/**
-	 * 快照
-	 * @param device
+	 * 通过设备id获取当前id下所有快照
+	 * @param DevID
 	 * @return
 	 */
-	List<Object> snapshot(String device);
+	List<DPSnapshot> snapshot(DPDevice device) throws IOException;
 
 	/**
-	 * 快照
-	 * @param device
-	 * @param channel
+	 * 通过设备id+通道id获取快照
+	 * @param DevID
+	 * @param DevChannel
 	 * @return
 	 */
-	String snapshot(String device, String channel);
+	DPSnapshot snapshot(DPDevice device, DPChannel channel);
 
+	/**
+	 * 通过 实时通道ID 请求实时码流
+	 * @return
+	 */
+	Integer getReal(String RealDevChannelID, OutputStream ous);
 
-	boolean gerReal();
+	/**
+	 * 关闭实时码流
+	 * @return
+	 */
+	boolean closeReal(Integer nRealSeq);
 
-	boolean closeReal();
+	/** 注销
+	 * @return
+	 */
+	boolean logout();
+
+	/**
+	 * 释放内存
+	 * @return
+	 */
+	boolean destroy();
 }
