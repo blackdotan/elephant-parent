@@ -24,6 +24,8 @@
         <module>elephant-payment-lianlian</module>
         <module>elephant-payment-weixin</module>
         <module>elephant-weixin</module>
+	    <module>elephant-security</module>
+	    <module>elephant-dssclient</module>
     </modules>
 
     <properties>
