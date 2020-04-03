@@ -16,4 +16,11 @@ import lombok.Data;
 public class DPSnapshot {
     private DPChannel channel;
     private String data;
+    @Builder.Default
+    private StringBuffer buffer = new StringBuffer();
+
+    public void append(byte[] data) {
+        buffer.append(data);
+    }
+
 }

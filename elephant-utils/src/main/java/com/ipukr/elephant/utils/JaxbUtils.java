@@ -1,6 +1,5 @@
 package com.ipukr.elephant.utils;
 
-import jdk.nashorn.internal.objects.Global;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
