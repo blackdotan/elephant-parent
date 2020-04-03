@@ -17,6 +17,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 /**
  * 请描述类 <br>
@@ -158,31 +159,43 @@ public class MultipalDPSClient implements Client {
 		}
 		List<DPSnapshot> arr = new ArrayList<>();
 
-//		List<DPOrganization.Devices.DeviceX.UnitNodes> uns = organization.getDevices().getDevices().stream().filter(e -> {
-//			System.out.println(e.getId());
-//			return e.getId() == device.getId();
-//		}).flatMap(e-> {
-//			System.out.println(e.getUnitNodes());
-//			return e.getUnitNodes().stream();
-//		}).filter(n-> {
-//			System.out.println(n.getType());
-//			return n.getType() == 1;
-//		}).collect(Collectors.toList());
-//		int offset = 0;
-//		for ( DPOrganization.Devices.DeviceX.UnitNodes.ChannelX channelX : uns.stream().flatMap(e ->e.getChannel().stream()).collect(Collectors.toList())) {
-//			DPChannel channel = DPChannel.builder()
-//					.id(channelX.getId())
-//					.offset(offset++)
-//					.build();
-//
+		List<DPOrganization.Devices.DeviceX.UnitNodes> uns = organization.getDevices().getDevices().stream().filter(e -> {
+			System.out.println(e.getId());
+			return e.getId() == device.getId();
+		}).flatMap(e-> {
+			System.out.println(e.getUnitNodes());
+			return e.getUnitNodes().stream();
+		}).filter(n-> {
+			System.out.println(n.getType());
+			return n.getType() == 1;
+		}).collect(Collectors.toList());
+
+
+		// 声明线程列表
+		final List<Callable<DPSnapshot>> partitions = new ArrayList<Callable<DPSnapshot>>(0);
+
+		int offset = 0;
+		for ( DPOrganization.Devices.DeviceX.UnitNodes.ChannelX channelX : uns.stream().flatMap(e ->e.getChannel().stream()).collect(Collectors.toList())) {
+			DPChannel channel = DPChannel.builder()
+					.id(channelX.getId())
+					.offset(offset++)
+					.build();
 //			DPSnapshot snapshot = snapshot(device, channel);
-//			arr.add(snapshot);
-//		}
+			// 为每个线程添加任务
+			partitions.add(new DPSSnapshotCallable(m_nDLLHandle, device, channel));
+		}
 
-
-
-
-
+		final List<Future<DPSnapshot>> futures;
+		try {
+			//执行线程
+			futures = pool.invokeAll(partitions, 15000, TimeUnit.SECONDS);
+			for (final Future<DPSnapshot> result : futures) {
+//				endingCount += result.get();
+				arr.add(result.get());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		return arr;
 	}
@@ -307,6 +320,43 @@ public class MultipalDPSClient implements Client {
 		}
 		System.out.println();
 		return false;
+	}
+
+	@Override
+	public DPDevice getDPDevice(String carName, DPOrganization organization) {
+		if(!carName.isEmpty()&&organization!=null&&organization.getDevices()!=null&&!organization.getDevices().getDevices().isEmpty()){
+			//1.通过名称+组织树->获取当前车辆的所有设备device信息
+			List<DPOrganization.Devices.DeviceX> deviceList = organization.getDevices().getDevices().stream().filter(e -> {
+				if (carName.equals(e.getName())) {
+					return true;
+				} else {
+					return false;
+				}
+			}).collect(Collectors.toList());
+			//把设备device信息 赋值给DPDevice
+			if(!deviceList.isEmpty()){
+				DPOrganization.Devices.DeviceX deviceX = deviceList.get(0);
+				DPDevice de=new DPDevice();
+				de.setId(deviceX.getId());
+				de.setName(carName);
+				de.setType(deviceX.getType());
+				return de;
+			}
+		}
+		/*List<DPDevice> deviceList=organization.getDevices().getDevices().stream().filter(e->{
+			if(carName.equals(e.getName())){
+				return true;
+			}else{
+				return false;
+			}
+		}).collect(Collectors.toList()).stream().map(e->{
+			DPDevice de=new DPDevice();
+			de.setId(e.getId());
+			de.setName(carName);
+			de.setType(e.getType());
+			return de;
+		}).collect(Collectors.toList());*/
+		return null;
 	}
 
 

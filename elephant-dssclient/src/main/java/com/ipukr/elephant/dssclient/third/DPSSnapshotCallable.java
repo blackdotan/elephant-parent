@@ -28,6 +28,7 @@ public class DPSSnapshotCallable implements Callable<DPSnapshot> {
 
 	@Override
 	public DPSnapshot call() throws Exception {
+		System.out.println(String.format("--device.id=%d, offset=%d", device.getId(),  channel.getOffset()));
 		return snapshot(device, channel);
 	}
 
@@ -45,15 +46,12 @@ public class DPSSnapshotCallable implements Callable<DPSnapshot> {
 			IDpsdkCore.DPSDK_SetGeneralJsonTransportCallback(nPDLLHandle, new fDPSDKGeneralJsonTransportCallback() {
 				public void invoke(int nPDLLHandle, byte[] szJson) {
 					sb.append(new String(szJson));
-					System.out.println(new String(szJson));
 				}
 			});
 			System.out.printf("DPSDK_GeneralJsonTransport:成功，nRet = %d", nRet);
 		} else {
 			System.out.printf("DPSDK_GeneralJsonTransport:失败，nRet = %d", nRet);
 		}
-		System.out.println();
 		return DPSnapshot.builder().channel(channel).data(sb.toString()).build();
-//		return sb.toString();
 	}
 }

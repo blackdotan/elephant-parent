@@ -7,6 +7,7 @@ import com.ipukr.elephant.dssclient.domain.DPOrganization;
 import com.ipukr.elephant.dssclient.domain.res.DPSnapshot;
 import com.ipukr.elephant.dssclient.third.DPSClient;
 import com.ipukr.elephant.utils.JsonUtils;
+import org.junit.Before;
 import org.junit.Test;
 
 import javax.xml.bind.JAXBException;
@@ -24,16 +25,21 @@ import java.util.List;
  * Created by ryan wu on 2020/3/31.
  */
 public class ClientTest {
-	@Test
+
+    private Client client;
+    private DPOrganization iDPOrganization;
+    @Before
+    public void setUp() throws Exception {
+        DPSClientConfig config = new DPSClientConfig();
+        //1.登陆
+        client = new DPSClient(config);
+        //2.获取组织树
+        iDPOrganization = client.group();
+    }
+
+    @Test
 	public void dotst() throws IOException, JAXBException {
-		DPSClientConfig config = new DPSClientConfig();
-		//1.登陆
-		Client client = new DPSClient(config);
-		//2.获取组织树
-		DPOrganization iDPOrganization = client.group();
-		if(iDPOrganization==null){
-			return;
-		}
+
 		//3.通过车名+组织树 ->获取设备id+name+type(暂时不知道怎么用)
 		DPDevice dpDevice = client.getDPDevice("105-闽DQ1G09", iDPOrganization);
 		//4.通过设备id->获取所有图片信息DPChannel(通道id+对应序号0,1,2.. 车辆详情名称name 类型type)对象 + data(base64)图片数据
@@ -74,4 +80,11 @@ public class ClientTest {
 				.build();
 		List<DPSnapshot> snapshots = client.snapshot(dpd);*/
 	}
+
+    @Test
+    public void dotstdevice() throws IOException, JAXBException {
+        DPDevice device = client.getDPDevice("140-闽DQ0E75", iDPOrganization);
+        List<DPSnapshot>  snapshots = client.snapshot(device);
+        System.out.println(snapshots);
+    }
 }
