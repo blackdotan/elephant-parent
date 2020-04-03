@@ -10,12 +10,13 @@ import com.ipukr.elephant.dssclient.domain.res.DPSnapshot;
 import com.ipukr.elephant.utils.JaxbUtils;
 
 import javax.xml.bind.JAXBException;
-import java.io.*;
-import java.sql.SQLOutput;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.concurrent.*;
 
 /**
  * 请描述类 <br>
@@ -24,18 +25,18 @@ import java.util.stream.Collectors;
  * <p>
  * Created by ryan wu on 2020/3/31.
  */
-public class DPSClient implements Client {
+public class MultipalDPSClient implements Client {
 
 
-	final int numberOfCore = Runtime.getRuntime().availableProcessors();
 
-	final int poolSize = 1;
+	final ExecutorService pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
 	private DPSClientConfig config;
 
 	public static int m_nDLLHandle = -1;
 
-	public DPSClient(DPSClientConfig config) {
+	public MultipalDPSClient(DPSClientConfig config) {
+
 		this.config = config;
 		this.init();
 		this.login();
@@ -177,7 +178,6 @@ public class DPSClient implements Client {
 //			DPSnapshot snapshot = snapshot(device, channel);
 //			arr.add(snapshot);
 //		}
-
 
 
 
