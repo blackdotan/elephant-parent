@@ -11,10 +11,8 @@ import com.ipukr.elephant.utils.JaxbUtils;
 
 import javax.xml.bind.JAXBException;
 import java.io.*;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -25,11 +23,6 @@ import java.util.stream.Collectors;
  * Created by ryan wu on 2020/3/31.
  */
 public class DPSClient implements Client {
-
-
-	final int numberOfCore = Runtime.getRuntime().availableProcessors();
-
-	final int poolSize = 1;
 
 	private DPSClientConfig config;
 
@@ -154,36 +147,33 @@ public class DPSClient implements Client {
 	public List<DPSnapshot> snapshot(DPDevice device) throws IOException, JAXBException {
 		if (this.organization == null) {
 			this.group();
+			//还加载不出来
+			if(this.organization == null){
+				throw new IOException("未登录，或服务器未开启");
+			}
 		}
 		List<DPSnapshot> arr = new ArrayList<>();
 
-//		List<DPOrganization.Devices.DeviceX.UnitNodes> uns = organization.getDevices().getDevices().stream().filter(e -> {
+		List<DPOrganization.Devices.DeviceX.UnitNodes> uns = organization.getDevices().getDevices().stream().filter(e -> {
 //			System.out.println(e.getId());
-//			return e.getId() == device.getId();
-//		}).flatMap(e-> {
+			return e.getId() == device.getId();
+		}).flatMap(e-> {
 //			System.out.println(e.getUnitNodes());
-//			return e.getUnitNodes().stream();
-//		}).filter(n-> {
+			return e.getUnitNodes().stream();
+		}).filter(n-> {
 //			System.out.println(n.getType());
-//			return n.getType() == 1;
-//		}).collect(Collectors.toList());
-//		int offset = 0;
-//		for ( DPOrganization.Devices.DeviceX.UnitNodes.ChannelX channelX : uns.stream().flatMap(e ->e.getChannel().stream()).collect(Collectors.toList())) {
-//			DPChannel channel = DPChannel.builder()
-//					.id(channelX.getId())
-//					.offset(offset++)
-//					.build();
-//
-//			DPSnapshot snapshot = snapshot(device, channel);
-//			arr.add(snapshot);
-//		}
+			return n.getType() == 1;
+		}).collect(Collectors.toList());
+		int offset = 0;
+		for ( DPOrganization.Devices.DeviceX.UnitNodes.ChannelX channelX : uns.stream().flatMap(e ->e.getChannel().stream()).collect(Collectors.toList())) {
+			DPChannel channel = DPChannel.builder()
+					.id(channelX.getId())
+					.offset(offset++)
+					.build();
 
-
-
-
-
-
-
+			DPSnapshot snapshot = snapshot(device, channel);
+			arr.add(snapshot);
+		}
 		return arr;
 	}
 
@@ -197,11 +187,13 @@ public class DPSClient implements Client {
 		//通过Json协议发送命令,返回结果通过DPSDK_SetGeneralJsonTransportCallback回调
 		int nRet = IDpsdkCore.DPSDK_GeneralJsonTransport(m_nDLLHandle, szJson.getBytes(), mdltype, trantype, 30 * 1000);
 		StringBuilder sb = new StringBuilder();
+		DPSnapshot snapshot = DPSnapshot.builder().channel(channel).build();
 		if (nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS) {
 			IDpsdkCore.DPSDK_SetGeneralJsonTransportCallback(m_nDLLHandle, new fDPSDKGeneralJsonTransportCallback() {
 				public void invoke(int nPDLLHandle, byte[] szJson) {
-					sb.append(new String(szJson));
+					snapshot.append(szJson);
 					System.out.println(new String(szJson));
+					snapshot.setData(new String(szJson));
 				}
 			});
 			System.out.printf("DPSDK_GeneralJsonTransport:成功，nRet = %d", nRet);
@@ -209,7 +201,7 @@ public class DPSClient implements Client {
 			System.out.printf("DPSDK_GeneralJsonTransport:失败，nRet = %d", nRet);
 		}
 		System.out.println();
-		return DPSnapshot.builder().channel(channel).data(sb.toString()).build();
+		return snapshot;
 //		return sb.toString();
 	}
 
@@ -307,6 +299,43 @@ public class DPSClient implements Client {
 		}
 		System.out.println();
 		return false;
+	}
+
+	@Override
+	public DPDevice getDPDevice(String carName, DPOrganization organization) {
+		if(!carName.isEmpty()&&organization!=null&&organization.getDevices()!=null&&!organization.getDevices().getDevices().isEmpty()){
+			//1.通过名称+组织树->获取当前车辆的所有设备device信息
+			List<DPOrganization.Devices.DeviceX> deviceList = organization.getDevices().getDevices().stream().filter(e -> {
+				if (carName.equals(e.getName())) {
+					return true;
+				} else {
+					return false;
+				}
+			}).collect(Collectors.toList());
+			//把设备device信息 赋值给DPDevice
+			if(!deviceList.isEmpty()){
+				DPOrganization.Devices.DeviceX deviceX = deviceList.get(0);
+				DPDevice de=new DPDevice();
+				de.setId(deviceX.getId());
+				de.setName(carName);
+				de.setType(deviceX.getType());
+				return de;
+			}
+		}
+		/*List<DPDevice> deviceList=organization.getDevices().getDevices().stream().filter(e->{
+			if(carName.equals(e.getName())){
+				return true;
+			}else{
+				return false;
+			}
+		}).collect(Collectors.toList()).stream().map(e->{
+			DPDevice de=new DPDevice();
+			de.setId(e.getId());
+			de.setName(carName);
+			de.setType(e.getType());
+			return de;
+		}).collect(Collectors.toList());*/
+		return null;
 	}
 
 

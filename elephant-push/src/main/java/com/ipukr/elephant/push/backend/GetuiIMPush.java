@@ -139,6 +139,16 @@ public class GetuiIMPush implements IPush{
         return mIPushResult.getResponse().get("result").equals("ok");
     }
 
+    @Override
+    public boolean login() {
+        return false;
+    }
+
+    @Override
+    public List<String> bind(String device, String channel) {
+        return null;
+    }
+
     private NotificationTemplate generatedNotificationTemplate(String title, String text) {
         NotificationTemplate template = new NotificationTemplate();
         // 设置APPID与APPKEY

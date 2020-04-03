@@ -638,7 +638,7 @@ public class DPOrganization {
                 @XmlAttribute(name = "channelnum")
                 private String channelnum;
                 @XmlAttribute(name = "type")
-                private String type;
+                private Integer type;
                 @XmlElement(name = "Channel")
                 private List<ChannelX> Channel;
 
@@ -652,11 +652,11 @@ public class DPOrganization {
                 }
 
                 @XmlTransient
-                public String getType() {
+                public Integer getType() {
                     return type;
                 }
 
-                public void setType(String type) {
+                public void setType(Integer type) {
                     this.type = type;
                 }
 
