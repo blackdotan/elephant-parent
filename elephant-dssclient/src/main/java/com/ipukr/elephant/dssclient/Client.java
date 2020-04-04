@@ -33,7 +33,7 @@ public interface Client {
 	 * @throws IOException
 	 * @throws JAXBException
 	 */
-	List<DPSnapshot> snapshot(DPDevice device) throws IOException, JAXBException;
+	List<DPSnapshot> snapshot(DPDevice device) throws Exception;
 
 	/**
 	 * 通过设备id+通道id获取快照
@@ -65,10 +65,12 @@ public interface Client {
 	 * @return
 	 */
 	boolean destroy();
-	/**
-	 * 1.通过名称+组织树->获取整个设备对象
-	 * 2.通过设备对象 返回对应的图片+通道channelId信息(snapshot()方法)
-	 * @return
-	 */
-	DPDevice getDPDevice(String carName,DPOrganization organization);
+//	/**
+//	 * FIXME 此为工具方法
+//	 *
+//	 * 1.通过名称+组织树->获取整个设备对象
+//	 * 2.通过设备对象 返回对应的图片+通道channelId信息(snapshot()方法)
+//	 * @return
+//	 */
+//	DPDevice getDPDevice(String carName,DPOrganization organization);
 }

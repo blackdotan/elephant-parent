@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 /**
  * 请描述类 <br>
  *
@@ -17,14 +18,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class DPChannel {
-
+    // TODO 注释属性
     private String id;
-
     private String name;
-
-    private String type;
+    private String desc;
+    private String status;
+    private String channelType;
+    private String channelSN;
+    private String rights;
+    private String alarmType;
+    private String alarmLevel;
 
     private int offset;
 
     private int nsequence;
+
 }

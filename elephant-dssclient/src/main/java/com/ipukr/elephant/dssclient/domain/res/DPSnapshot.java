@@ -14,13 +14,18 @@ import lombok.Data;
 @Data
 @Builder
 public class DPSnapshot {
+    // TODO 注释属性
     private DPChannel channel;
+
     private String data;
+
     @Builder.Default
     private StringBuffer buffer = new StringBuffer();
 
     public void append(byte[] data) {
         buffer.append(data);
     }
+
+
 
 }

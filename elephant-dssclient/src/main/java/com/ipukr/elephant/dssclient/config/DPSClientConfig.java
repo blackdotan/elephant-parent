@@ -1,5 +1,10 @@
 package com.ipukr.elephant.dssclient.config;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * 请描述类 <br>
  *
@@ -7,11 +12,26 @@ package com.ipukr.elephant.dssclient.config;
  * <p>
  * Created by ryan wu on 2020/3/31.
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class DPSClientConfig {
-
-	public String 	m_strIp 		= "112.5.172.93";   //登录平台ip
-	public int    	m_nPort 		= 9000;            //端口
-	public String 	m_strUser 		= "zazd";        //用户名
-	public String 	m_strPassword 	= "zazd1043";    //密码
+	/**
+	 * 中心服务器IP地址
+	 */
+	private String ip;
+	/**
+	 * 中心服务器端口
+	 */
+	private int port;
+	/**
+	 * 用户
+	 */
+	private String user;
+	/**
+	 * 密码
+	 */
+	private String pass;
 
 }

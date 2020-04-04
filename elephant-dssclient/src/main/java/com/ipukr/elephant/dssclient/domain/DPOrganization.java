@@ -1,6 +1,8 @@
 package com.ipukr.elephant.dssclient.domain;
 
 
+import com.ipukr.elephant.utils.DataUtils;
+
 import javax.xml.bind.annotation.*;
 import java.util.List;
 
@@ -14,6 +16,7 @@ import java.util.List;
 @XmlRootElement(name = "Organization")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DPOrganization {
+    // TODO 注释属性
     @XmlElement(name = "Department")
     private Department Department;
     @XmlElement(name = "Devices")
@@ -632,6 +635,15 @@ public class DPOrganization {
                 this.rights = rights;
             }
 
+
+            /**
+             * 快速转换对象未DPDevice
+             * @return
+             */
+            public DPDevice parser() {
+                return DataUtils.copyPropertiesIgnoreNull(this, DPDevice.class);
+            }
+
             public static class UnitNodes {
                 @XmlAttribute(name = "index")
                 private String index;
@@ -778,6 +790,14 @@ public class DPOrganization {
 
                     public void setAlarmLevel(String alarmLevel) {
                         this.alarmLevel = alarmLevel;
+                    }
+
+                    /**
+                     * 快速转换对象未DPChannel
+                     * @return
+                     */
+                    public DPChannel parser() {
+                        return DataUtils.copyPropertiesIgnoreNull(this, DPChannel.class);
                     }
                 }
             }

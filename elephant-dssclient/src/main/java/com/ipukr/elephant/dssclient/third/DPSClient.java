@@ -24,9 +24,11 @@ import java.util.stream.Collectors;
  */
 public class DPSClient implements Client {
 
-	private DPSClientConfig config;
+	protected DPSClientConfig config;
 
-	public static int m_nDLLHandle = -1;
+	protected DPOrganization organization;
+	// TODO 理清句柄应用的逻辑
+	protected int m_nDLLHandle = -1;
 
 	public DPSClient(DPSClientConfig config) {
 		this.config = config;
@@ -34,9 +36,11 @@ public class DPSClient implements Client {
 		this.login();
 	}
 
+
 	private fDPSDKGeneralJsonTransportCallback fGeneralJson = new fDPSDKGeneralJsonTransportCallback() {
 		@Override
 		public void invoke(int nPDLLHandle, byte[] szJson) {
+			// TODO 使用日志工具打印日志
 			System.out.printf("General Json Return, ReturnJson = %s", new String(szJson));
 			System.out.println();
 		}
@@ -73,10 +77,11 @@ public class DPSClient implements Client {
 
 	private boolean login() {
 		Login_Info_t loginInfo = new Login_Info_t();
-		loginInfo.szIp = config.m_strIp.getBytes();
-		loginInfo.nPort = config.m_nPort;
-		loginInfo.szUsername = config.m_strUser.getBytes();
-		loginInfo.szPassword = config.m_strPassword.getBytes();
+		loginInfo.szIp = config.getIp().getBytes();
+		loginInfo.nPort = config.getPort();
+		loginInfo.szUsername = config.getUser().getBytes();
+		loginInfo.szPassword = config.getPass().getBytes();
+
 		// 1.一代协议  2.二代协议
 		loginInfo.nProtocol = dpsdk_protocol_version_e.DPSDK_PROTOCOL_VERSION_II;
 		//// 登陆类型，1为PC客户端, 2为手机客户端
@@ -93,8 +98,12 @@ public class DPSClient implements Client {
 		return false;
 	}
 
-	private DPOrganization organization;
 
+	/**
+	 * @return
+	 * @throws IOException
+	 * @throws JAXBException
+	 */
 	@Override
 	public DPOrganization group() throws IOException, JAXBException {
 		Return_Value_Info_t nGroupLen = new Return_Value_Info_t();
@@ -144,7 +153,7 @@ public class DPSClient implements Client {
 	}
 
 	@Override
-	public List<DPSnapshot> snapshot(DPDevice device) throws IOException, JAXBException {
+	public List<DPSnapshot> snapshot(DPDevice device) throws Exception {
 		if (this.organization == null) {
 			this.group();
 			//还加载不出来
@@ -190,6 +199,7 @@ public class DPSClient implements Client {
 		DPSnapshot snapshot = DPSnapshot.builder().channel(channel).build();
 		if (nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS) {
 			IDpsdkCore.DPSDK_SetGeneralJsonTransportCallback(m_nDLLHandle, new fDPSDKGeneralJsonTransportCallback() {
+				@Override
 				public void invoke(int nPDLLHandle, byte[] szJson) {
 					snapshot.append(szJson);
 					System.out.println(new String(szJson));
@@ -299,43 +309,6 @@ public class DPSClient implements Client {
 		}
 		System.out.println();
 		return false;
-	}
-
-	@Override
-	public DPDevice getDPDevice(String carName, DPOrganization organization) {
-		if(!carName.isEmpty()&&organization!=null&&organization.getDevices()!=null&&!organization.getDevices().getDevices().isEmpty()){
-			//1.通过名称+组织树->获取当前车辆的所有设备device信息
-			List<DPOrganization.Devices.DeviceX> deviceList = organization.getDevices().getDevices().stream().filter(e -> {
-				if (carName.equals(e.getName())) {
-					return true;
-				} else {
-					return false;
-				}
-			}).collect(Collectors.toList());
-			//把设备device信息 赋值给DPDevice
-			if(!deviceList.isEmpty()){
-				DPOrganization.Devices.DeviceX deviceX = deviceList.get(0);
-				DPDevice de=new DPDevice();
-				de.setId(deviceX.getId());
-				de.setName(carName);
-				de.setType(deviceX.getType());
-				return de;
-			}
-		}
-		/*List<DPDevice> deviceList=organization.getDevices().getDevices().stream().filter(e->{
-			if(carName.equals(e.getName())){
-				return true;
-			}else{
-				return false;
-			}
-		}).collect(Collectors.toList()).stream().map(e->{
-			DPDevice de=new DPDevice();
-			de.setId(e.getId());
-			de.setName(carName);
-			de.setType(e.getType());
-			return de;
-		}).collect(Collectors.toList());*/
-		return null;
 	}
 
 
