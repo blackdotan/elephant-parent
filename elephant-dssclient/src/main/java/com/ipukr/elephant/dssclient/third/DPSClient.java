@@ -105,7 +105,7 @@ public class DPSClient implements Client {
 	 * @throws JAXBException
 	 */
 	@Override
-	public DPOrganization group() throws IOException, JAXBException {
+	public DPOrganization fetgroup() throws IOException, JAXBException {
 		Return_Value_Info_t nGroupLen = new Return_Value_Info_t();
 		int nRet = IDpsdkCore.DPSDK_LoadDGroupInfo(m_nDLLHandle, nGroupLen, 180000);
 		if (nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS) {
@@ -155,7 +155,7 @@ public class DPSClient implements Client {
 	@Override
 	public List<DPSnapshot> snapshot(DPDevice device) throws Exception {
 		if (this.organization == null) {
-			this.group();
+			this.fetgroup();
 			//还加载不出来
 			if(this.organization == null){
 				throw new IOException("未登录，或服务器未开启");
@@ -221,7 +221,7 @@ public class DPSClient implements Client {
 	 * @return
 	 */
 	@Override
-	public Integer getReal(DPChannel channel, OutputStream ous) {
+	public Integer openreal(DPChannel channel, OutputStream ous) {
 		Return_Value_Info_t nRealSeq = new Return_Value_Info_t();
 		Get_RealStream_Info_t getInfo = new Get_RealStream_Info_t();
 		getInfo.szCameraId = channel.getId().getBytes();// 通道ID
@@ -269,7 +269,7 @@ public class DPSClient implements Client {
 	 * @return
 	 */
 	@Override
-	public boolean closeReal(DPChannel channel) {
+	public boolean closereal(DPChannel channel) {
 		int nsequence = channel.getNsequence();
 		if (nsequence != -1) {
 			int nRet = IDpsdkCore.DPSDK_CloseRealStreamBySeq(m_nDLLHandle, nsequence, 10000);
@@ -285,18 +285,18 @@ public class DPSClient implements Client {
 		}
 	}
 
-	@Override
-	public boolean logout() {
-		int nRet = IDpsdkCore.DPSDK_Logout(m_nDLLHandle, 10000);
-		if (nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS) {
-			System.out.printf("登出成功，nRet = %d", nRet);
-			return true;
-		} else {
-			System.out.printf("登出失败，nRet = %d", nRet);
-		}
-		System.out.println();
-		return false;
-	}
+//	@Override
+//	public boolean logout() {
+//		int nRet = IDpsdkCore.DPSDK_Logout(m_nDLLHandle, 10000);
+//		if (nRet == dpsdk_retval_e.DPSDK_RET_SUCCESS) {
+//			System.out.printf("登出成功，nRet = %d", nRet);
+//			return true;
+//		} else {
+//			System.out.printf("登出失败，nRet = %d", nRet);
+//		}
+//		System.out.println();
+//		return false;
+//	}
 
 	@Override
 	public boolean destroy() {

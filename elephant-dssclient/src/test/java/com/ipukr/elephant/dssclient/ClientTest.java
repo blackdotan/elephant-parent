@@ -31,7 +31,7 @@ public class ClientTest {
         //1.登陆
         client = new DPSClient(config);
         //2.获取组织树
-        iDPOrganization = client.group();
+        iDPOrganization = client.fetgroup();
     }
 
     @Test
@@ -48,7 +48,7 @@ public class ClientTest {
             try{
                 DPSnapshot dpSnapshot = snapshotList.get(0);//图片信息
                 DPChannel channel = dpSnapshot.getChannel();
-                Integer integer = client.getReal(channel, ous);
+                Integer integer = client.openreal(channel, ous);
                 channel.setNsequence(integer);
                 try {
                     Thread.sleep(120000);
@@ -57,7 +57,7 @@ public class ClientTest {
                     e.printStackTrace();
                 }
                 //6.通过channel中的nsequence 去关闭视频流
-                client.closeReal(channel);
+                client.closereal(channel);
             }catch (Exception e){
                 ous.close();
                 e.printStackTrace();
@@ -65,7 +65,7 @@ public class ClientTest {
 
 
             //7.登出
-            client.logout();
+//            client.logout();
             //8.清除缓存
             client.destroy();
 

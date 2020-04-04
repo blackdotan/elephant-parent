@@ -1,20 +1,12 @@
 package com.ipukr.elephant.dssclient.third;
 
-import com.dh.DpsdkCore.*;
-import com.ipukr.elephant.dssclient.Client;
 import com.ipukr.elephant.dssclient.config.DPSClientConfig;
 import com.ipukr.elephant.dssclient.domain.DPChannel;
 import com.ipukr.elephant.dssclient.domain.DPDevice;
 import com.ipukr.elephant.dssclient.domain.DPOrganization;
 import com.ipukr.elephant.dssclient.domain.res.DPSnapshot;
-import com.ipukr.elephant.utils.JaxbUtils;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.xml.bind.JAXBException;
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
@@ -43,7 +35,7 @@ public class MultipalDPSClient extends DPSClient {
 	@Override
 	public List<DPSnapshot> snapshot(DPDevice device) throws Exception {
 		if (this.organization == null) {
-			this.group();
+			this.fetgroup();
 		}
 		List<DPSnapshot> arr = new ArrayList<>();
 

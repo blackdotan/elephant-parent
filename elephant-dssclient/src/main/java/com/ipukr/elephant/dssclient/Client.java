@@ -24,7 +24,7 @@ public interface Client {
 	 * 获取组织树
 	 * @return
 	 */
-	DPOrganization group() throws IOException, JAXBException;
+	DPOrganization fetgroup() throws IOException, JAXBException;
 
 	/**
 	 * 通过设备id获取当前id下所有快照
@@ -47,18 +47,13 @@ public interface Client {
 	 * 通过 实时通道ID 请求实时码流
 	 * @return
 	 */
-	Integer getReal(DPChannel channel, OutputStream ous);
+	Integer openreal(DPChannel channel, OutputStream ous);
 
 	/**
 	 * 关闭实时码流
 	 * @return
 	 */
-	boolean closeReal(DPChannel channel);
-
-	/** 注销
-	 * @return
-	 */
-	boolean logout();
+	boolean closereal(DPChannel channel);
 
 	/**
 	 * 释放内存

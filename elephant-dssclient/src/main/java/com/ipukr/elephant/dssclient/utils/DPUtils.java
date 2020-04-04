@@ -112,6 +112,12 @@ public class DPUtils {
 		return device;
 	}
 
+
+	/**
+	 * @param device
+	 * @param organization
+	 * @return
+	 */
 	public static List<DPChannel> getChannelByDevice(DPDevice device, DPOrganization organization) {
 		return organization.getDevices().getDevices().stream().filter(e -> {
 			return e.getId() == device.getId();
@@ -121,6 +127,17 @@ public class DPUtils {
 			return n.getType() == 1;
 		}).flatMap(m -> m.getChannel().stream()).map(x->x.parser()).collect(Collectors.toList());
 
-
 	}
+
+	/**
+	 * @param id
+	 * @param organization
+	 * @return
+	 */
+	public static Optional<DPChannel> getChannelById(String id, DPOrganization organization) {
+		return organization.getDevices().getDevices().stream().flatMap(e-> {
+			return e.getUnitNodes().stream();
+		}).flatMap( x-> x.getChannel().stream()).filter(m -> m.getId().equals(id)).map(x->x.parser()).findFirst();
+	}
+
 }
