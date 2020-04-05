@@ -3,15 +3,11 @@ package com.ipukr.elephant.dssclient.utils;
 import com.ipukr.elephant.dssclient.domain.DPChannel;
 import com.ipukr.elephant.dssclient.domain.DPDevice;
 import com.ipukr.elephant.dssclient.domain.DPOrganization;
-import com.ipukr.elephant.dssclient.domain.res.DPSnapshot;
-import com.ipukr.elephant.dssclient.third.DPSSnapshotCallable;
 import com.ipukr.elephant.utils.DataUtils;
-import com.ipukr.elephant.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
 /**

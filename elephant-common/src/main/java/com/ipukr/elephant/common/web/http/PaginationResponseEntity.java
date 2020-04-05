@@ -2,11 +2,16 @@ package com.ipukr.elephant.common.web.http;
 
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.github.miemiedev.mybatis.paginator.domain.Paginator;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.MultiValueMap;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +25,7 @@ public class PaginationResponseEntity<T> extends HttpEntity {
 
     private HttpStatus statusCode;
 
-    private PaginationResponseBody body;
+    private PaginationResponseEntityBody body;
 
     /**
      * @param data
@@ -28,7 +33,7 @@ public class PaginationResponseEntity<T> extends HttpEntity {
      */
     public PaginationResponseEntity(List<T> data,
                                     HttpStatus statusCode) {
-        this(data, true, "请求成功", new HttpHeaders(), statusCode);
+        this(data, true, "请求成功", null, new HttpHeaders(), statusCode);
     }
 
     /**
@@ -41,7 +46,7 @@ public class PaginationResponseEntity<T> extends HttpEntity {
                                     Boolean success,
                                     String msg,
                                     HttpStatus statusCode) {
-        this(data, success, msg, new HttpHeaders(), statusCode);
+        this(data, success, msg, null, new HttpHeaders(), statusCode);
     }
 
     /**
@@ -62,7 +67,7 @@ public class PaginationResponseEntity<T> extends HttpEntity {
     public PaginationResponseEntity(List<T> data,
                                     MultiValueMap<String, String> headers,
                                     HttpStatus statusCode) {
-        this(data, true, "请求成功", headers, statusCode);
+        this(data, true, "请求成功", null, headers, statusCode);
     }
 
     /**
@@ -75,12 +80,14 @@ public class PaginationResponseEntity<T> extends HttpEntity {
     public PaginationResponseEntity(List<T> data,
                                     Boolean success,
                                     String msg,
+                                    Integer code,
                                     MultiValueMap<String, String> headers,
                                     HttpStatus statusCode) {
-        body = new PaginationResponseBody();
+        body = new PaginationResponseEntityBody();
         body.setData(data);
         body.setSuccess(success);
         body.setMsg(msg);
+        body.setCode(code == null ? statusCode.value() : code);
         if(data instanceof PageList) {
             Paginator paginator = ((PageList) data).getPaginator();
             body.setCount(paginator.getTotalCount());
@@ -130,120 +137,114 @@ public class PaginationResponseEntity<T> extends HttpEntity {
 
     public static class BodyBuilder {
 
-        private final HttpStatus status;
+        private HttpStatus status;
 
-        private final HttpHeaders headers = new HttpHeaders();
+        private HttpHeaders headers = new HttpHeaders();
+
+        /**
+         * 提示信息
+         */
+        private String msg = "请求成功";
+        /**
+         * 是否成功
+         */
+        private Boolean success = true;
+        /**
+         * 提示信息
+         */
+        private Integer code;
+        /**
+         * 数据
+         * */
+        private List data;
+
 
         public BodyBuilder(HttpStatus status) {
             this.status = status;
         }
 
-        public BodyBuilder header(String headerName, String... headerValues) {
+        public PaginationResponseEntity.BodyBuilder header(String headerName, String... headerValues) {
             for (String headerValue : headerValues) {
                 this.headers.add(headerName, headerValue);
             }
             return this;
         }
 
+
+        public PaginationResponseEntity.BodyBuilder msg(String msg) {
+            this.msg = msg;
+            return this;
+        }
+
+        public PaginationResponseEntity.BodyBuilder success(Boolean success) {
+            this.success = success;
+            return this;
+        }
+
+        public PaginationResponseEntity.BodyBuilder code(Integer code) {
+            this.code = code;
+            return this;
+        }
+
+        public PaginationResponseEntity.BodyBuilder data(List data) {
+            this.data = data;
+            return this;
+        }
+
         public PaginationResponseEntity build() {
-            return new PaginationResponseEntity(null, this.headers, this.status);
+            return new PaginationResponseEntity(data, success, msg, code, this.headers, this.status);
         }
 
         public PaginationResponseEntity body(List data) {
-            return new PaginationResponseEntity(data, this.headers, this.status);
+            this.data = data;
+            return new PaginationResponseEntity(data, success, msg, code, this.headers, this.status);
         }
     }
 
 
-    public static class PaginationResponseBody {
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class PaginationResponseEntityBody {
         /**
-         *
+         * 提示信息
          */
         private String msg;
         /**
-         *
+         * 是否成功
          */
         private Boolean success;
         /**
+         * 提示信息
+         */
+        private Integer code;
+        /**
          * 页面大小
          */
+        @Builder.Default
         private Integer pageSize = 0;
-
         /**
          * 页面游标
          */
+        @Builder.Default
         private Integer pageIndex = 0;
-
         /**
          * 页面数
          */
+        @Builder.Default
         private Integer pageCount = 0;
-
         /**
          * 记录总数
          */
+        @Builder.Default
         private Integer count = 0;
-
         /**
          * 数据
          * */
-        private List data;
+        @Builder.Default
+        private List data = new ArrayList();
 
-        public Integer getPageSize() {
-            return pageSize;
-        }
-
-        public void setPageSize(Integer pageSize) {
-            this.pageSize = pageSize;
-        }
-
-        public Integer getPageIndex() {
-            return pageIndex;
-        }
-
-        public void setPageIndex(Integer pageIndex) {
-            this.pageIndex = pageIndex;
-        }
-
-        public Integer getPageCount() {
-            return pageCount;
-        }
-
-        public void setPageCount(Integer pageCount) {
-            this.pageCount = pageCount;
-        }
-
-        public Integer getCount() {
-            return count;
-        }
-
-        public void setCount(Integer count) {
-            this.count = count;
-        }
-
-        public List getData() {
-            return data;
-        }
-
-        public void setData(List data) {
-            this.data = data;
-        }
-
-        public String getMsg() {
-            return msg;
-        }
-
-        public void setMsg(String msg) {
-            this.msg = msg;
-        }
-
-        public Boolean getSuccess() {
-            return success;
-        }
-
-        public void setSuccess(Boolean success) {
-            this.success = success;
-        }
     }
 
 }

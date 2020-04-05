@@ -3,10 +3,9 @@ package com.ipukr.elephant.dssclient;
 import com.ipukr.elephant.dssclient.domain.DPChannel;
 import com.ipukr.elephant.dssclient.domain.DPDevice;
 import com.ipukr.elephant.dssclient.domain.DPOrganization;
-import com.ipukr.elephant.dssclient.domain.res.DPSnapshot;
+import com.ipukr.elephant.dssclient.domain.DPSnapshot;
 
 import javax.xml.bind.JAXBException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;

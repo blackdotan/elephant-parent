@@ -26,6 +26,8 @@
         <module>elephant-weixin</module>
 	    <module>elephant-security</module>
 	    <module>elephant-dssclient</module>
+	    <module>elephant-dssclient-linux</module>
+	    <module>elephant-dssclient-windows</module>
     </modules>
 
     <properties>
