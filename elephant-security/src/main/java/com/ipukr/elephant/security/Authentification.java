@@ -13,18 +13,22 @@ import java.util.List;
  */
 public abstract class Authentification<T extends Serializable> {
 
-//	/**
-//	 * 授权列表
-//	 */
-//	protected List<? extends Authority> authorities = new ArrayList();
+
+    /**
+     * 获取认证关键字
+     * @return
+     */
+	public abstract T getKey();
+
+//    /**
+//     * 授权列表
+//     */
+//    private List<? extends Authority> authorities = new ArrayList<>();
 //
+//    public abstract List<? extends Authority> getAuthorities();
 //
-//	/**
-//	 * 获取授权列表
-//	 * @return
-//	 */
-//	public List<? extends Authority> getAuthorities() {
-//		return authorities;
-//	}
-	
+//    public void setAuthorities(List<? extends Authority> authorities) {
+//        this.authorities = authorities;
+//    }
+
 }

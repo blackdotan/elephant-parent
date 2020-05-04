@@ -187,6 +187,16 @@
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
                 <!-- 默认编译工具|JDK1.8 -->
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -215,6 +225,7 @@
                 <plugin>
                     <groupId>com.github.wvengen</groupId>
                     <artifactId>proguard-maven-plugin</artifactId>
+                    <version>2.2.0</version>
                     <executions>
                         <execution>
                             <!-- 混淆时刻，这里是打包的时候混淆-->

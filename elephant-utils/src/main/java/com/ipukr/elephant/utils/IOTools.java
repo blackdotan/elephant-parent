@@ -17,7 +17,10 @@ public class IOTools {
 	 */
 	public static void close(Closeable closeable) {
 		try {
-			closeable.close();
+			if (closeable != null) {
+				closeable.close();
+			}
+			closeable = null;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

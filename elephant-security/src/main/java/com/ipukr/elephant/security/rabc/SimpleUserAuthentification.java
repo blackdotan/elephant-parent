@@ -1,7 +1,9 @@
 package com.ipukr.elephant.security.rabc;
 
 import com.ipukr.elephant.security.Authentification;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAuthentification extends Authentification<String> {
+public class SimpleUserAuthentification extends Authentification<String> {
 
 	/**
 	 * 主键
@@ -36,12 +38,12 @@ public class UserAuthentification extends Authentification<String> {
 	/**
 	 * 授权机构（该用户可以访问的机构数据）
 	 */
-	private List<OrganizationAuthentification> subordinates = new ArrayList<OrganizationAuthentification>();
+	private List<String> subordinates = new ArrayList<String>();
 
 	/**
 	 * 授权角色（该用户持有的机构数据）
 	 */
-	private List<RoleAuthentification> roles = new ArrayList<RoleAuthentification>();
+	private List<String> roles = new ArrayList<String>();
 
 	/**
 	 * 授权权限（）
@@ -54,8 +56,8 @@ public class UserAuthentification extends Authentification<String> {
 	 * @param role
 	 * @return
 	 */
-	public boolean hasRole(RoleAuthentification role) {
-		return roles.stream().filter(e->e.getKey().equals(role.getKey())).count() > 0;
+	public boolean hasRole(String role) {
+		return roles.contains(role);
 	}
 
 	/**
@@ -63,8 +65,8 @@ public class UserAuthentification extends Authentification<String> {
 	 * @param organization
 	 * @return
 	 */
-	public boolean hasSubordinate(Authentification organization) {
-		return subordinates.stream().filter(e->e.getKey().equals(organization.getKey())).count() > 0;
+	public boolean hasSubordinate(Integer organization) {
+		return subordinates.contains(organization);
 	}
 
 	/**
@@ -72,7 +74,6 @@ public class UserAuthentification extends Authentification<String> {
 	 * @param authority
 	 * @return
 	 */
-	@Deprecated
 	public boolean hasAuthority(AccessAuthority authority) {
 		return authorities.stream().filter(e->e.match(authority)).count() > 0;
 	}

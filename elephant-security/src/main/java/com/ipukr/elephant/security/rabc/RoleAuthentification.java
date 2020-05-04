@@ -1,8 +1,7 @@
 package com.ipukr.elephant.security.rabc;
 
 import com.ipukr.elephant.security.Authentification;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,19 +14,22 @@ import java.util.List;
  * <p>
  * Created by ryan wu on 2019/12/15.
  */
+@Data
 @Getter
 @Setter
-public abstract class RoleAuthentification<T extends Serializable> extends Authentification<T> {
+@NoArgsConstructor
+@AllArgsConstructor
+public class RoleAuthentification extends Authentification<String> {
 
+	/**
+	 * 关键字
+	 */
 	private String key;
+
 	/**
-	 * 机构认证
+	 * 授权机构
 	 */
-	protected List<? extends Authentification<? extends Serializable>> organizations = new ArrayList();
-	/**
-	 * 角色认证
-	 */
-	protected List<? extends Authentification<? extends Serializable>> roles = new ArrayList();
+	private List<Authentification<? extends Serializable>> organizations = new ArrayList();
 
 
 }
