@@ -17,20 +17,22 @@ public @interface Require {
     String[] subjects();
 
     /**
-     * JWT 需要验证 audience
+     * JWT 验证 audience
      * @return
      */
-    String[] audiences();
+    String[] audiences() default {""};
+
     /**
      * 是否需要Token认证
      * @return
      */
-    boolean accessToken() default false;
+    boolean accessToken() default true;
     /**
      * 是否需要登录
      * @return
      */
-    boolean login() default false;
+    boolean login() default true;
+
     /**
      * 权限列表
      * @return

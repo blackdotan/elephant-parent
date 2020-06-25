@@ -1,7 +1,5 @@
 package com.ipukr.elephant.payment.weixin;
 
-import com.github.wxpay.sdk.WXPayConstants;
-import com.github.wxpay.sdk.WXPayUtil;
 import com.ipukr.elephant.common.exception.IllegalArgumentEx;
 import com.ipukr.elephant.common.exception.IllegalStateEx;
 import com.ipukr.elephant.http.config.HttpClientPoolConfig;

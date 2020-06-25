@@ -235,7 +235,6 @@ public class DPSClient implements Client {
 		getInfo.nTrackID = 701;
 //		fMediaDataCallback m_MediaCB = new DPSDKMediaDataCallback();//请求实时码流，成功后视频码流进入m_MediaCB函数中
 
-
 		fMediaDataCallback m_MediaCB = new fMediaDataCallback() {
 			@Override
 			public void invoke(int nPDLLHandle, int nSeq, int nMediaType, byte[] szNodeId, int nParamVal, byte[] szData, int nDataLen) {

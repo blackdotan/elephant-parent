@@ -2,6 +2,7 @@ package com.ipukr.elephant.security.rabc;
 
 import com.ipukr.elephant.security.Authentification;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,35 +22,59 @@ import java.util.List;
 public class SimpleUserAuthentification extends Authentification<String> {
 
 	/**
-	 * 主键
+	 * 客户端类型
+	 */
+	@Deprecated
+	private int type;
+	// ====================================[用户]====================================
+	/**
+	 * User.Id
 	 */
 	private Integer id;
 
 	/**
-	 * 关键字
+	 * User.Eno
 	 */
 	private String key;
-
+	// ====================================[机构]====================================
 	/**
-	 * 客户端类型
+	 * 所属机构 Organization.Id
+	 * eg：组织机构代码 GB
 	 */
-	private int type;
-
+	private Integer organizationId;
 	/**
-	 * 授权机构（该用户可以访问的机构数据）
+	 * 所属机构 Organization.Name
+	 */
+	private String organizationName;
+	/**
+	 * 行政区划代码
+	 */
+	private Integer administrativeDivisionId;
+	// ====================================[部门]====================================
+	/**
+	 * 所属部门 Department.Id
+	 * eg：部门代码
+	 */
+	private Integer departmentId;
+	/**
+	 * 所属部门 Department.Name
+	 */
+	private String departmentName;
+
+	// ====================================[权限]====================================
+	/**
+	 * 授权机构（该用户可以访问的机构数据，[Organization.Id...] ）
 	 */
 	private List<String> subordinates = new ArrayList<String>();
 
 	/**
-	 * 授权角色（该用户持有的机构数据）
+	 * 授权角色（该用户持有的机构数据，[Role.Name...]）
 	 */
 	private List<String> roles = new ArrayList<String>();
-
 	/**
 	 * 授权权限（）
 	 */
 	private List<AccessAuthority> authorities = new ArrayList<AccessAuthority>();
-
 
 	/**
 	 * 是否持有角色

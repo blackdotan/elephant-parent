@@ -12,6 +12,8 @@ import java.io.*;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -66,6 +68,69 @@ public class ZipUtils {
 
 
     /**
+     * @param fm
+     * @param ous
+     * @throws IOException
+     */
+    public static void compress(FileModel fm, OutputStream ous) throws IOException {
+        compress(Arrays.asList(fm), ous);
+    }
+
+    /**
+     * @param fms
+     * @param ous
+     * @throws IOException
+     */
+    public static void compress(List<FileModel> fms, OutputStream ous) throws IOException {
+        ZipOutputStream zous = new ZipOutputStream(ous);
+        byte[] buffer = new byte[1024];
+        for (FileModel fm : fms) {
+//            ByteArrayInputStream bais = new ByteArrayInputStream(fm.getBytes());
+            DataInputStream dis = new DataInputStream(new ByteArrayInputStream(fm.getBytes()));
+            ZipEntry entry = new ZipEntry(fm.getName());
+            zous.putNextEntry(entry);
+            int length = 0;
+            while ((length = dis.read(buffer)) != -1) {
+                zous.write(buffer, 0, length);
+            }
+            zous.closeEntry();
+            zous.flush();
+        }
+        zous.finish();
+        zous.close();
+    }
+
+
+
+    /**
+     * 压缩文件到目标输出流
+     * @param files
+     * @param ous
+     * @throws IOException
+     */
+    public static void pcompress(File[] files, OutputStream ous) throws IOException {
+        byte[] buffer = new byte[1024];
+        ZipOutputStream zous = new ZipOutputStream(ous);
+        for (int i = 0; i < files.length; i++) {
+            FileInputStream fins = new FileInputStream(files[i]);
+            ZipEntry entry = new ZipEntry(files[i].getPath());
+
+            zous.putNextEntry(entry);
+            int length = 0;
+            while ((length = fins.read(buffer)) != -1) {
+                zous.write(buffer, 0, length);
+            }
+            fins.close();
+            zous.closeEntry();
+            zous.flush();
+        }
+        zous.finish();
+        zous.close();
+    }
+
+
+
+    /**
      * @param filename
      * @param ins
      * @param charset
@@ -74,7 +139,7 @@ public class ZipUtils {
      * @throws RarException
      */
     public static List<FileModel> extract(String filename, InputStream ins, Charset charset) throws IOException, RarException {
-        if (filename.endsWith(".rzr")) {
+        if (filename.endsWith(".rar")) {
             return unrar(ins, charset);
         } else if (filename.endsWith(".zip")) {
             return unzip(ins, charset);
@@ -155,8 +220,12 @@ public class ZipUtils {
         return models;
     }
 
+
+
+
     //每次读取的大小 1KB
     private static final int BYTESIZE = 1024;
+
 
     /**
      * 存储临时文件

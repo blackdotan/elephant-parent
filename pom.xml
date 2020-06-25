@@ -28,6 +28,7 @@
 	    <module>elephant-dssclient</module>
 	    <module>elephant-dssclient-linux</module>
 	    <module>elephant-dssclient-windows</module>
+        <module>elephant-simulator</module>
     </modules>
 
     <properties>
