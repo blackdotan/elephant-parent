@@ -3,7 +3,7 @@ package com.ipukr.elephant.common.exception;
 import org.springframework.http.HttpStatus;
 
 /**
- * 非法参数 <br>
+ * 400 BAD REQUEST - [POST/PUT/PATCH]：非法参数 <br>
  *
  * @author ryan.
  *         <p>
@@ -11,11 +11,11 @@ import org.springframework.http.HttpStatus;
  */
 public class IllegalArgumentEx extends AbstractEx {
     public IllegalArgumentEx(String message) {
-        super(HttpStatus.NOT_ACCEPTABLE, message);
+        super(HttpStatus.BAD_REQUEST, message);
     }
 
     public IllegalArgumentEx(String message, String... args) {
-        super(HttpStatus.NOT_ACCEPTABLE, message, args);
+        super(HttpStatus.BAD_REQUEST, message, args);
     }
 
     public IllegalArgumentEx(HttpStatus status, String message) {

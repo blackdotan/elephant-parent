@@ -3,7 +3,8 @@ package com.ipukr.elephant.common.exception;
 import org.springframework.http.HttpStatus;
 
 /**
- * 权限异常 <br>
+ *
+ * 403 Forbidden - [*]：权限异常（资源/功能未授权） <br>
  *
  * @author ryan.
  *         <p>
@@ -12,11 +13,11 @@ import org.springframework.http.HttpStatus;
 public class AuthorizeEx extends AbstractEx {
 
     public AuthorizeEx(String message) {
-        super(HttpStatus.UNAUTHORIZED, message);
+        super(HttpStatus.FORBIDDEN, message);
     }
 
     public AuthorizeEx(String message, String... args) {
-        super(HttpStatus.UNAUTHORIZED, message, args);
+        super(HttpStatus.FORBIDDEN, message, args);
     }
 
     public AuthorizeEx(HttpStatus status, String message) {

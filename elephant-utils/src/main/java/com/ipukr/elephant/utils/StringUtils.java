@@ -4,6 +4,8 @@ import org.slf4j.helpers.FormattingTuple;
 import org.slf4j.helpers.MessageFormatter;
 
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by wmw on 16/10/21.
@@ -104,4 +106,20 @@ public class StringUtils {
         }
     }
 
+    /**
+     *
+     */
+    public static Pattern numattern = Pattern.compile("[0-9]*");
+
+    /**
+     * @param str
+     * @return
+     */
+    public static boolean isNumeric(String str){
+        Matcher isNum = numattern.matcher(str);
+        if( !isNum.matches() ){
+            return false;
+        }
+        return true;
+    }
 }

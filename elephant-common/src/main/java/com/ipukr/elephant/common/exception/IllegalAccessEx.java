@@ -3,7 +3,7 @@ package com.ipukr.elephant.common.exception;
 import org.springframework.http.HttpStatus;
 
 /**
- * 非法访问 <br>
+ * 403 Forbidden - [*]：非法访问（被操作数据未授权） <br>
  *
  * @author ryan.
  * <p>

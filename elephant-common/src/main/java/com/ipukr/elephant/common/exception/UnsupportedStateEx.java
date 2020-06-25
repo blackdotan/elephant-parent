@@ -3,7 +3,7 @@ package com.ipukr.elephant.common.exception;
 import org.springframework.http.HttpStatus;
 
 /**
- * 不支持状态 <br>
+ * 406 Not Acceptable - [GET]：不支持的状态 <br>
  *
  * @author ryan wu
  * <p>

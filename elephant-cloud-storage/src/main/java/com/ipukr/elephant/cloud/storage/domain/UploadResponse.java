@@ -14,6 +14,7 @@ import lombok.ToString;
  */
 @Data
 @AllArgsConstructor
+@ToString
 public abstract class UploadResponse {
 
     /**

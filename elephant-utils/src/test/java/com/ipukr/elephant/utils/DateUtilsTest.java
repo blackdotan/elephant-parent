@@ -52,4 +52,11 @@ public class DateUtilsTest {
             System.out.println(item);
         }
     }
+
+    @Test
+    public void daybeginend() throws ParseException {
+        Date date = DateUtils.stringToDate("2018-09-01 11:00:00", STD_PATTERN);
+        System.out.println(DateUtils.daybegin(date));
+        System.out.println(DateUtils.dayend(date));
+    }
 }

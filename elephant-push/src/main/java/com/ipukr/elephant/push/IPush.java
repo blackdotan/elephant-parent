@@ -28,4 +28,19 @@ public interface IPush {
      * @return
      */
     public boolean push(String title, String text);
+
+    /**
+     * @return
+     */
+    public boolean login();
+
+    /**
+     * @param device
+     * @param channel
+     * @return
+     */
+    public List<String> bind(String device, String channel);
+
+
+
 }
