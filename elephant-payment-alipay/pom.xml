@@ -51,10 +51,17 @@
             <artifactId>elephant-common</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!-- 阿里支付-->
+        <!-- 阿里支付
         <dependency>
             <groupId>com.alipay</groupId>
             <artifactId>sdk-java</artifactId>
+        </dependency>
+        -->
+
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>4.9.79.ALL</version>
         </dependency>
     </dependencies>
     <build>
