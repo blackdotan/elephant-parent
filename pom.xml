@@ -7,7 +7,7 @@
     <groupId>com.ipukr.elephant</groupId>
     <artifactId>elephant-parent</artifactId>
     <packaging>pom</packaging>
-    <version>2.4.1</version>
+    <version>2.4.2</version>
 
     <modules>
         <module>elephant-utils</module>
@@ -24,6 +24,11 @@
         <module>elephant-payment-lianlian</module>
         <module>elephant-payment-weixin</module>
         <module>elephant-weixin</module>
+	    <module>elephant-security</module>
+	    <module>elephant-dssclient</module>
+	    <module>elephant-dssclient-linux</module>
+	    <module>elephant-dssclient-windows</module>
+        <module>elephant-simulator</module>
     </modules>
 
     <properties>
@@ -183,6 +188,16 @@
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
                 <!-- 默认编译工具|JDK1.8 -->
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -211,6 +226,7 @@
                 <plugin>
                     <groupId>com.github.wvengen</groupId>
                     <artifactId>proguard-maven-plugin</artifactId>
+                    <version>2.2.0</version>
                     <executions>
                         <execution>
                             <!-- 混淆时刻，这里是打包的时候混淆-->

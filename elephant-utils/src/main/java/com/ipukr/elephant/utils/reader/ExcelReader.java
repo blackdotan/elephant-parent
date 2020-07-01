@@ -60,7 +60,10 @@ public class ExcelReader implements Readable {
 
         List<T> arr = new ArrayList<T>();
         for (int i = begin; i <= end; i++) {
-            arr.add(function.apply(sheet.getRow(i)));
+            T ins = function.apply(sheet.getRow(i));
+            if ( ins != null ) {
+                arr.add(ins);
+            }
         }
         return arr;
     }

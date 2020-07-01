@@ -12,6 +12,7 @@ import lombok.ToString;
  * Created by ryan wu on 2019/4/12.
  */
 @Data
+@ToString
 public class QiniuUploadResponse extends UploadResponse {
 
 	@Builder

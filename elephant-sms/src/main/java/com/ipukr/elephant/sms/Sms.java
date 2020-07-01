@@ -1,5 +1,6 @@
 package com.ipukr.elephant.sms;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,4 +32,14 @@ public interface Sms {
      * @return 短信发送状态
      */
     public SmsResponse send(String templateId, String mobile, Map map);
+
+    /**
+     *
+     * @param template
+     * @param mobiles
+     * @param signs
+     * @param params
+     * @return
+     */
+    SmsResponse batsend(String template, List<String> mobiles, List<String> signs, List<Map<String, String>> params);
 }

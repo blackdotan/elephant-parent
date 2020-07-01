@@ -7,6 +7,7 @@ package com.ipukr.elephant.utils.domain;
  * <p>
  * Created by ryan wu on 2018/4/20.
  */
+
 public class User {
     private String nickname;
     private String username;

@@ -3,7 +3,7 @@ package com.ipukr.elephant.common.exception;
 import org.springframework.http.HttpStatus;
 
 /**
- * 非法状态 <br>
+ * 406 Not Acceptable - [GET]：非法状态（状态转移错误） <br>
  *
  * @author ryan.
  * <p>
