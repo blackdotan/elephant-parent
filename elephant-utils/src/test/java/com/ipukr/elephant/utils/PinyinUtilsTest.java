@@ -1,6 +1,6 @@
 package com.ipukr.elephant.utils;
 
-import com.ipukr.elephant.utils.PinyinUtils;
+import com.ipukr.elephant.utils.language.PinyinUtils;
 import org.junit.Test;
 
 /**

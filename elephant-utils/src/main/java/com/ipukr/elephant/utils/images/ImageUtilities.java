@@ -31,7 +31,7 @@ public class ImageUtilities {
         baos.write(bytes, 0, bytes.length);
         // 内存流 转 Base64 编码
         BASE64Encoder encoder = new BASE64Encoder();
-        while (bytes.length > 500 * 1024) {
+        while (baos.size() > 500 * 1024) {
             baos = compress(baos, 0.8f, 0.2f, true);
         }
         String base64 = encoder.encode(baos.toByteArray());

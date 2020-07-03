@@ -34,7 +34,13 @@ public class ValidateUtils {
     /**
      * 正则表达式：验证身份证
      */
+    @Deprecated
     public static final String REGEX_ID_CARD = "(^\\d{18}$)|(^\\d{15}$)";
+
+    /**
+     * 正则表达式：验证身份证
+     */
+    public static final String REGEX_ID_CARD_V2 = "(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}$)|(^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)";
 
     /**
      * 正则表达式：验证URL
