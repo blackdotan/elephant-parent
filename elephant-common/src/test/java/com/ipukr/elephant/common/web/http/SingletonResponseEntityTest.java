@@ -4,6 +4,7 @@ import com.ipukr.elephant.utils.JsonUtils;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
@@ -34,5 +35,9 @@ public class SingletonResponseEntityTest {
 				}}).build();
 		System.out.println(JsonUtils.parserObj2String(entity3));
 
+		PaginationResponseWarpper warpper = PaginationResponseWarpper.status(HttpStatus.OK).body(Collections.singletonList(new HashMap() {{
+			put(1, 2);
+		}}));
+		System.out.println(JsonUtils.parserObj2String(warpper));
 	}
 }
