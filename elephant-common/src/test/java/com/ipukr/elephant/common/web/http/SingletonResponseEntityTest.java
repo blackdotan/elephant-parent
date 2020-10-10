@@ -15,6 +15,7 @@ import java.util.HashMap;
  * Created by ryan wu on 2020/4/5.
  */
 public class SingletonResponseEntityTest {
+
 	@Test
 	public void name() {
 		SingletonResponseEntity entity = SingletonResponseEntity.status(HttpStatus.OK).body(new HashMap(){{
@@ -35,9 +36,12 @@ public class SingletonResponseEntityTest {
 				}}).build();
 		System.out.println(JsonUtils.parserObj2String(entity3));
 
-		PaginationResponseWarpper warpper = PaginationResponseWarpper.status(HttpStatus.OK).body(Collections.singletonList(new HashMap() {{
+
+		PaginationResponseWrapper warpper = PaginationResponseWrapper.status(HttpStatus.OK)
+				.body(Collections.singletonList(new HashMap() {{
 			put(1, 2);
 		}}));
 		System.out.println(JsonUtils.parserObj2String(warpper));
 	}
+
 }

@@ -4,7 +4,6 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.github.miemiedev.mybatis.paginator.domain.Paginator;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
@@ -21,7 +20,7 @@ import java.util.List;
  *
  *************************************************************** */
 @Data
-public class PaginationResponseWarpper<T> {
+public class PaginationResponseWrapper<T> {
     /**
      * 提示信息
      */
@@ -34,10 +33,6 @@ public class PaginationResponseWarpper<T> {
      * 提示信息
      */
     private Integer code;
-    /**
-     * 数据
-     * */
-    private List<T> data;
 
     /**
      * 页面大小
@@ -61,16 +56,35 @@ public class PaginationResponseWarpper<T> {
     private Integer count = 0;
 
     /**
+     * 数据
+     * */
+    private List<T> data;
+
+    public PaginationResponseWrapper() {
+    }
+
+    public PaginationResponseWrapper(String msg, Boolean success, Integer code, Integer pageSize, Integer pageIndex, Integer pageCount, Integer count, List<T> data) {
+        this.msg = msg;
+        this.success = success;
+        this.code = code;
+        this.pageSize = pageSize;
+        this.pageIndex = pageIndex;
+        this.pageCount = pageCount;
+        this.count = count;
+        this.data = data;
+    }
+
+    /**
      * @param code
      * @param msg
      * @param data
      */
-    public PaginationResponseWarpper(int code, String msg , List<T> data) {
+    public PaginationResponseWrapper(int code, String msg , List<T> data) {
         this.code = code;
         this.success = code == 200;
         this.msg = msg;
         this.data = data;
-        if(data instanceof PageList) {
+        if( data instanceof PageList) {
             Paginator paginator = ((PageList) data).getPaginator();
             this.count = paginator.getTotalCount();
             this.pageIndex = paginator.getPage();
@@ -88,13 +102,20 @@ public class PaginationResponseWarpper<T> {
         return new PaginationResponseWarpperBuilder(status);
     }
 
-
     /**
      * @return
      */
     public static PaginationResponseWarpperBuilder ok() {
         return new PaginationResponseWarpperBuilder(HttpStatus.OK);
     }
+
+    /**
+     * @return
+     */
+    public static PaginationResponseWarpperBuilder fail() {
+        return new PaginationResponseWarpperBuilder(HttpStatus.NOT_ACCEPTABLE);
+    }
+
 
     /**
      *
@@ -141,14 +162,20 @@ public class PaginationResponseWarpper<T> {
             return this;
         }
 
-        public PaginationResponseWarpper build() {
-            return new PaginationResponseWarpper(code, msg, data);
+        /**
+         * 快速返回
+         * @param data
+         * @return
+         */
+        public PaginationResponseWrapper body(List data) {
+            this.data = data;
+            return new PaginationResponseWrapper(code, msg, data);
         }
 
-        public PaginationResponseWarpper body(List data) {
-            this.data = data;
-            return new PaginationResponseWarpper(code, msg, data);
+        public PaginationResponseWrapper build() {
+            return new PaginationResponseWrapper(code, msg, data);
         }
+
     }
 
 }

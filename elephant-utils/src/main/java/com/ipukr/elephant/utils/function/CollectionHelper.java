@@ -1,4 +1,4 @@
-package com.ipukr.elephant.common.function;
+package com.ipukr.elephant.utils.function;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
  * <p>
  * Created by ryan wu on 2019/6/6.
  */
-@Deprecated
 public class CollectionHelper {
     /**
      * 集合列表结构转树形结构

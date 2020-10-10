@@ -37,6 +37,16 @@ public class NormalResponseWrapper<T> {
      */
     private T data;
 
+    public NormalResponseWrapper() {
+    }
+
+    public NormalResponseWrapper(int code, Boolean success, String msg, T data) {
+        this.code = code;
+        this.success = success;
+        this.msg = msg;
+        this.data = data;
+    }
+
     /**
      * @param code
      * @param msg
@@ -65,6 +75,14 @@ public class NormalResponseWrapper<T> {
         return new NormalResponseWrapperBuild(HttpStatus.OK);
     }
 
+    /**
+     * @return
+     */
+    public static NormalResponseWrapperBuild fail() {
+        return new NormalResponseWrapperBuild(HttpStatus.NOT_ACCEPTABLE);
+    }
+
+
     public static class NormalResponseWrapperBuild<T> {
         /**
          * 提示信息
@@ -80,6 +98,9 @@ public class NormalResponseWrapper<T> {
         private T data;
 
 
+        /**
+         * @param status
+         */
         public NormalResponseWrapperBuild(HttpStatus status) {
             this.code = status.value();
         }
@@ -106,14 +127,21 @@ public class NormalResponseWrapper<T> {
             return this;
         }
 
-        public NormalResponseWrapper build() {
-            return new NormalResponseWrapper(code, msg, data);
-        }
-
+        /**
+         * 快速返回
+         * @param data
+         * @return
+         */
         public NormalResponseWrapper body(T data) {
             this.data = data;
             return new NormalResponseWrapper(code, msg, data);
         }
+
+        public NormalResponseWrapper build() {
+            return new NormalResponseWrapper(code, msg, data);
+        }
+
+
     }
 
 

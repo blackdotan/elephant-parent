@@ -1,4 +1,4 @@
-package com.ipukr.elephant.common.function;
+package com.ipukr.elephant.utils.function;
 
 import java.util.List;
 
@@ -9,7 +9,6 @@ import java.util.List;
  * <p>
  * Created by ryan wu on 2018/4/30.
  */
-@Deprecated
 public class EntityCombineHelper {
     /**
      * @param ts

@@ -1,4 +1,9 @@
 
+
+
+
+
+
 # elephant kit 简介
 
 钚氪基础组件包
@@ -8,6 +13,17 @@
         <artifactId>elephant-parent</artifactId>
         <version>2.4.1</version>
     <dependency>
+
+🔥🔥🔥
+
+CHANGELOG
+
+发布 2.4.6 稳定版本
+- FIX elephant-utils 支持IFunction、IPredicate
+- ImageUtilities 支持图片、Base64互转、支持数据压缩
+- Word2ImageUtilities 支持字体转头像图片
+- 新增 NormalResponseWrapper、PaginationResponseWrapper 用于封装 接口返回 对象
+
 
 
 # 七牛存储

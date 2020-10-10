@@ -1,5 +1,8 @@
 package com.ipukr.elephant.utils;
 
+import com.ipukr.elephant.utils.validate.IdCardValidateUtil;
+
+import javax.annotation.Resource;
 import java.util.regex.Pattern;
 
 /**
@@ -19,7 +22,13 @@ public class ValidateUtils {
     /**
      * 正则表达式：验证手机号
      */
+    @Deprecated
     public static final String REGEX_MOBILE = "^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+
+    /**
+     * 正则表达式：验证手机号
+     */
+    public static final String REGEX_MOBILE_V2 = "1[3456789]\\d{9}$";
 
     /**
      * 正则表达式：验证邮箱
@@ -30,6 +39,11 @@ public class ValidateUtils {
      * 正则表达式：验证汉字
      */
     public static final String REGEX_CHINESE = "^[\u4e00-\u9fa5],{0,}$";
+
+    /**
+     * 正则表达式：中文名
+     */
+    public static final String REGEX_CHINESE_NAME = "^[\u4e00-\u9fa5],{2,}$";
 
     /**
      * 正则表达式：验证身份证
@@ -78,8 +92,18 @@ public class ValidateUtils {
      * @param mobile 手机号
      * @return 校验通过返回true，否则返回false
      */
+    @Deprecated
     public static boolean isMobile(String mobile) {
         return Pattern.matches(REGEX_MOBILE, mobile);
+    }
+
+    /**
+     * 校验手机号
+     * @param mobile 手机号
+     * @return 校验通过返回true，否则返回false
+     */
+    public static boolean isMobileV2(String mobile) {
+        return Pattern.matches(REGEX_MOBILE_V2, mobile);
     }
 
     /**
@@ -92,6 +116,7 @@ public class ValidateUtils {
         return Pattern.matches(REGEX_EMAIL, email);
     }
 
+
     /**
      * 校验汉字
      *
@@ -102,14 +127,40 @@ public class ValidateUtils {
         return Pattern.matches(REGEX_CHINESE, chinese);
     }
 
+
+    /**
+     * 中文名称
+     * @param chineseName 中文名称
+     * @return 校验通过返回true，否则返回false
+     */
+    public static boolean isChineseName(String chineseName) {
+        return Pattern.matches(REGEX_CHINESE_NAME, chineseName);
+    }
+
     /**
      * 校验身份证
      *
      * @param idCard 身份证
      * @return 校验通过返回true，否则返回false
      */
+    @Deprecated
     public static boolean isIDCard(String idCard) {
         return Pattern.matches(REGEX_ID_CARD, idCard);
+    }
+
+    /**
+     * 校验身份证
+     *
+     * @param idCard 身份证
+     * @return 校验通过返回true，否则返回false
+     */
+    public static boolean isIDCardV2(String idCard) {
+        return Pattern.matches(REGEX_ID_CARD_V2, idCard);
+    }
+
+
+    public static boolean isIDCardV3(String idCard) {
+        return IdCardValidateUtil.isValidatedAllIdcard(idCard);
     }
 
     /**

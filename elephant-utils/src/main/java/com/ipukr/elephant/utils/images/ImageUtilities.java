@@ -2,13 +2,11 @@ package com.ipukr.elephant.utils.images;
 
 import com.ipukr.elephant.utils.IOTools;
 import net.coobird.thumbnailator.Thumbnails;
+import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 import javax.net.ssl.HttpsURLConnection;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -19,6 +17,7 @@ import java.net.URL;
  */
 public class ImageUtilities {
 
+
     /**
      * Tobase 64 string.
      *
@@ -27,25 +26,47 @@ public class ImageUtilities {
      * @throws IOException the io exception
      */
     public static String tobase64(byte[] bytes) throws IOException {
+       return tobase64(bytes, 500 * 1024, 0.8f, 0.2f);
+    }
+
+    /**
+     * Tobase 64 string.
+     *
+     * @param bytes the bytes
+     * @return the string
+     * @throws IOException the io exception
+     */
+    public static String tobase64(byte[] bytes, int size, float scale, float quality) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(bytes, 0, bytes.length);
         // 内存流 转 Base64 编码
         BASE64Encoder encoder = new BASE64Encoder();
-        while (baos.size() > 500 * 1024) {
-            baos = compress(baos, 0.8f, 0.2f, true);
+        while (baos.size() > size) {
+            // baos = compress(baos, 0.8f, 0.2f, true);
+            baos = compress(baos, scale, quality, true);
         }
         String base64 = encoder.encode(baos.toByteArray());
-
         return base64;
+    }
+
+    /**
+     * @param imgURL
+     * @return
+     */
+    public static String tobase64(String imgURL) {
+        return tobase64(imgURL, 500 * 1024, 0.8f, 0.2f);
     }
 
     /**
      * Tobase 64 string.
      *
      * @param imgURL the img url
+     * @param size bit size 最大保存体积
+     * @param scale   压缩比例
+     * @param quality
      * @return string string
      */
-    public static String tobase64(String imgURL) {
+    public static String tobase64(String imgURL, int size, float scale, float quality) {
         ByteArrayOutputStream baos = null;
         try {
             // 流
@@ -70,8 +91,9 @@ public class ImageUtilities {
             IOTools.close(ins);
 
 
-            while (baos.size() > 500 * 1024) {
-                baos = compress(baos, 0.8f, 0.2f, true);
+            while (baos.size() > size) {
+                // baos = compress(baos, 0.8f, 0.2f, true);
+                baos = compress(baos, scale, quality, true);
             }
 
             // 内存流 转 Base64 编码
@@ -126,5 +148,33 @@ public class ImageUtilities {
         return nbaos;
     }
 
+    public static boolean base64StrToImage(String imgStr, String path) {
+        if (imgStr == null) {
+            return false;
+        }
+        BASE64Decoder decoder = new BASE64Decoder();
+        try {
+            // 解密
+            byte[] b = decoder.decodeBuffer(imgStr);
+            // 处理数据
+            for (int i = 0; i < b.length; ++i) {
+                if (b[i] < 0) {
+                    b[i] += 256;
+                }
+            }
+            //文件夹不存在则自动创建
+            File tempFile = new File(path);
+            if (!tempFile.getParentFile().exists()) {
+                tempFile.getParentFile().mkdirs();
+            }
+            OutputStream out = new ByteArrayOutputStream();
+            out.write(b);
+            out.flush();
+            out.close();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 }
