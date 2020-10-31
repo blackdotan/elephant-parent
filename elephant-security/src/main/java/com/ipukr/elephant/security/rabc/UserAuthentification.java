@@ -20,6 +20,7 @@ public class UserAuthentification extends Authentification<String> {
 
 	/**
 	 * 主键
+	 * @see #key 建议使用Key作为唯一
 	 */
 	private Integer id;
 
