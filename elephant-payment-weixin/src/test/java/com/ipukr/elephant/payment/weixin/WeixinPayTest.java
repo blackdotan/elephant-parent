@@ -92,23 +92,23 @@ public class WeixinPayTest {
     public void verify() throws Exception {
         // 微信返回参数示例
         String text =
-                "<xml><appid><![CDATA[wx7c044c92ffbee262]]></appid>\n" +
-                        "<bank_type><![CDATA[CFT]]></bank_type>\n" +
-                        "<cash_fee><![CDATA[2]]></cash_fee>\n" +
-                        "<fee_type><![CDATA[CNY]]></fee_type>\n" +
-                        "<is_subscribe><![CDATA[N]]></is_subscribe>\n" +
-                        "<mch_id><![CDATA[1497977952]]></mch_id>\n" +
-                        "<nonce_str><![CDATA[8e40e59f78c8432c8f90165379996ac9]]></nonce_str>\n" +
-                        "<openid><![CDATA[ozkVA0dJ4f5tw03s_uYROBKC6-eE]]></openid>\n" +
-                        "<out_trade_no><![CDATA[968417425890476032]]></out_trade_no>\n" +
-                        "<result_code><![CDATA[SUCCESS]]></result_code>\n" +
-                        "<return_code><![CDATA[SUCCESS]]></return_code>\n" +
-                        "<sign><![CDATA[C10E5CF56986DF97D0D1B05803DECDDE]]></sign>\n" +
-                        "<time_end><![CDATA[20180227174024]]></time_end>\n" +
-                        "<total_fee>2</total_fee>\n" +
-                        "<trade_type><![CDATA[APP]]></trade_type>\n" +
-                        "<transaction_id><![CDATA[4200000056201802279403991918]]></transaction_id>\n" +
-                        "</xml>";
+            "<xml><appid><![CDATA[wx7c044c92ffbee262]]></appid>\n" +
+                "<bank_type><![CDATA[CFT]]></bank_type>\n" +
+                "<cash_fee><![CDATA[2]]></cash_fee>\n" +
+                "<fee_type><![CDATA[CNY]]></fee_type>\n" +
+                "<is_subscribe><![CDATA[N]]></is_subscribe>\n" +
+                "<mch_id><![CDATA[1497977952]]></mch_id>\n" +
+                "<nonce_str><![CDATA[8e40e59f78c8432c8f90165379996ac9]]></nonce_str>\n" +
+                "<openid><![CDATA[ozkVA0dJ4f5tw03s_uYROBKC6-eE]]></openid>\n" +
+                "<out_trade_no><![CDATA[968417425890476032]]></out_trade_no>\n" +
+                "<result_code><![CDATA[SUCCESS]]></result_code>\n" +
+                "<return_code><![CDATA[SUCCESS]]></return_code>\n" +
+                "<sign><![CDATA[C10E5CF56986DF97D0D1B05803DECDDE]]></sign>\n" +
+                "<time_end><![CDATA[20180227174024]]></time_end>\n" +
+                "<total_fee>2</total_fee>\n" +
+                "<trade_type><![CDATA[APP]]></trade_type>\n" +
+                "<transaction_id><![CDATA[4200000056201802279403991918]]></transaction_id>\n" +
+            "</xml>";
         Map params = WXPayUtil.xmlToMap(text);
         Boolean bool = pay.verify(params);
         Assert.assertEquals(true, bool);

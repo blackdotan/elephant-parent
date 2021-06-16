@@ -25,9 +25,10 @@
         <module>elephant-payment-weixin</module>
         <module>elephant-weixin</module>
 	    <module>elephant-security</module>
-	    <module>elephant-dssclient</module>
-	    <module>elephant-dssclient-linux</module>
-	    <module>elephant-dssclient-windows</module>
+        <module>elephant-security-jwt</module>
+        <module>elephant-dssclient</module>
+        <module>elephant-dssclient-linux</module>
+        <module>elephant-dssclient-windows</module>
         <module>elephant-simulator</module>
     </modules>
 
@@ -312,7 +313,6 @@
             <password>guest123456</password>
         </server>
         =============================================================================
-    -->
     <repositories>
         <repository>
             <id>ipukr_repo</id>
@@ -350,6 +350,9 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+
+    -->
+
 
 
 </project>

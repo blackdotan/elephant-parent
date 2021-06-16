@@ -63,10 +63,15 @@ public class SimpleUserAuthentification extends Authentification<String> {
 
 	// ====================================[权限]====================================
 	/**
-	 * 授权机构（该用户可以访问的机构数据，[Organization.Id...] ）
+	 * 下级机构（该用户可以访问的机构数据，[Organization.Id...] ）
 	 */
 	private List<String> subordinates = new ArrayList<String>();
 
+	/**
+	 * 授权机构
+	 * 既下级机构 + 所属机构
+	 */
+	private List<String> organizations = new ArrayList<>();
 	/**
 	 * 授权角色（该用户持有的机构数据，[Role.Name...]）
 	 */
