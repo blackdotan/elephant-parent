@@ -3,11 +3,11 @@
 ## 内存存储
 
 >application.label=kv
->application.kv.class=com.ipukr.elephant.kv.backend.MemoryKV
+>application.kv.class=com.blackdotan.elephant.kv.backend.MemoryKV
 
 ## Redis存储
 
-> application.redis.class=com.ipukr.elephant.kv.backend.RedisKV
+> application.redis.class=RedisKV
 > application.redis.address=120.76.120.81
 > application.redis.port=6379
 > application.redis.auth=admin123@$^!

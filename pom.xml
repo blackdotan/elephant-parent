@@ -4,10 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ipukr.elephant</groupId>
+    <groupId>com.blackdotan.elephant</groupId>
     <artifactId>elephant-parent</artifactId>
     <packaging>pom</packaging>
-    <version>2.4.2</version>
+    <version>2.4.7</version>
+
+    <url>https://github.com/blackdotan/elephant-parent</url>
+
+    <developers>
+        <developer>
+            <name>Ryan Wu</name>
+            <email>wmw1612@gmail.com</email>
+        </developer>
+    </developers>
 
     <modules>
         <module>elephant-utils</module>
@@ -25,9 +34,10 @@
         <module>elephant-payment-weixin</module>
         <module>elephant-weixin</module>
 	    <module>elephant-security</module>
-	    <module>elephant-dssclient</module>
-	    <module>elephant-dssclient-linux</module>
-	    <module>elephant-dssclient-windows</module>
+        <module>elephant-security-jwt</module>
+        <module>elephant-dssclient</module>
+        <module>elephant-dssclient-linux</module>
+        <module>elephant-dssclient-windows</module>
         <module>elephant-simulator</module>
     </modules>
 
@@ -279,7 +289,7 @@
                             <!--<option>-keep class com.chinatelecom.gz.wy.zhukun.shiro_spring.model.** {*;}</option>-->
                             <!--&lt;!&ndash; 以下两个包因为大部分是Spring管理的Bean，不对包类的类名进行混淆，但对类中的属性和方法混淆&ndash;&gt;-->
                             <!--<option>-keep class com.chinatelecom.gz.wy.zhukun.shiro_spring.service.** </option>-->
-                            <option>-keep class com.ipukr.elephant.** { &lt;methods&gt;; }</option>
+                            <option>-keep class com.blackdotan.elephant.** { &lt;methods&gt;; }</option>
                         </options>
                         <injar>${project.build.finalName}.jar</injar>
                         <outjar>${project.build.finalName}.jar</outjar>
@@ -312,7 +322,6 @@
             <password>guest123456</password>
         </server>
         =============================================================================
-    -->
     <repositories>
         <repository>
             <id>ipukr_repo</id>
@@ -350,6 +359,9 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+
+    -->
+
 
 
 </project>

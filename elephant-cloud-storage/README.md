@@ -7,7 +7,7 @@
 
 > application.label=storage
 >
-> application.storage.class=com.ipukr.elephant.cloud.storage.backend.QiniuStorage
+> application.storage.class=QiniuStorage
 >
 > application.storage.access_key=TIfWJ8n_YCiOfnA8O4eOx79VdgfduHQO0svjhO2K
 >
@@ -34,7 +34,7 @@
 
 本地存储路径配置文件
 
-> application.storage.local.class=com.ipukr.elephant.cloud.storage.backend.LocalStorage
+> application.storage.local.class=com.blackdotan.elephant.cloud.storage.backend.LocalStorage
 > application.storage.local.file_absolute_address=C:\\Users\\Administrator\\Desktop
 
 

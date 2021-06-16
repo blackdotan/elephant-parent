@@ -8,5 +8,4 @@ HOME=`cd "$PRGDIR/.." >/dev/null; pwd`
 cd $HOME;
 echo `pwd`;
 
-git pull;
 mvn clean package source:jar install deploy -DskipTests -U;
