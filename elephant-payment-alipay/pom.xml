@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>elephant-parent</artifactId>
-        <groupId>com.ipukr.elephant</groupId>
+        <groupId>com.blackdotan.elephant</groupId>
         <version>2.4.7</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -42,12 +42,12 @@
         </dependency>
 
         <dependency>
-            <groupId>com.ipukr.elephant</groupId>
+            <groupId>com.blackdotan.elephant</groupId>
             <artifactId>elephant-payment</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.ipukr.elephant</groupId>
+            <groupId>com.blackdotan.elephant</groupId>
             <artifactId>elephant-common</artifactId>
             <version>${project.version}</version>
         </dependency>

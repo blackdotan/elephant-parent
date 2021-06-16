@@ -1,6 +1,6 @@
 
 
-
+https://github.com/blackdotan/elephant-parent
 
 
 
@@ -9,7 +9,7 @@
 钚氪基础组件包
 
     <dependency>
-        <groupId>com.ipukr.elephant</groupId>
+        <groupId>com.blackdotan.elephant</groupId>
         <artifactId>elephant-parent</artifactId>
         <version>2.4.1</version>
     <dependency>
@@ -29,7 +29,7 @@ CHANGELOG
 # 七牛存储
 
     <dependency>
-        <groupId>com.ipukr.elephant</groupId>
+        <groupId>com.blackdotan.elephant</groupId>
         <artifactId>elephant-cloud-storage</artifactId>
         <version>2.4.1</version>
     <dependency>
@@ -89,7 +89,7 @@ CHANGELOG
 # Httpclient使用
 
     <dependency>
-        <groupId>com.ipukr.elephant</groupId>
+        <groupId>com.blackdotan.elephant</groupId>
         <artifactId>elephant-httpclient</artifactId>
         <version>2.4.1</version>
     </dependency>
@@ -138,7 +138,7 @@ Httpclient组件主要是简化httpclient的代码，
 # KV缓存
 
     <dependency>
-        <groupId>com.ipukr.elephant</groupId>
+        <groupId>com.blackdotan.elephant</groupId>
         <artifactId>elephant-kv</artifactId>
         <version>2.4.1</version>
     </dependency>
@@ -202,7 +202,7 @@ Httpclient组件主要是简化httpclient的代码，
 # 邮件功能
 
     <dependency>
-        <groupId>com.ipukr.elephant</groupId>
+        <groupId>com.blackdotan.elephant</groupId>
         <artifactId>elephant-mail</artifactId>
         <version>2.4.1</version>
     </dependency>
@@ -234,7 +234,7 @@ Httpclient组件主要是简化httpclient的代码，
 # 推送功能
 
     <dependency>
-        <groupId>com.ipukr.elephant</groupId>
+        <groupId>com.blackdotan.elephant</groupId>
         <artifactId>elephant-push</artifactId>
         <version>2.4.1</version>
     </dependency>
@@ -283,7 +283,7 @@ Httpclient组件主要是简化httpclient的代码，
 # 短信功能
 
     <dependency>
-        <groupId>com.ipukr.elephant</groupId>
+        <groupId>com.blackdotan.elephant</groupId>
         <artifactId>elephant-sms</artifactId>
         <version>2.4.1</version>
     </dependency>
@@ -326,7 +326,7 @@ Httpclient组件主要是简化httpclient的代码，
 # 微信工具
 
     <dependency>
-        <groupId>com.ipukr.elephant</groupId>
+        <groupId>com.blackdotan.elephant</groupId>
         <artifactId>elephant-weixin</artifactId>
         <version>2.4.1</version>
     </dependency>
@@ -377,7 +377,7 @@ Httpclient组件主要是简化httpclient的代码，
 ## 阿里支付
 
     <dependency>
-        <groupId>com.ipukr.elephant</groupId>
+        <groupId>com.blackdotan.elephant</groupId>
         <artifactId>elephant-payment-alipay</artifactId>
         <version>2.4.1</version>
     </dependency>
@@ -386,7 +386,7 @@ Httpclient组件主要是简化httpclient的代码，
 ## 微信支付
 
     <dependency>
-        <groupId>com.ipukr.elephant</groupId>
+        <groupId>com.blackdotan.elephant</groupId>
         <artifactId>elephant-payment-weixin</artifactId>
         <version>2.4.1</version>
     </dependency>
@@ -488,7 +488,7 @@ Httpclient组件主要是简化httpclient的代码，
 # 代码生成
 
     <dependency>
-        <groupId>com.ipukr.elephant</groupId>
+        <groupId>com.blackdotan.elephant</groupId>
         <artifactId>elephant-mybatis-plugin</artifactId>
         <version>2.4.1</version>
     </dependency>
@@ -521,28 +521,28 @@ Httpclient组件主要是简化httpclient的代码，
             自定义插件
             参考链接：http://www.mybatis.org/generator/
         -->
-        <plugin type="com.ipukr.elephant.mybatis.plugins.SerializablePlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.ToStringPlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.ConditionPlugin"></plugin>
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.SerializablePlugin"></plugin>
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.ToStringPlugin"></plugin>
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.ConditionPlugin"></plugin>
 
-        <plugin type="com.ipukr.elephant.mybatis.plugins.DeleteByIdsPlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.FindAllPlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.FindByIdsPlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.QueryPlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.ExamplePlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.SearchPlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.ExistPlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.CountPlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.IgsertPlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.UpsertPlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.UniquePlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.UniletePlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.ModelAppendPlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.AbstractMapperPlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.QConditionPlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.SConditionPlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.VirtualPrimaryKeyPlugin"></plugin>
-        <plugin type="com.ipukr.elephant.mybatis.plugins.GeneratedEnumerationHandlerJavaFilePlugin">
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.DeleteByIdsPlugin"></plugin>
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.FindAllPlugin"></plugin>
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.FindByIdsPlugin"></plugin>
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.QueryPlugin"></plugin>
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.ExamplePlugin"></plugin>
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.SearchPlugin"></plugin>
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.ExistPlugin"></plugin>
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.CountPlugin"></plugin>
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.IgsertPlugin"></plugin>
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.UpsertPlugin"></plugin>
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.UniquePlugin"></plugin>
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.UniletePlugin"></plugin>
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.ModelAppendPlugin"></plugin>
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.AbstractMapperPlugin"></plugin>
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.QConditionPlugin"></plugin>
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.SConditionPlugin"></plugin>
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.VirtualPrimaryKeyPlugin"></plugin>
+        <plugin type="com.blackdotan.elephant.mybatis.plugins.GeneratedEnumerationHandlerJavaFilePlugin">
             <property name="OverrideEnumeration" value="false"/>
         </plugin>
 
@@ -565,15 +565,15 @@ Httpclient组件主要是简化httpclient的代码，
         <!--
             Mybatis 代码生成规则
         -->
-        <javaModelGenerator targetPackage="com.ipukr.ants.entity" targetProject="MAVEN">
+        <javaModelGenerator targetPackage="com.blackdotan.ants.entity" targetProject="MAVEN">
             <property name="enableSubPackages" value="false"/>
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="com.ipukr.ants.dao.mapper" targetProject="MAVEN">
+        <sqlMapGenerator targetPackage="com.blackdotan.ants.dao.mapper" targetProject="MAVEN">
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.ipukr.ants.dao" targetProject="MAVEN">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.blackdotan.ants.dao" targetProject="MAVEN">
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
 
