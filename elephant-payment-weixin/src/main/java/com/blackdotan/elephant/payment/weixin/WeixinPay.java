@@ -25,12 +25,10 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.ResourceUtils;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URI;
 import java.util.*;
 
@@ -68,9 +66,25 @@ public class WeixinPay implements Pay {
                 .protocol("TLSv1,TLSv1.1,TLSv1.2")
                 .connections(20);
         if (config.getCertification() != null && !config.getCertification().equals("")) {
-            File file = ResourceUtils.getFile(config.getCertification());
-            logger.debug("{}, 加载微信证书路径: {}", WeixinPay.class.getCanonicalName(), file.getAbsolutePath());
-            InputStream ins = new FileInputStream(file);
+
+            InputStream ins = null;
+            // 出问题代码
+            // 异常：cannot be resolved to absolute file path because it does not reside in the file system
+            // File file = ResourceUtils.getFile(config.getCertification());
+
+            // 修改后代码
+            if (config.getCertification().trim().startsWith("classpath:")) {
+                //
+                ClassPathResource iClassPathResource =  new ClassPathResource(config.getCertification());
+                logger.debug("{}, 加载微信证书路径: {}", WeixinPay.class.getCanonicalName(), iClassPathResource.getPath());
+                ins = iClassPathResource.getInputStream();
+            } else {
+                File file = ResourceUtils.getFile(config.getCertification());
+                logger.debug("{}, 加载微信证书路径: {}", WeixinPay.class.getCanonicalName(), file.getAbsolutePath());
+                ins = new FileInputStream(file);
+            }
+
+
             byte[] bytes = new byte[ins.available()];
             IOUtils.read(ins, bytes);
             builder

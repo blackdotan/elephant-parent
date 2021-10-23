@@ -29,6 +29,8 @@ public abstract class AbstractEx extends RuntimeException {
 
     private HttpHeaders headers = new HttpHeaders();
 
+    private int code;
+
     public AbstractEx(String message) {
         super(message);
         headers.add("msg", message);
@@ -96,5 +98,13 @@ public abstract class AbstractEx extends RuntimeException {
 
     public void setHeaders(HttpHeaders headers) {
         this.headers = headers;
+    }
+
+    public int getCode() {
+        return status.value();
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 }

@@ -57,4 +57,6 @@ public class IllegalStateEx extends AbstractEx {
     public String getMessage() {
         return super.getMessage();
     }
+
+
 }

@@ -3,6 +3,7 @@ package com.blackdotan.elephant.weixin;
 import com.blackdotan.elephant.common.exception.IllegalStateEx;
 import com.blackdotan.elephant.http.config.HttpClientPoolConfig;
 import com.blackdotan.elephant.http.third.HttpClientPool;
+import com.blackdotan.elephant.weixin.bean.WxPhoneInfo;
 import com.blackdotan.elephant.weixin.bean.WxUserInfo;
 import com.blackdotan.elephant.weixin.request.WxTemplateMessageRequest;
 import com.blackdotan.elephant.utils.JsonUtils;
@@ -93,6 +94,35 @@ public class WeixinMPHelper {
         iWxUserInfo.setWc2sr(wc2sr);
         return iWxUserInfo;
     }
+
+    /**
+     * 获取用户信息
+     * @param sessionKey
+     * @param encrypted
+     * @param iv
+     * @return
+     * @throws Exception
+     */
+    public WxUserInfo getUserInfo(String sessionKey, String encrypted, String iv) throws Exception {
+        WxUserInfo iWxUserInfo = WxUtil.getUserInfo(encrypted, sessionKey, iv);
+        // iWxUserInfo.setWc2sr(wc2sr);
+        return iWxUserInfo;
+    }
+
+    /**
+     * 获取用户手机号码
+     * @param sessionKey
+     * @param encrypted
+     * @param iv
+     * @return
+     * @throws Exception
+     */
+    public WxPhoneInfo getPhoneNumber(String sessionKey, String encrypted, String iv) throws Exception {
+        WxPhoneInfo iWxPhoneInfo = WxUtil.getPhoneNumber(encrypted, sessionKey, iv);
+        return iWxPhoneInfo;
+    }
+
+
 
     /**
      * 获取授权Token

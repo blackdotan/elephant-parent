@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
  * <p>
  * Created by ryan wu on 2018/5/9.
  */
+@Deprecated
 public class UnsupportedStateEx extends AbstractEx {
 
     public UnsupportedStateEx(String message) {
