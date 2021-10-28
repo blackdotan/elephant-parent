@@ -3,12 +3,15 @@ package com.blackdotan.elephant.weixin;
 import com.blackdotan.elephant.common.exception.IllegalStateEx;
 import com.blackdotan.elephant.http.config.HttpClientPoolConfig;
 import com.blackdotan.elephant.http.third.HttpClientPool;
+import com.blackdotan.elephant.utils.images.ImageUtilities;
 import com.blackdotan.elephant.weixin.bean.WxPhoneInfo;
 import com.blackdotan.elephant.weixin.bean.WxUserInfo;
+import com.blackdotan.elephant.weixin.request.GetWxACodeUnlimitRequest;
 import com.blackdotan.elephant.weixin.request.WxTemplateMessageRequest;
 import com.blackdotan.elephant.utils.JsonUtils;
 import com.blackdotan.elephant.weixin.response.WxAccessTokenResponse;
 import com.blackdotan.elephant.weixin.response.WxCode2SessionResponse;
+import com.blackdotan.elephant.weixin.response.WxGrantClientCredentialResponse;
 import com.blackdotan.elephant.weixin.response.WxSendTemplateMessageResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.httpclient.HttpStatus;
@@ -20,8 +23,10 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.util.EntityUtils;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * 请描述类 <br>
@@ -165,6 +170,48 @@ public class WeixinMPHelper {
         }
     }
 
+    /**
+     * 参考文档：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.getUnlimited.html
+     *
+     * @param accessToken image base64
+     * @param req
+     * @return
+     * @throws Exception
+     */
+    public String getWxACodeUnlimit(String accessToken, GetWxACodeUnlimitRequest req) throws Exception {
+
+        HttpClient client = pool.getConnection();
+
+        URI URI = new URIBuilder()
+                .setScheme("https")
+                .setHost("api.weixin.qq.com")
+                .setPort(443)
+                .setPath("/wxa/getwxacodeunlimit")
+                .addParameter("access_token", accessToken)
+                .setCharset(Consts.UTF_8)
+                .build();
+
+        StringEntity entity  = new StringEntity(JsonUtils.parserObj2String(req), Consts.UTF_8.toString());
+
+        HttpUriRequest request = RequestBuilder.post(URI)
+                .setCharset(Consts.UTF_8)
+                .setEntity(entity)
+                .build();
+
+        HttpResponse response = client.execute(request);
+
+        if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+            // String content = EntityUtils.toString(response.getEntity());
+            byte[] bytes = EntityUtils.toByteArray(response.getEntity());
+            String base64 = ImageUtilities.tobase64(bytes, 300 * 1024, 1.0f, 1.0f ).trim();
+            return base64;
+
+        } else {
+            throw new IllegalStateEx("微信【getAccessToken】失败，HTTP请求失败 Code={}", String.valueOf(response.getStatusLine().getStatusCode()));
+        }
+    }
+
+
 
     /**
      * 发送模板消息
@@ -206,4 +253,7 @@ public class WeixinMPHelper {
             throw new IllegalStateEx("微信【sendTemplateMessage】失败，HTTP请求失败 Code={}", String.valueOf(response.getStatusLine().getStatusCode()));
         }
     }
+
+
+
 }

@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 
 public class IllegalStatusEx extends AbstractEx{
 
-    private int code;
+    private int code = -1;
 
     public IllegalStatusEx(String message) {
         super(message);
@@ -26,9 +26,16 @@ public class IllegalStatusEx extends AbstractEx{
         super(status, message, args);
         this.code = code;
     }
+    public IllegalStatusEx(int code, String message, String... args) {
+        super(HttpStatus.OK, message, args);
+        this.code = code;
+    }
 
     @Override
     public int getCode() {
+        if (code == -1) {
+            return getStatus().value();
+        }
         return code;
     }
 

@@ -19,29 +19,33 @@ public class ImageUtilities {
 
 
     /**
-     * Tobase 64 string.
+     * Tobase 64 string. / compressed
      *
      * @param bytes the bytes
      * @return the string
      * @throws IOException the io exception
      */
     public static String tobase64(byte[] bytes) throws IOException {
+
        return tobase64(bytes, 500 * 1024, 0.8f, 0.2f);
     }
 
     /**
-     * Tobase 64 string.
+     * Tobase 64 string. / compressed
      *
      * @param bytes the bytes
+     * @param maxSize 最大大小
+     * @param scale 缩放比例
+     * @param quality 图片质量 / 0.1 ~ 1.0
      * @return the string
      * @throws IOException the io exception
      */
-    public static String tobase64(byte[] bytes, int size, float scale, float quality) throws IOException {
+    public static String tobase64(byte[] bytes, int maxSize, float scale, float quality) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(bytes, 0, bytes.length);
         // 内存流 转 Base64 编码
         BASE64Encoder encoder = new BASE64Encoder();
-        while (baos.size() > size) {
+        while (baos.size() > maxSize) {
             // baos = compress(baos, 0.8f, 0.2f, true);
             baos = compress(baos, scale, quality, true);
         }
@@ -50,7 +54,7 @@ public class ImageUtilities {
     }
 
     /**
-     * @param imgURL
+     * @param imgURL / compressed
      * @return
      */
     public static String tobase64(String imgURL) {
@@ -58,7 +62,7 @@ public class ImageUtilities {
     }
 
     /**
-     * Tobase 64 string.
+     * Tobase 64 string. / compressed
      *
      * @param imgURL the img url
      * @param size bit size 最大保存体积
@@ -89,7 +93,6 @@ public class ImageUtilities {
             }
             // 关闭网络流
             IOTools.close(ins);
-
 
             while (baos.size() > size) {
                 // baos = compress(baos, 0.8f, 0.2f, true);
@@ -132,8 +135,8 @@ public class ImageUtilities {
      * Compress byte array output stream.
      *
      * @param baos    the baos
-     * @param scale   the scale
-     * @param quality the quality
+     * @param scale   the scale / 缩放比例
+     * @param quality the quality /
      * @return the byte array output stream
      * @throws IOException the io exception
      */
