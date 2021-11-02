@@ -19,5 +19,5 @@ ipukr.elephant.payment.weixin.appid: wx12c736b1c7124d61
 ipukr.elephant.payment.weixin.mchid: 1518547931
 ipukr.elephant.payment.weixin.notify: https://cloud.ipukr.cn/kong/wxint/account/bill/callback
 ipukr.elephant.payment.weixin.signature: ABCABCABCABCABCABCABCABCABCABCDD
-ipukr.elephant.payment.weixin.certification: classpath:weixin/15418283701854570.p12
+ipukr.elephant.payment.weixin.certification: /Users/black.an/Workspace/Java/elephant/elephant-parent/elephant-payment-weixin/src/test/resources/weixin/15418283701854570.p12
 ipukr.elephant.payment.weixin.magnification: 1.0

@@ -11,10 +11,17 @@
 
     <url>https://github.com/blackdotan/elephant-parent</url>
 
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
     <developers>
         <developer>
             <name>Ryan Wu</name>
             <email>wmw1612@gmail.com</email>
+            <organization>BLACK DOT AN</organization>
         </developer>
     </developers>
 
@@ -310,58 +317,18 @@
     </build>
 
 
-    <!--
-        钚氪代码仓库
-        账号/密码：guest/guest123456
-
-        setting.xml配置
-        =============================================================================
-        <server>
-            <id>ipukr_repo</id>
-            <username>guest</username>
-            <password>guest123456</password>
-        </server>
-        =============================================================================
-    <repositories>
-        <repository>
-            <id>ipukr_repo</id>
-            <url>https://repo.ipukr.cn/nexus/content/groups/develop/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
     <distributionManagement>
-        <repository>
-            <id>ipukr_repo</id>
-            <name>Nexus Releases Repository</name>
-            <url>https://repo.ipukr.cn/nexus/content/repositories/releases/</url>
-        </repository>
         <snapshotRepository>
-            <id>ipukr_repo</id>
-            <name>Nexus Snapshots Repository</name>
-            <url>https://repo.ipukr.cn/nexus/content/repositories/snapshots/</url>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </snapshotRepository>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>Nexus Release Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
     </distributionManagement>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>ipukr_repo</id>
-            <name>Nexus</name>
-            <url>https://repo.ipukr.cn/nexus/content/groups/develop/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
-
-    -->
-
 
 
 </project>
