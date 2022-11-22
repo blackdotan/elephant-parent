@@ -1,8 +1,5 @@
 
-
 https://github.com/blackdotan/elephant-parent
-
-
 
 # elephant kit 简介
 
@@ -11,7 +8,7 @@ https://github.com/blackdotan/elephant-parent
     <dependency>
         <groupId>com.blackdotan.elephant</groupId>
         <artifactId>elephant-parent</artifactId>
-        <version>2.4.1</version>
+        <version>${elephant.version}</version>
     <dependency>
 
 🔥🔥🔥
@@ -19,7 +16,9 @@ https://github.com/blackdotan/elephant-parent
 CHANGELOG
 
 发布 2.5.0 稳定版本
--
+- 1、优化 elephant-security 模型
+- 2、优化 elephant-security-jwt 鉴权逻辑
+- 3、更改 SecurityUtils.md5 实现方式，支持 JDK1.8+ 
 
 发布 2.4.7 稳定版本
 - 1、新增解析微信授权手机号接口 
