@@ -16,6 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class UserAuthentification extends Authentification<String> {
 
 	/**

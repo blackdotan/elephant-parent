@@ -10,4 +10,4 @@ CATTLE_MAIL_HOME=`cd "$PRGDIR/.." >/dev/null; pwd`
 
 cd $CATTLE_MAIL_HOME
 
-mvn clean javadoc:jar source:jar install deploy -DskipTests -U
+mvn clean javadoc:jar source:jar install deploy -DskipTests -U -N

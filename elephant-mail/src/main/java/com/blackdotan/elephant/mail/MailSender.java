@@ -1,6 +1,7 @@
 package com.blackdotan.elephant.mail;
 
 import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public interface MailSender {
      * @param content 内容
      * @throws MessagingException 邮件异常
      */
-    public void send(String to, String subject, String content) throws MessagingException;
+    public void send(String to, String subject, String content) throws MessagingException, UnsupportedEncodingException;
 
     /**
      * 发送邮件
@@ -24,5 +25,5 @@ public interface MailSender {
      * @param content 内容
      * @throws MessagingException 邮件异常
      */
-    public void send(List<String> tos, String subject, String content) throws MessagingException;
+    public void send(List<String> tos, String subject, String content) throws MessagingException, UnsupportedEncodingException;
 }

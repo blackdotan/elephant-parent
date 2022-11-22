@@ -4,6 +4,7 @@ import java.lang.annotation.*;
 
 /**
  * 需要登录
+ * @author black.an
  * Created by ryan on 上午10:21.
  */
 @Target(ElementType.METHOD)
@@ -14,5 +15,5 @@ public @interface RequireAudience {
      * 角色名称
      * @return
      */
-    String[] value();
+    String[] value() default {};
 }

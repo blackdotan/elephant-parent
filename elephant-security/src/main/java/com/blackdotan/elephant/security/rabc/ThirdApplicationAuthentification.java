@@ -11,6 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class ThirdApplicationAuthentification extends Authentification<String> {
 
     /**

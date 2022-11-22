@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class SimpleUserAuthentification extends Authentification<String> {
 
 	/**
@@ -25,7 +27,7 @@ public class SimpleUserAuthentification extends Authentification<String> {
 	 */
 	@Deprecated
 	private int type;
-	// ====================================[用户]====================================
+	// ====================================[用户信息]====================================
 	/**
 	 * User.Id
 	 */
@@ -35,7 +37,7 @@ public class SimpleUserAuthentification extends Authentification<String> {
 	 * User.Eno
 	 */
 	private String key;
-	// ====================================[机构]====================================
+	// ====================================[机构信息]====================================
 	/**
 	 * 所属机构 Organization.Id
 	 * eg：组织机构代码 GB
@@ -49,7 +51,7 @@ public class SimpleUserAuthentification extends Authentification<String> {
 	 * 行政区划代码
 	 */
 	private Integer administrativeDivisionId;
-	// ====================================[部门]====================================
+	// ====================================[部门信息]====================================
 	/**
 	 * 所属部门 Department.Id
 	 * eg：部门代码
@@ -60,23 +62,32 @@ public class SimpleUserAuthentification extends Authentification<String> {
 	 */
 	private String departmentName;
 
-	// ====================================[权限]====================================
+	// ====================================[授权情况]====================================
 	/**
 	 * 下级机构（该用户可以访问的机构数据，[Organization.Id...] ）
 	 */
-	private List<String> subordinates = new ArrayList<String>();
+	private List<? extends Serializable> subordinates = new ArrayList<>();
 
 	/**
 	 * 授权机构
 	 * 既下级机构 + 所属机构
 	 */
-	private List<String> organizations = new ArrayList<>();
+	private List<? extends Serializable> organizations = new ArrayList<>();
+
+	/**
+	 * 检查机构
+	 * 既 指定数据隶属的机构
+	 * pass through http.header from client
+	 */
+	private List<? extends Serializable> inspections = new ArrayList<>();
+
 	/**
 	 * 授权角色（该用户持有的机构数据，[Role.Name...]）
 	 */
-	private List<String> roles = new ArrayList<String>();
+	private List<? extends Serializable> roles = new ArrayList<String>();
+
 	/**
-	 * 授权权限（）
+	 * 授权权限
 	 */
 	private List<AccessAuthority> authorities = new ArrayList<AccessAuthority>();
 
@@ -85,8 +96,17 @@ public class SimpleUserAuthentification extends Authentification<String> {
 	 * @param role
 	 * @return
 	 */
-	public boolean hasRole(String role) {
+	public boolean hasRole(Serializable role) {
 		return roles.contains(role);
+	}
+
+	/**
+	 * 是否持有机构
+	 * @param subordinate
+	 * @return
+	 */
+	public boolean hasSubordinate(Serializable subordinate) {
+		return subordinates.contains(subordinate);
 	}
 
 	/**
@@ -94,8 +114,8 @@ public class SimpleUserAuthentification extends Authentification<String> {
 	 * @param organization
 	 * @return
 	 */
-	public boolean hasSubordinate(Integer organization) {
-		return subordinates.contains(organization);
+	public boolean hasOrganization(Serializable organization) {
+		return organizations.contains(organization);
 	}
 
 	/**

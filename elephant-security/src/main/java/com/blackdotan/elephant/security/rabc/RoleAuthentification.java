@@ -19,6 +19,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class RoleAuthentification extends Authentification<String> {
 
 	/**

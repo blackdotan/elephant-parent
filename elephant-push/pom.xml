@@ -5,12 +5,16 @@
     <parent>
         <groupId>com.blackdotan.elephant</groupId>
         <artifactId>elephant-parent</artifactId>
-        <version>2.4.8</version>
+        <version>2.4.9</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>elephant-push</artifactId>
+
+    <properties>
+        <gexin.version>4.1.1.4</gexin.version>
+    </properties>
 
     <dependencies>
         <!-- 测试工具 -->
@@ -52,11 +56,13 @@
             <groupId>com.gexin.platform</groupId>
             <artifactId>gexin-rp-sdk-http</artifactId>
             <version>4.0.1.17</version>
+<!--            <version>${gexin.version}</version>-->
         </dependency>
         <dependency>
             <groupId>com.gexin.platform</groupId>
             <artifactId>gexin-rp-sdk-template</artifactId>
             <version>4.0.0.16</version>
+<!--            <version>${gexin.version}</version>-->
         </dependency>
     </dependencies>
 
@@ -88,7 +94,7 @@
     <repositories>
         <repository>
             <id>getui-nexus</id>
-            <url>http://mvn.gt.igexin.com/nexus/content/repositories/releases/</url>
+            <url>http://mvn.gt.gexin.com/nexus/content/repositories/releases/</url>
         </repository>
     </repositories>
 

@@ -18,6 +18,15 @@ https://github.com/blackdotan/elephant-parent
 
 CHANGELOG
 
+发布 2.5.0 稳定版本
+-
+
+发布 2.4.7 稳定版本
+- 1、新增解析微信授权手机号接口 
+- 2、FIX 微信支付 证书加载路径异常（无法加载Jar包内资源文件） 
+- 3、新增通用代码 IllegalStatusEx、UnexpectedLogicEx
+
+
 发布 2.4.6 稳定版本
 - FIX elephant-utils 支持IFunction、IPredicate
 - ImageUtilities 支持图片、Base64互转、支持数据压缩

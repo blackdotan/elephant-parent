@@ -47,17 +47,4 @@ public class UrlTemplateUtilities {
         return false;
     }
 
-//    /**
-//     * @param types
-//     * @param type
-//     * @return
-//     */
-//    public static boolean contain(AbstractClientType[] types, AbstractClientType type) {
-//        for (AbstractClientType t : types) {
-//            if (t == type) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
 }

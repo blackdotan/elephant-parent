@@ -7,7 +7,7 @@
     <groupId>com.blackdotan.elephant</groupId>
     <artifactId>elephant-parent</artifactId>
     <packaging>pom</packaging>
-    <version>2.4.8</version>
+    <version>2.5.0</version>
 
     <url>https://github.com/blackdotan/elephant-parent</url>
 
@@ -29,7 +29,7 @@
         <module>elephant-utils</module>
         <module>elephant-common</module>
         <module>elephant-kv</module>
-        <module>elephant-push</module>
+<!--        <module>elephant-push</module>-->
         <module>elephant-mail</module>
         <module>elephant-cloud-storage</module>
         <module>elephant-httpclient</module>
