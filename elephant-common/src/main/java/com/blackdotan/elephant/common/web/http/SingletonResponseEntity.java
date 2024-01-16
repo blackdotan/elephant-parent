@@ -9,6 +9,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.MultiValueMap;
 
+import java.util.Map;
+
 /**
  * 请描述类 <br>
  *
@@ -18,205 +20,221 @@ import org.springframework.util.MultiValueMap;
  */
 public class SingletonResponseEntity<T> extends HttpEntity {
 
-	private HttpStatus statusCode;
+    private HttpStatus statusCode;
 
-	private SingletonResponseEntityBody body;
+    private SingletonResponseEntityBody body;
 
-	/**
-	 * @param data
-	 * @param statusCode
-	 */
-	public SingletonResponseEntity(T data, HttpStatus statusCode) {
-		this(data, true, "请求成功", null, new HttpHeaders(), statusCode);
-	}
+    /**
+     * @param data
+     * @param statusCode
+     */
+    public SingletonResponseEntity(T data, HttpStatus statusCode) {
+        this(data, true, "请求成功", null, null, new HttpHeaders(), statusCode);
+    }
 
-	/**
-	 * @param data
-	 * @param success
-	 * @param msg
-	 * @param statusCode
-	 */
-	public SingletonResponseEntity(T data,
-	                                Boolean success,
-	                                String msg,
-	                                HttpStatus statusCode) {
-		this(data, success, msg, null, new HttpHeaders(), statusCode);
-	}
+    /**
+     * @param data
+     * @param success
+     * @param msg
+     * @param statusCode
+     */
+    public SingletonResponseEntity(T data,
+                                   Boolean success,
+                                   String msg,
+                                   HttpStatus statusCode) {
+        this(data, success, msg, null, null, new HttpHeaders(), statusCode);
+    }
 
-	/**
-	 * @param headers
-	 * @param statusCode
-	 */
-	public SingletonResponseEntity(MultiValueMap<String, String> headers,
-	                                HttpStatus statusCode) {
-		super(headers);
-		this.statusCode = statusCode;
-	}
+    /**
+     * @param headers
+     * @param statusCode
+     */
+    public SingletonResponseEntity(MultiValueMap<String, String> headers,
+                                   HttpStatus statusCode) {
+        super(headers);
+        this.statusCode = statusCode;
+    }
 
-	/**
-	 * @param data
-	 * @param headers
-	 * @param statusCode
-	 */
-	public SingletonResponseEntity(T data,
-	                                MultiValueMap<String, String> headers,
-	                                HttpStatus statusCode) {
-		this(data, true, "请求成功", null,headers, statusCode);
-	}
+    /**
+     * @param data
+     * @param headers
+     * @param statusCode
+     */
+    public SingletonResponseEntity(T data,
+                                   MultiValueMap<String, String> headers,
+                                   HttpStatus statusCode) {
+        this(data, true, "请求成功", null, null, headers, statusCode);
+    }
 
-	/**
-	 * @param data
-	 * @param success
-	 * @param msg
-	 * @param headers
-	 * @param statusCode
-	 */
-	public SingletonResponseEntity(T data,
-	                                Boolean success,
-	                                String msg,
-	                                Integer code,
-	                                MultiValueMap<String, String> headers,
-	                                HttpStatus statusCode) {
-		body = new SingletonResponseEntityBody();
-		body.setData(data);
-		body.setSuccess(success);
-		body.setMsg(msg);
-		body.setCode(code == null ? statusCode.value() : code);
-		body.setData(data);
-		this.statusCode = statusCode;
-	}
-
-
-	@Override
-	public Object getBody() {
-		return body;
-	}
+    /**
+     * @param data
+     * @param success
+     * @param msg
+     * @param headers
+     * @param statusCode
+     */
+    public SingletonResponseEntity(T data,
+                                   Boolean success,
+                                   String msg,
+                                   Integer code,
+                                   Map<String, Object> atta,
+                                   MultiValueMap<String, String> headers,
+                                   HttpStatus statusCode) {
+        body = new SingletonResponseEntityBody();
+        body.setData(data);
+        body.setSuccess(success);
+        body.setMsg(msg);
+        body.setCode(code == null ? statusCode.value() : code);
+        body.setAtta(atta);
+        this.statusCode = statusCode;
+    }
 
 
-	/**
-	 * Create a builder with the given status.
-	 * @param status the response status
-	 * @return the created builder
-	 * @since 4.1
-	 */
-	public static SingletonResponseEntity.BodyBuilder status(HttpStatus status) {
-		return new SingletonResponseEntity.BodyBuilder(status);
-	}
-
-	/**
-	 * Create a builder with the status set to {@linkplain HttpStatus#OK OK}.
-	 * @return the created builder
-	 * @since 4.1
-	 */
-	public static SingletonResponseEntity.BodyBuilder ok() {
-		return new SingletonResponseEntity.BodyBuilder(HttpStatus.OK);
-	}
-
-	/**
-	 * @param data
-	 * @param <T>
-	 * @return
-	 */
-	public static <T> SingletonResponseEntity ok(T data){
-		return new SingletonResponseEntity(data, HttpStatus.OK);
-	}
+    @Override
+    public Object getBody() {
+        return body;
+    }
 
 
-	@Data
-	@NoArgsConstructor
-	@AllArgsConstructor
-	@Builder
-	public static class BodyBuilder {
+    /**
+     * Create a builder with the given status.
+     *
+     * @param status the response status
+     * @return the created builder
+     * @since 4.1
+     */
+    public static SingletonResponseEntity.BodyBuilder status(HttpStatus status) {
+        return new SingletonResponseEntity.BodyBuilder(status);
+    }
 
-		private HttpStatus status;
+    /**
+     * Create a builder with the status set to {@linkplain HttpStatus#OK OK}.
+     *
+     * @return the created builder
+     * @since 4.1
+     */
+    public static SingletonResponseEntity.BodyBuilder ok() {
+        return new SingletonResponseEntity.BodyBuilder(HttpStatus.OK);
+    }
 
-		private HttpHeaders headers = new HttpHeaders();
-
-		/**
-		 * 提示信息
-		 */
-		private String msg = "请求成功";
-		/**
-		 * 是否成功
-		 */
-		private Boolean success = true;
-		/**
-		 * 提示信息
-		 */
-		private Integer code;
-		/**
-		 * 数据
-		 * */
-		private Object data;
-
-
-		public BodyBuilder(HttpStatus status) {
-			this.status = status;
-		}
-
-		public SingletonResponseEntity.BodyBuilder header(String headerName, String... headerValues) {
-			for (String headerValue : headerValues) {
-				this.headers.add(headerName, headerValue);
-			}
-			return this;
-		}
+    /**
+     * @param data
+     * @param <T>
+     * @return
+     */
+    public static <T> SingletonResponseEntity ok(T data) {
+        return new SingletonResponseEntity(data, HttpStatus.OK);
+    }
 
 
-		public SingletonResponseEntity.BodyBuilder msg(String msg) {
-			this.msg = msg;
-			return this;
-		}
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class BodyBuilder {
 
-		public SingletonResponseEntity.BodyBuilder success(Boolean success) {
-			this.success = success;
-			return this;
-		}
+        private HttpStatus status;
 
-		public SingletonResponseEntity.BodyBuilder code(Integer code) {
-			this.code = code;
-			return this;
-		}
+        private HttpHeaders headers = new HttpHeaders();
 
-		public SingletonResponseEntity.BodyBuilder data(Object data) {
-			this.data = data;
-			return this;
-		}
-
-		public SingletonResponseEntity build() {
-			return new SingletonResponseEntity(data, success, msg, code, this.headers, this.status);
-		}
-
-		public SingletonResponseEntity body(Object data) {
-			this.data = data;
-			return new SingletonResponseEntity(data, success, msg, code, this.headers, this.status);
-		}
-	}
-
-
-	@Data
-	@NoArgsConstructor
-	@AllArgsConstructor
-	@Builder
-	public static class SingletonResponseEntityBody {
-		/**
-		 * 提示信息
-		 */
-		private String msg;
-		/**
-		 * 是否成功
-		 */
-		private Boolean success;
-		/**
-		 * 提示信息
-		 */
-		private Integer code;
-		/**
-		 * 数据
-		 * */
-		private Object data;
+        /**
+         * 提示信息
+         */
+        private String msg = "请求成功";
+        /**
+         * 是否成功
+         */
+        private Boolean success = true;
+        /**
+         * 提示信息
+         */
+        private Integer code;
+        /**
+         * 数据
+         */
+        private Object data;
+        /**
+         * 数据之外，附加内容
+         */
+        private Map<String, Object> atta;
 
 
-	}
+        public BodyBuilder(HttpStatus status) {
+            this.status = status;
+        }
+
+        public SingletonResponseEntity.BodyBuilder header(String headerName, String... headerValues) {
+            for (String headerValue : headerValues) {
+                this.headers.add(headerName, headerValue);
+            }
+            return this;
+        }
+
+
+        public SingletonResponseEntity.BodyBuilder msg(String msg) {
+            this.msg = msg;
+            return this;
+        }
+
+        public SingletonResponseEntity.BodyBuilder success(Boolean success) {
+            this.success = success;
+            return this;
+        }
+
+        public SingletonResponseEntity.BodyBuilder code(Integer code) {
+            this.code = code;
+            return this;
+        }
+
+        public SingletonResponseEntity.BodyBuilder data(Object data) {
+            this.data = data;
+            return this;
+        }
+
+        public SingletonResponseEntity.BodyBuilder atta(Map<String, Object> atta) {
+            this.atta = atta;
+            return this;
+        }
+
+        public SingletonResponseEntity build() {
+            return new SingletonResponseEntity(data, success, msg, code, atta, this.headers, this.status);
+        }
+
+        public SingletonResponseEntity body(Object data) {
+            this.data = data;
+            return new SingletonResponseEntity(data, success, msg, code, atta, this.headers, this.status);
+        }
+    }
+
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class SingletonResponseEntityBody {
+        /**
+         * 提示信息
+         */
+        private String msg;
+        /**
+         * 是否成功
+         */
+        private Boolean success;
+        /**
+         * 提示信息
+         */
+        private Integer code;
+        /**
+         * 数据
+         */
+        private Object data;
+
+        /**
+         * 数据之外，附加内容
+         */
+        private Map<String, Object> atta;
+
+    }
 
 
 }

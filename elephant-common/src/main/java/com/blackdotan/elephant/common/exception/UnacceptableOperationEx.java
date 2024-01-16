@@ -15,7 +15,7 @@ public class UnacceptableOperationEx extends AbstractEx {
         super(HttpStatus.NOT_ACCEPTABLE, message);
     }
 
-    public UnacceptableOperationEx(String message, String... args) {
+    public UnacceptableOperationEx(String message, Object... args) {
         super(HttpStatus.NOT_ACCEPTABLE, message, args);
     }
 
@@ -23,7 +23,7 @@ public class UnacceptableOperationEx extends AbstractEx {
         super(status, message);
     }
 
-    public UnacceptableOperationEx(HttpStatus status, String message, String... args) {
+    public UnacceptableOperationEx(HttpStatus status, String message, Object... args) {
         super(status, message, args);
     }
 
@@ -38,7 +38,7 @@ public class UnacceptableOperationEx extends AbstractEx {
     }
 
     @Deprecated
-    public UnacceptableOperationEx(Throwable cause, String message, String... args) {
+    public UnacceptableOperationEx(Throwable cause, String message, Object... args) {
         super(cause, message, args);
     }
 
@@ -48,7 +48,7 @@ public class UnacceptableOperationEx extends AbstractEx {
     }
 
     @Deprecated
-    public UnacceptableOperationEx(Throwable cause, HttpStatus status, String message, String... args) {
+    public UnacceptableOperationEx(Throwable cause, HttpStatus status, String message, Object... args) {
         super(cause, status, message, args);
     }
 }

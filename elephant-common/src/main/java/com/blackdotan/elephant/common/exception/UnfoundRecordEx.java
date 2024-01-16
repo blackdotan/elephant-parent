@@ -15,7 +15,7 @@ public class UnfoundRecordEx extends AbstractEx {
 		super(HttpStatus.NOT_FOUND, message);
 	}
 
-	public UnfoundRecordEx(String message, String... args) {
+	public UnfoundRecordEx(String message, Object... args) {
 		super(HttpStatus.NOT_FOUND, message, args);
 	}
 
@@ -23,7 +23,7 @@ public class UnfoundRecordEx extends AbstractEx {
 		super(status, message);
 	}
 
-	public UnfoundRecordEx(HttpStatus status, String message, String... args) {
+	public UnfoundRecordEx(HttpStatus status, String message, Object... args) {
 		super(status, message, args);
 	}
 }

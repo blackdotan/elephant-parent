@@ -116,6 +116,20 @@ public class WeixinMPHelper {
 
     /**
      * 获取用户手机号码
+     * @param wc2sr
+     * @param encrypted
+     * @param iv
+     * @return
+     * @throws Exception
+     */
+    public WxPhoneInfo getPhoneNumber(WxCode2SessionResponse wc2sr, String encrypted, String iv) throws Exception {
+        WxPhoneInfo iWxPhoneInfo = WxUtil.getPhoneNumber(encrypted, wc2sr.getSessionKey(), iv);
+        iWxPhoneInfo.setWc2sr(wc2sr);
+        return iWxPhoneInfo;
+    }
+
+    /**
+     * 获取用户手机号码
      * @param sessionKey
      * @param encrypted
      * @param iv
@@ -126,6 +140,9 @@ public class WeixinMPHelper {
         WxPhoneInfo iWxPhoneInfo = WxUtil.getPhoneNumber(encrypted, sessionKey, iv);
         return iWxPhoneInfo;
     }
+
+
+
 
 
 

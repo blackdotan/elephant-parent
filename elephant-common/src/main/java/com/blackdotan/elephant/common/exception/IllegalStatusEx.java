@@ -10,7 +10,7 @@ public class IllegalStatusEx extends AbstractEx{
         super(message);
     }
 
-    public IllegalStatusEx(String message, String... args) {
+    public IllegalStatusEx(String message, Object... args) {
         super(message, args);
     }
 
@@ -18,15 +18,15 @@ public class IllegalStatusEx extends AbstractEx{
         super(status, message);
     }
 
-    public IllegalStatusEx(HttpStatus status, String message, String... args) {
+    public IllegalStatusEx(HttpStatus status, String message, Object... args) {
         super(status, message, args);
     }
 
-    public IllegalStatusEx(HttpStatus status, int code, String message, String... args) {
+    public IllegalStatusEx(HttpStatus status, int code, String message, Object... args) {
         super(status, message, args);
         this.code = code;
     }
-    public IllegalStatusEx(int code, String message, String... args) {
+    public IllegalStatusEx(int code, String message, Object... args) {
         super(HttpStatus.OK, message, args);
         this.code = code;
     }

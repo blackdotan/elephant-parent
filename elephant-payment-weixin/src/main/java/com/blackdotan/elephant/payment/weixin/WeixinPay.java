@@ -71,7 +71,6 @@ public class WeixinPay implements Pay {
             // 出问题代码
             // 异常：cannot be resolved to absolute file path because it does not reside in the file system
             // File file = ResourceUtils.getFile(config.getCertification());
-
             // 修改后代码
             if (config.getCertification().trim().startsWith("classpath:")) {
                 //
@@ -202,14 +201,12 @@ public class WeixinPay implements Pay {
     public <T extends RefundOrder> T refund(T order) throws Exception {
         if (order instanceof WeixinRefundOrder) {
             String fee = Integer.toString(((Number) Math.max(order.getAmount() * 100, 1)).intValue());
-
             Long start = DateUtils.now().getTime();
             Map<String, String> data = new HashMap<String, String>();
             data.put("refund_fee", fee);
             data.put("total_fee", fee);
             data.put("out_trade_no", order.getNo());
             data.put("out_refund_no", order.getNo());
-
             return order;
         } else {
             throw new IllegalArgumentEx("微信退款失败，传入参数类型不是{}", WeixinRefundOrder.class.getName());

@@ -5,7 +5,7 @@ package com.blackdotan.elephant.utils;
  *
  * @author ryan.
  * <p>
- * Created by ryan on 2018/1/21.
+ * Created by http://www.blogjava.net/bolo/archive/2015/07/13/426200.html on 2018/1/21.
  */
 public class IdGen {
     private long workerId;
@@ -14,8 +14,8 @@ public class IdGen {
     private long twepoch = 1288834974657L; //Thu, 04 Nov 2010 01:42:54 GMT
     private long workerIdBits = 5L; //节点ID长度
     private long datacenterIdBits = 5L; //数据中心ID长度
-    private long maxWorkerId = -1L ^ (-1L << workerIdBits); //最大支持机器节点数0~31，一共32个
-    private long maxDatacenterId = -1L ^ (-1L << datacenterIdBits); //最大支持数据中心节点数0~31，一共32个
+    private long maxWorkerId = -1L ^ (-1L << workerIdBits); // 最大支持机器节点数0~31，一共32个
+    private long maxDatacenterId = -1L ^ (-1L << datacenterIdBits); // 最大支持数据中心节点数0~31，一共32个
     private long sequenceBits = 12L; //序列号12位
     private long workerIdShift = sequenceBits; //机器节点左移12位
     private long datacenterIdShift = sequenceBits + workerIdBits; //数据中心节点左移17位
@@ -34,6 +34,10 @@ public class IdGen {
         this(0L, 0L);
     }
 
+    /**
+     * @param workerId
+     * @param datacenterId
+     */
     public IdGen(long workerId, long datacenterId)  {
         if (workerId > maxWorkerId || workerId < 0) {
             throw new IllegalArgumentException(String.format("worker Id can't be greater than %d or less than 0", maxWorkerId));
@@ -44,6 +48,10 @@ public class IdGen {
         this.workerId = workerId;
         this.datacenterId = datacenterId;
     }
+
+    /**
+     * @return
+     */
     public synchronized long nextId() {
         long timestamp = timeGen(); //获取当前毫秒数
         //如果服务器时间有问题(时钟后退) 报错。

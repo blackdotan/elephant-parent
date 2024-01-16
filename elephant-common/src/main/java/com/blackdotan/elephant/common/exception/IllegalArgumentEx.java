@@ -14,7 +14,7 @@ public class IllegalArgumentEx extends AbstractEx {
         super(HttpStatus.BAD_REQUEST, message);
     }
 
-    public IllegalArgumentEx(String message, String... args) {
+    public IllegalArgumentEx(String message, Object... args) {
         super(HttpStatus.BAD_REQUEST, message, args);
     }
 
@@ -22,7 +22,7 @@ public class IllegalArgumentEx extends AbstractEx {
         super(status, message);
     }
 
-    public IllegalArgumentEx(HttpStatus status, String message, String... args) {
+    public IllegalArgumentEx(HttpStatus status, String message, Object... args) {
         super(status, message, args);
     }
 
@@ -37,7 +37,7 @@ public class IllegalArgumentEx extends AbstractEx {
     }
 
     @Deprecated
-    public IllegalArgumentEx(Throwable cause, String message, String... args) {
+    public IllegalArgumentEx(Throwable cause, String message, Object... args) {
         super(cause, message, args);
     }
 
@@ -47,7 +47,7 @@ public class IllegalArgumentEx extends AbstractEx {
     }
 
     @Deprecated
-    public IllegalArgumentEx(Throwable cause, HttpStatus status, String message, String... args) {
+    public IllegalArgumentEx(Throwable cause, HttpStatus status, String message, Object... args) {
         super(cause, status, message, args);
     }
 }

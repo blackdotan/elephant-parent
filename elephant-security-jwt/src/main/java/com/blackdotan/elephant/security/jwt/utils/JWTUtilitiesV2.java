@@ -31,7 +31,7 @@ public class JWTUtilitiesV2 {
     public static String encode(JWTAuthenticationV2 authentication, Algorithm algorithm) {
         String text = JWT.create()
                 .withJWTId(authentication.getIdentifer().toString())
-                .withKeyId(authentication.getKey())
+                .withKeyId(authentication.getKey().toString())
                 .withIssuer(authentication.getIssuer())
                 .withSubject(authentication.getSubject())
                 .withAudience(authentication.getAudience())

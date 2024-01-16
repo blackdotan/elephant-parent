@@ -33,7 +33,7 @@ public class JWTUtilities {
 	public static String sign(JWTAuthenticationV2 authentication, Algorithm algorithm) {
 		String text = JWT.create()
 				.withJWTId(authentication.getIdentifer().toString())
-				.withKeyId(authentication.getKey())
+				.withKeyId(authentication.getKey().toString())
 				.withIssuer(authentication.getIssuer())
 				.withSubject(authentication.getSubject())
 				.withAudience(authentication.getAudience())

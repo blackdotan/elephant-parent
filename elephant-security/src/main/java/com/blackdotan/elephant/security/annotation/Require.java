@@ -1,5 +1,7 @@
 package com.blackdotan.elephant.security.annotation;
 
+import java.lang.annotation.*;
+
 /**
  * 请描述类 <br>
  *
@@ -7,12 +9,15 @@ package com.blackdotan.elephant.security.annotation;
  * <p>
  * Created by ryan wu on 2019/4/8.
  */
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
 public @interface Require {
     /**
      * JWT 需要验证 subject
      * @return
      */
-    String[] subjects();
+    String[] subjects() default {};
 
     /**
      * JWT 验证 audience
@@ -42,6 +47,12 @@ public @interface Require {
      * 是否需要判断权限
      * @return
      */
-    boolean permission() default true;
+    boolean permission() default false;
+
+    /**
+     * 是否需要授权
+     * @return
+     */
+    boolean authority() default false;
 
 }

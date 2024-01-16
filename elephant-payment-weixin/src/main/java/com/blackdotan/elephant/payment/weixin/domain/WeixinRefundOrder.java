@@ -14,6 +14,21 @@ import lombok.Setter;
 @Getter
 @Setter
 public class WeixinRefundOrder extends RefundOrder {
+
+    private String outTradeNo;
+
+    private String transactionId;
+
+    private String outRefundNo;
+
+    private String openid;
+
+    private Float totalFee;
+
+    private Float refundFee;
+
+    private String refundDesc;
+
     // 支付是否成功
     private Boolean success = false;
     // 支付返回信息

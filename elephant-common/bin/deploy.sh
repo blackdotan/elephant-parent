@@ -8,4 +8,4 @@ HOME=`cd "$PRGDIR/.." >/dev/null; pwd`
 cd $HOME;
 echo `pwd`;
 
-mvn clean package source:jar install -DskipTests -U;
+mvn clean package install -DskipTests -U;

@@ -11,6 +11,7 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.ConnectionConfig;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.impl.DefaultConnectionReuseStrategy;
 import org.apache.http.impl.client.*;
 import org.apache.http.impl.conn.InMemoryDnsResolver;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
@@ -20,6 +21,7 @@ import org.apache.http.ssl.SSLContexts;
 import javax.net.ssl.SSLContext;
 import java.net.Inet4Address;
 import java.security.KeyStore;
+import java.util.concurrent.TimeUnit;
 
 /**
  * HttpClient线程池 <br>
@@ -138,7 +140,7 @@ public class HttpClientPool {
      * 获取连接
      * @return
      */
-    public HttpClient getConnection() {
+    public CloseableHttpClient getConnection() {
         HttpClientBuilder builder = HttpClients.custom()
                 .setConnectionManager(manager)
                 .setDefaultRequestConfig(mRequestConfig)
@@ -155,6 +157,5 @@ public class HttpClientPool {
 
         return builder.build();
     }
-
 
 }

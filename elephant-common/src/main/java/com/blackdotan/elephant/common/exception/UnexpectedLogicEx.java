@@ -19,7 +19,7 @@ public class UnexpectedLogicEx extends AbstractEx {
         super(message);
     }
 
-    public UnexpectedLogicEx(String message, String... args) {
+    public UnexpectedLogicEx(String message, Object... args) {
         super(message, args);
     }
 
@@ -27,11 +27,11 @@ public class UnexpectedLogicEx extends AbstractEx {
         super(status, message);
     }
 
-    public UnexpectedLogicEx(HttpStatus status, String message, String... args) {
+    public UnexpectedLogicEx(HttpStatus status, String message, Object... args) {
         super(status, message, args);
     }
 
-    public UnexpectedLogicEx(HttpStatus status, int code, String message, String... args) {
+    public UnexpectedLogicEx(HttpStatus status, int code, String message, Object... args) {
         super(status, message, args);
         this.code = code;
     }

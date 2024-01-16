@@ -10,4 +10,4 @@ CATTLE_UTILS_HOME=`cd "$PRGDIR/.." >/dev/null; pwd`
 
 cd $CATTLE_UTILS_HOME
 
-mvn clean package install source:jar deploy -DskipTests
+mvn clean package install -DskipTests

@@ -16,7 +16,7 @@ public class AuthorizeEx extends AbstractEx {
         super(HttpStatus.FORBIDDEN, message);
     }
 
-    public AuthorizeEx(String message, String... args) {
+    public AuthorizeEx(String message, Object... args) {
         super(HttpStatus.FORBIDDEN, message, args);
     }
 
@@ -24,7 +24,7 @@ public class AuthorizeEx extends AbstractEx {
         super(status, message);
     }
 
-    public AuthorizeEx(HttpStatus status, String message, String... args) {
+    public AuthorizeEx(HttpStatus status, String message, Object... args) {
         super(status, message, args);
     }
 
@@ -39,7 +39,7 @@ public class AuthorizeEx extends AbstractEx {
     }
 
     @Deprecated
-    public AuthorizeEx(Throwable cause, String message, String... args) {
+    public AuthorizeEx(Throwable cause, String message, Object... args) {
         super(cause, message, args);
     }
 
@@ -49,7 +49,7 @@ public class AuthorizeEx extends AbstractEx {
     }
 
     @Deprecated
-    public AuthorizeEx(Throwable cause, HttpStatus status, String message, String... args) {
+    public AuthorizeEx(Throwable cause, HttpStatus status, String message, Object... args) {
         super(cause, status, message, args);
     }
 }

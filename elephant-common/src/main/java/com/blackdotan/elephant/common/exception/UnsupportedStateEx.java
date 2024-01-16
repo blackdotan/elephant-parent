@@ -16,7 +16,7 @@ public class UnsupportedStateEx extends AbstractEx {
         super(HttpStatus.NOT_ACCEPTABLE, message);
     }
 
-    public UnsupportedStateEx(String message, String... args) {
+    public UnsupportedStateEx(String message, Object... args) {
         super(HttpStatus.NOT_ACCEPTABLE, message, args);
     }
 
@@ -24,7 +24,7 @@ public class UnsupportedStateEx extends AbstractEx {
         super(status, message);
     }
 
-    public UnsupportedStateEx(HttpStatus status, String message, String... args) {
+    public UnsupportedStateEx(HttpStatus status, String message, Object... args) {
         super(status, message, args);
     }
 
@@ -39,7 +39,7 @@ public class UnsupportedStateEx extends AbstractEx {
     }
 
     @Deprecated
-    public UnsupportedStateEx(Throwable cause, String message, String... args) {
+    public UnsupportedStateEx(Throwable cause, String message, Object... args) {
         super(cause, message, args);
     }
 
@@ -49,7 +49,7 @@ public class UnsupportedStateEx extends AbstractEx {
     }
 
     @Deprecated
-    public UnsupportedStateEx(Throwable cause, HttpStatus status, String message, String... args) {
+    public UnsupportedStateEx(Throwable cause, HttpStatus status, String message, Object... args) {
         super(cause, status, message, args);
     }
 }

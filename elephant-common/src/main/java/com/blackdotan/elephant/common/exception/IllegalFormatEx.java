@@ -15,7 +15,7 @@ public class IllegalFormatEx extends AbstractEx {
         super(HttpStatus.BAD_REQUEST, message);
     }
 
-    public IllegalFormatEx(String message, String... args) {
+    public IllegalFormatEx(String message, Object... args) {
         super(HttpStatus.BAD_REQUEST, message, args);
     }
 
@@ -23,7 +23,7 @@ public class IllegalFormatEx extends AbstractEx {
         super(status, message);
     }
 
-    public IllegalFormatEx(HttpStatus status, String message, String... args) {
+    public IllegalFormatEx(HttpStatus status, String message, Object... args) {
         super(status, message, args);
     }
 
@@ -38,7 +38,7 @@ public class IllegalFormatEx extends AbstractEx {
     }
 
     @Deprecated
-    public IllegalFormatEx(Throwable cause, String message, String... args) {
+    public IllegalFormatEx(Throwable cause, String message, Object... args) {
         super(cause, message, args);
     }
 
@@ -48,7 +48,7 @@ public class IllegalFormatEx extends AbstractEx {
     }
 
     @Deprecated
-    public IllegalFormatEx(Throwable cause, HttpStatus status, String message, String... args) {
+    public IllegalFormatEx(Throwable cause, HttpStatus status, String message, Object... args) {
         super(cause, status, message, args);
     }
 }

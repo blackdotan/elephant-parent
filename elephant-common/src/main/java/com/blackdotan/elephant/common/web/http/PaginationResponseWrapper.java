@@ -7,6 +7,7 @@ import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
+import java.util.Map;
 
 /****************************************************************
  * 分页对象封装，
@@ -33,7 +34,6 @@ public class PaginationResponseWrapper<T> {
      * 提示信息
      */
     private Integer code;
-
     /**
      * 页面大小
      */
@@ -54,16 +54,27 @@ public class PaginationResponseWrapper<T> {
      */
     @Builder.Default
     private Integer count = 0;
-
     /**
      * 数据
      * */
     private List<T> data;
+    /**
+     * 数据之外，附加内容
+     */
+    private Map<String, Object> atta;
 
     public PaginationResponseWrapper() {
     }
 
-    public PaginationResponseWrapper(String msg, Boolean success, Integer code, Integer pageSize, Integer pageIndex, Integer pageCount, Integer count, List<T> data) {
+    public PaginationResponseWrapper(String msg,
+                                     Boolean success,
+                                     Integer code,
+                                     Integer pageSize,
+                                     Integer pageIndex,
+                                     Integer pageCount,
+                                     Integer count,
+                                     List<T> data,
+                                     Map<String, Object> atta) {
         this.msg = msg;
         this.success = success;
         this.code = code;
@@ -72,6 +83,7 @@ public class PaginationResponseWrapper<T> {
         this.pageCount = pageCount;
         this.count = count;
         this.data = data;
+        this.atta = atta;
     }
 
     /**
@@ -79,11 +91,12 @@ public class PaginationResponseWrapper<T> {
      * @param msg
      * @param data
      */
-    public PaginationResponseWrapper(int code, String msg , List<T> data) {
+    public PaginationResponseWrapper(int code, String msg , List<T> data, Map<String, Object> atta) {
         this.code = code;
         this.success = code == 200;
         this.msg = msg;
         this.data = data;
+        this.atta = atta;
         if( data instanceof PageList) {
             Paginator paginator = ((PageList) data).getPaginator();
             this.count = paginator.getTotalCount();
@@ -106,14 +119,14 @@ public class PaginationResponseWrapper<T> {
      * @return
      */
     public static PaginationResponseWarpperBuilder ok() {
-        return new PaginationResponseWarpperBuilder(HttpStatus.OK);
+        return status(HttpStatus.OK);
     }
 
     /**
      * @return
      */
     public static PaginationResponseWarpperBuilder fail() {
-        return new PaginationResponseWarpperBuilder(HttpStatus.NOT_ACCEPTABLE);
+        return status(HttpStatus.NOT_ACCEPTABLE);
     }
 
 
@@ -133,7 +146,11 @@ public class PaginationResponseWrapper<T> {
         /**
          * 数据
          * */
-        private List data;
+        private List<?> data;
+        /**
+         * 数据之外，附加内容
+         */
+        private Map<String, Object> atta;
 
 
         public PaginationResponseWarpperBuilder(HttpStatus status) {
@@ -145,12 +162,10 @@ public class PaginationResponseWrapper<T> {
             return this;
         }
 
-
         public PaginationResponseWarpperBuilder msg(String msg) {
             this.msg = msg;
             return this;
         }
-
 
         public PaginationResponseWarpperBuilder code(Integer code) {
             this.code = code;
@@ -162,18 +177,18 @@ public class PaginationResponseWrapper<T> {
             return this;
         }
 
-        /**
-         * 快速返回
-         * @param data
-         * @return
-         */
-        public PaginationResponseWrapper body(List data) {
-            this.data = data;
-            return new PaginationResponseWrapper(code, msg, data);
+        public PaginationResponseWarpperBuilder atta(Map<String, Object> atta) {
+            this.atta = atta;
+            return this;
+        }
+
+        @Deprecated
+        public PaginationResponseWrapper body(List<?> data) {
+            return new PaginationResponseWrapper(code, msg, data, atta);
         }
 
         public PaginationResponseWrapper build() {
-            return new PaginationResponseWrapper(code, msg, data);
+            return new PaginationResponseWrapper(code, msg, data, atta);
         }
 
     }

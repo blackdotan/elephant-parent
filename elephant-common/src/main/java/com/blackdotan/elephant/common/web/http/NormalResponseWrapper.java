@@ -3,6 +3,8 @@ package com.blackdotan.elephant.common.web.http;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 
+import java.util.Map;
+
 /****************************************************************
  * 简单返回封装类
  *
@@ -32,15 +34,20 @@ public class NormalResponseWrapper<T> {
      *
      */
     private T data;
+    /**
+     * 数据之外，附加内容
+     */
+    private Map<String, Object> atta;
 
     public NormalResponseWrapper() {
     }
 
-    public NormalResponseWrapper(int code, Boolean success, String msg, T data) {
+    public NormalResponseWrapper(int code, Boolean success, String msg, T data, Map<String, Object> atta) {
         this.code = code;
         this.success = success;
         this.msg = msg;
         this.data = data;
+        this.atta = atta;
     }
 
     /**
@@ -48,11 +55,12 @@ public class NormalResponseWrapper<T> {
      * @param msg
      * @param data
      */
-    public NormalResponseWrapper(int code, String msg , T data) {
+    public NormalResponseWrapper(int code, String msg , T data, Map<String, Object> atta) {
         this.code = code;
         this.success = code == 200;
         this.msg = msg;
         this.data = data;
+        this.atta = atta;
     }
 
     /**
@@ -68,14 +76,14 @@ public class NormalResponseWrapper<T> {
      * @return
      */
     public static NormalResponseWrapperBuild ok() {
-        return new NormalResponseWrapperBuild(HttpStatus.OK);
+        return status(HttpStatus.OK);
     }
 
     /**
      * @return
      */
     public static NormalResponseWrapperBuild fail() {
-        return new NormalResponseWrapperBuild(HttpStatus.NOT_ACCEPTABLE);
+        return status(HttpStatus.NOT_ACCEPTABLE);
     }
 
 
@@ -93,6 +101,10 @@ public class NormalResponseWrapper<T> {
          * */
         private T data;
 
+        /**
+         * 数据之外，附加内容
+         */
+        private Map<String, Object> atta;
 
         /**
          * @param status
@@ -112,7 +124,6 @@ public class NormalResponseWrapper<T> {
             return this;
         }
 
-
         public NormalResponseWrapperBuild code(Integer code) {
             this.code = code;
             return this;
@@ -123,23 +134,26 @@ public class NormalResponseWrapper<T> {
             return this;
         }
 
+        public NormalResponseWrapperBuild atta(Map<String, Object> atta) {
+            this.atta = atta;
+            return this;
+        }
+
         /**
          * 快速返回
          * @param data
          * @return
          */
+        @Deprecated
         public NormalResponseWrapper body(T data) {
             this.data = data;
-            return new NormalResponseWrapper(code, msg, data);
+            return new NormalResponseWrapper(code, msg, data, atta);
         }
 
         public NormalResponseWrapper build() {
-            return new NormalResponseWrapper(code, msg, data);
+            return new NormalResponseWrapper(code, msg, data, atta);
         }
 
-
     }
-
-
 
 }

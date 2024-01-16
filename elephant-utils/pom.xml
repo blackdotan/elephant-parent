@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.blackdotan.elephant</groupId>
 		<artifactId>elephant-parent</artifactId>
-		<version>2.5.0</version>
+		<version>2.5.1</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -14,13 +14,19 @@
 	<version>${project.parent.version}</version>
 	<packaging>jar</packaging>
 
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+
 	<dependencies>
 		<!-- 测试工具 -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.10</version>
-			<scope>provided</scope>
+			<version>4.12</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>commons-configuration</groupId>

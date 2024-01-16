@@ -1,7 +1,6 @@
 package com.blackdotan.elephant.utils;
 
 import org.apache.commons.codec.binary.Base64;
-
 import java.io.UnsupportedEncodingException;
 
 /**

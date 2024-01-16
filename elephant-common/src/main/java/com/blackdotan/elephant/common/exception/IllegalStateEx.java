@@ -15,7 +15,7 @@ public class IllegalStateEx extends AbstractEx {
         super(HttpStatus.NOT_ACCEPTABLE, message);
     }
 
-    public IllegalStateEx(String message, String... args) {
+    public IllegalStateEx(String message, Object... args) {
 
         super(HttpStatus.NOT_ACCEPTABLE, message, args);
     }
@@ -24,7 +24,7 @@ public class IllegalStateEx extends AbstractEx {
         super(status, message);
     }
 
-    public IllegalStateEx(HttpStatus status, String message, String... args) {
+    public IllegalStateEx(HttpStatus status, String message, Object... args) {
         super(status, message, args);
     }
 
@@ -39,7 +39,7 @@ public class IllegalStateEx extends AbstractEx {
     }
 
     @Deprecated
-    public IllegalStateEx(Throwable cause, String message, String... args) {
+    public IllegalStateEx(Throwable cause, String message, Object... args) {
         super(cause, message, args);
     }
 
@@ -49,7 +49,7 @@ public class IllegalStateEx extends AbstractEx {
     }
 
     @Deprecated
-    public IllegalStateEx(Throwable cause, HttpStatus status, String message, String... args) {
+    public IllegalStateEx(Throwable cause, HttpStatus status, String message, Object... args) {
         super(cause, status, message, args);
     }
 

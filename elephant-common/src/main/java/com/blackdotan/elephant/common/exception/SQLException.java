@@ -16,7 +16,7 @@ public class SQLException extends AbstractEx {
         super(message);
     }
 
-    public SQLException(String message, String... args) {
+    public SQLException(String message, Object... args) {
         super(message, args);
     }
 
@@ -24,7 +24,7 @@ public class SQLException extends AbstractEx {
         super(status, message);
     }
 
-    public SQLException(HttpStatus status, String message, String... args) {
+    public SQLException(HttpStatus status, String message, Object... args) {
         super(status, message, args);
     }
 
@@ -36,7 +36,7 @@ public class SQLException extends AbstractEx {
         super(cause, message);
     }
 
-    public SQLException(Throwable cause, String message, String... args) {
+    public SQLException(Throwable cause, String message, Object... args) {
         super(cause, message, args);
     }
 
@@ -44,7 +44,7 @@ public class SQLException extends AbstractEx {
         super(cause, status, message);
     }
 
-    public SQLException(Throwable cause, HttpStatus status, String message, String... args) {
+    public SQLException(Throwable cause, HttpStatus status, String message, Object... args) {
         super(cause, status, message, args);
     }
 }

@@ -16,7 +16,7 @@ public class AuthenticationEx extends AbstractEx {
         super(HttpStatus.UNAUTHORIZED, message);
     }
 
-    public AuthenticationEx(String message, String... args) {
+    public AuthenticationEx(String message, Object... args) {
         super(HttpStatus.UNAUTHORIZED, message, args);
     }
 
@@ -24,7 +24,7 @@ public class AuthenticationEx extends AbstractEx {
         super(status, message);
     }
 
-    public AuthenticationEx(HttpStatus status, String message, String... args) {
+    public AuthenticationEx(HttpStatus status, String message, Object... args) {
         super(status, message, args);
     }
 
@@ -36,7 +36,7 @@ public class AuthenticationEx extends AbstractEx {
         super(cause, message);
     }
 
-    public AuthenticationEx(Throwable cause, String message, String... args) {
+    public AuthenticationEx(Throwable cause, String message, Object... args) {
         super(cause, message, args);
     }
 
@@ -44,7 +44,7 @@ public class AuthenticationEx extends AbstractEx {
         super(cause, status, message);
     }
 
-    public AuthenticationEx(Throwable cause, HttpStatus status, String message, String... args) {
+    public AuthenticationEx(Throwable cause, HttpStatus status, String message, Object... args) {
         super(cause, status, message, args);
     }
 }

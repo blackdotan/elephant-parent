@@ -36,7 +36,7 @@ public abstract class AbstractEx extends RuntimeException {
         headers.add("msg", message);
     }
 
-    public AbstractEx(String message, String...args) {
+    public AbstractEx(String message, Object...args) {
         super(MessageFormatter.format(message, args).getMessage());
         headers.add("msg", MessageFormatter.format(message, args).getMessage());
     }
@@ -47,7 +47,7 @@ public abstract class AbstractEx extends RuntimeException {
         headers.add("msg", message);
     }
 
-    public AbstractEx(HttpStatus status, String message, String...args) {
+    public AbstractEx(HttpStatus status, String message, Object...args) {
         super(MessageFormatter.format(message, args).getMessage());
         this.status = status;
         headers.add("msg", MessageFormatter.format(message, args).getMessage());
@@ -65,7 +65,7 @@ public abstract class AbstractEx extends RuntimeException {
     }
 
     @Deprecated
-    public AbstractEx(Throwable cause, String message, String...args) {
+    public AbstractEx(Throwable cause, String message, Object...args) {
         super(cause);
         headers.add("msg", MessageFormatter.format(message, args).getMessage());
     }
@@ -78,7 +78,7 @@ public abstract class AbstractEx extends RuntimeException {
     }
 
     @Deprecated
-    public AbstractEx(Throwable cause, HttpStatus status, String message, String...args) {
+    public AbstractEx(Throwable cause, HttpStatus status, String message, Object...args) {
         super(cause);
         this.status = status;
         headers.add("msg", MessageFormatter.format(message, args).getMessage());

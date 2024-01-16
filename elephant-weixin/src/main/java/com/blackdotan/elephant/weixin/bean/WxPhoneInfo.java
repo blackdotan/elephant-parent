@@ -1,5 +1,7 @@
 package com.blackdotan.elephant.weixin.bean;
 
+import com.blackdotan.elephant.weixin.response.WxCode2SessionResponse;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +24,8 @@ public class WxPhoneInfo {
     private String purePhoneNumber;
     private String countryCode;
 
+    @JsonIgnore
+    private WxCode2SessionResponse wc2sr;
 
     @Getter
     @Setter

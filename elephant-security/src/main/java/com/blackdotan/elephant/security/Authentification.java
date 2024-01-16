@@ -11,7 +11,7 @@ import java.util.List;
  * <p>
  * Created by ryan wu on 2019/12/15.
  */
-public abstract class Authentification<T extends Serializable> {
+public abstract class Authentification<T extends Serializable> implements java.io.Serializable {
 
 
     /**
