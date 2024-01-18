@@ -7,7 +7,6 @@ import com.blackdotan.elephant.dssclient.domain.DPChannel;
 import com.blackdotan.elephant.dssclient.domain.DPDevice;
 import com.blackdotan.elephant.dssclient.domain.DPOrganization;
 import com.blackdotan.elephant.dssclient.domain.DPSnapshot;
-import com.blackdotan.elephant.utils.JaxbUtils;
 
 import javax.xml.bind.JAXBException;
 import java.io.BufferedInputStream;
