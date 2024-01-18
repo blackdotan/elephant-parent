@@ -2,8 +2,7 @@ package com.blackdotan.elephant.utils.images;
 
 import com.blackdotan.elephant.utils.IOTools;
 import net.coobird.thumbnailator.Thumbnails;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import org.apache.commons.codec.binary.Base64;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
@@ -44,12 +43,13 @@ public class ImageUtilities {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write(bytes, 0, bytes.length);
         // 内存流 转 Base64 编码
-        BASE64Encoder encoder = new BASE64Encoder();
+        //BASE64Encoder encoder = new BASE64Encoder();
         while (baos.size() > maxSize) {
             // baos = compress(baos, 0.8f, 0.2f, true);
             baos = compress(baos, scale, quality, true);
         }
-        String base64 = encoder.encode(baos.toByteArray());
+        //String base64 = encoder.encode(baos.toByteArray());
+        String base64 = Base64.encodeBase64String(baos.toByteArray());
         return base64;
     }
 
@@ -100,8 +100,9 @@ public class ImageUtilities {
             }
 
             // 内存流 转 Base64 编码
-            BASE64Encoder encoder = new BASE64Encoder();
-            String base64 = encoder.encode(baos.toByteArray());
+            //BASE64Encoder encoder = new BASE64Encoder();
+            //String base64 = encoder.encode(baos.toByteArray());
+            String base64 = Base64.encodeBase64String(baos.toByteArray());
 
             return base64;
         } catch (Exception e) {
@@ -155,10 +156,11 @@ public class ImageUtilities {
         if (imgStr == null) {
             return false;
         }
-        BASE64Decoder decoder = new BASE64Decoder();
+        //BASE64Decoder decoder = new BASE64Decoder();
         try {
             // 解密
-            byte[] b = decoder.decodeBuffer(imgStr);
+            //byte[] b = decoder.decodeBuffer(imgStr);
+            byte[] b = Base64.decodeBase64(imgStr);
             // 处理数据
             for (int i = 0; i < b.length; ++i) {
                 if (b[i] < 0) {

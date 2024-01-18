@@ -40,11 +40,11 @@
         <module>elephant-payment-lianlian</module>
         <module>elephant-payment-weixin</module>
         <module>elephant-weixin</module>
-	    <module>elephant-security</module>
+        <module>elephant-security</module>
         <module>elephant-security-jwt</module>
-        <module>elephant-dssclient</module>
-        <module>elephant-dssclient-linux</module>
-        <module>elephant-dssclient-windows</module>
+<!--        <module>elephant-dssclient</module>-->
+<!--        <module>elephant-dssclient-linux</module>-->
+<!--        <module>elephant-dssclient-windows</module>-->
         <module>elephant-simulator</module>
     </modules>
 

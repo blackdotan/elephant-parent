@@ -10,7 +10,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <version>2.4.2-batch-SNAPSHOT</version>
+    <version>2.4.8</version>
     <artifactId>elephant-sms</artifactId>
 
 

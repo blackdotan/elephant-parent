@@ -1,6 +1,6 @@
 package com.blackdotan.elephant.utils;
 
-import sun.misc.BASE64Encoder;
+import org.apache.commons.codec.binary.Base64;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -16,8 +16,9 @@ public class SecurityUtils {
     public static String md5(String text) {
         try {
             MessageDigest md5 = MessageDigest.getInstance("MD5");
-            BASE64Encoder base64en = new BASE64Encoder();
-            return base64en.encode(md5.digest(text.getBytes("utf-8")));
+            //BASE64Encoder base64en = new BASE64Encoder();
+            return Base64.encodeBase64String(text.getBytes("utf-8"));
+            //return base64en.encode(md5.digest(text.getBytes("utf-8")));
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
