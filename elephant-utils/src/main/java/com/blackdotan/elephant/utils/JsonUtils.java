@@ -33,14 +33,14 @@ public class JsonUtils {
      *
      * @param object 待转对象
      * @return 转化结果
-     * */
+     */
     public static String parserObj2String(Object object) {
         String text = "";
-        try{
+        try {
             text = mapper.writeValueAsString(object);
-        }catch (Exception e){
-            logger.error("Object 2 Json text error");
-            throw new RuntimeException("Object 2 Json text error");
+        } catch (Exception e) {
+            //logger.error("Object 2 Json text error");
+            throw new RuntimeException(e);
         }
         return text;
     }
@@ -48,35 +48,36 @@ public class JsonUtils {
     /**
      * 字符串(Json) 转成 Object对象 <br>
      *
-     * @param text 待处理文本
+     * @param text  待处理文本
      * @param clazz 转化对象类型
-     * @param <T> 元素T类型
+     * @param <T>   元素T类型
      * @return 转化对象实例
      * @throws IOException IO异常
-     * */
+     */
     public static <T> T parserString2Obj(String text, Class<T> clazz) throws IOException {
         T t = null;
-        t =  mapper.readValue(text, clazz);
+        t = mapper.readValue(text, clazz);
         return t;
     }
 
     /**
      * 文件(Json) 转成 Object对象 <br>
      *
-     * @param file 待处理文件
+     * @param file  待处理文件
      * @param clazz 转化对象类型
-     * @param <T> 元素T类型
+     * @param <T>   元素T类型
      * @return 转化对象实例
      * @throws IOException IO异常
-     * */
+     */
     public static <T> T parserString2Obj(File file, Class<T> clazz) throws IOException {
         T t = null;
-        t =  mapper.readValue(file, clazz);
+        t = mapper.readValue(file, clazz);
         return t;
     }
 
     /**
      * 输入流转对象
+     *
      * @param ins
      * @param clazz
      * @param <T>
@@ -85,7 +86,7 @@ public class JsonUtils {
      */
     public static <T> T parserInputStream2Obj(InputStream ins, Class<T> clazz) throws IOException {
         T t = null;
-        t =  mapper.readValue(ins, clazz);
+        t = mapper.readValue(ins, clazz);
         return t;
     }
 
@@ -93,10 +94,10 @@ public class JsonUtils {
     /**
      * 文本转Json对象 <br>
      *
-     * @param text 待转文本
+     * @param text   待转文本
      * @param cClazz 集合类型
      * @param eClazz 元素T类型.class
-     * @param <T> 元素T类型
+     * @param <T>    元素T类型
      * @return T实例
      * @throws IOException IO异常
      */
@@ -108,10 +109,10 @@ public class JsonUtils {
     /**
      * 文件转Json对象 <br>
      *
-     * @param file 待转文件
+     * @param file   待转文件
      * @param cClazz 集合类型
      * @param eClazz 元素T类型.class
-     * @param <T> 元素T类型
+     * @param <T>    元素T类型
      * @return 元素T实例
      * @throws IOException IO异常
      */
@@ -122,6 +123,7 @@ public class JsonUtils {
 
     /**
      * 输入流转Json对象
+     *
      * @param inputStream
      * @param cClazz
      * @param eClazz
@@ -138,7 +140,7 @@ public class JsonUtils {
     /**
      * 验证Json是否有效
      *
-     * @param text 待验证文本
+     * @param text  待验证文本
      * @param clazz 待验证元素类型
      * @return 是否有效
      */
@@ -153,7 +155,7 @@ public class JsonUtils {
     /**
      * 验证Json是否有效
      *
-     * @param text 待验证文本
+     * @param text   待验证文本
      * @param cClazz 待验证集合类型
      * @param eClazz 待验证元素类型
      * @return 是否有效

@@ -57,4 +57,23 @@ public class DateUtilsTest {
         System.out.println(DateUtils.daybegin(date));
         System.out.println(DateUtils.dayend(date));
     }
+
+    @Test
+    public void name() {
+        Date date = DateUtils.now();
+        {
+            Date begin = DateUtils.obtainMonthBeginOfDate(date);
+            Date end = DateUtils.obtainMonthEndOfDate(date);
+            System.out.println(begin);
+            System.out.println(end);
+        }
+//        {
+//            Pair<Date, Date> pair = DateUtils.obtainMonthRangeOfDate(date);
+//            Date begin = pair.getKey();
+//            Date end = pair.getValue();
+//            System.out.println(begin);
+//            System.out.println(end);
+//        }
+
+    }
 }

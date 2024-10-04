@@ -14,18 +14,13 @@
     <version>${project.parent.version}</version>
     <packaging>jar</packaging>
 
-
     <dependencies>
         <!-- 工具 -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
+            <scope>test</scope>
         </dependency>
         <!-- 日志框架 -->
         <dependency>
@@ -57,6 +52,7 @@
             <artifactId>jackson-annotations</artifactId>
         </dependency>
 
+        <!-- 通用代码 -->
         <dependency>
             <groupId>com.blackdotan.elephant</groupId>
             <artifactId>elephant-common</artifactId>
@@ -83,6 +79,11 @@
             <artifactId>bcprov-jdk15</artifactId>
             <version>1.46</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
     </dependencies>
 
 
@@ -96,7 +97,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <executions>
@@ -107,7 +108,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 
