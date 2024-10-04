@@ -42,7 +42,8 @@
         <module>elephant-weixin</module>
         <module>elephant-security</module>
         <module>elephant-security-jwt</module>
-<!--        <module>elephant-dssclient</module>-->
+        <module>elephant-pay</module>
+        <!--        <module>elephant-dssclient</module>-->
 <!--        <module>elephant-dssclient-linux</module>-->
 <!--        <module>elephant-dssclient-windows</module>-->
 <!--        <module>elephant-simulator</module>-->
@@ -121,11 +122,11 @@
             </dependency>
 
             <!-- 阿里支付-->
-            <dependency>
-                <groupId>com.alipay</groupId>
-                <artifactId>sdk-java</artifactId>
-                <version>2017120116003</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.alipay</groupId>-->
+<!--                <artifactId>sdk-java</artifactId>-->
+<!--                <version>2017120116003</version>-->
+<!--            </dependency>-->
             <!-- 微信支付 -->
             <dependency>
                 <groupId>com.github.wxpay</groupId>
@@ -152,11 +153,11 @@
                 <version>2.4.2</version>
             </dependency>
             <!-- 代码混淆 -->
-            <dependency>
-                <groupId>net.sf.proguard</groupId>
-                <artifactId>proguard</artifactId>
-                <version>4.4</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>net.sf.proguard</groupId>-->
+<!--                <artifactId>proguard</artifactId>-->
+<!--                <version>4.4</version>-->
+<!--            </dependency>-->
             <!-- 辅助工具 -->
             <dependency>
                 <groupId>org.projectlombok</groupId>

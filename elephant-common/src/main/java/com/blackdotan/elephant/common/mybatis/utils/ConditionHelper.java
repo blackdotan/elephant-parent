@@ -20,7 +20,27 @@ public class ConditionHelper {
      * @return
      */
     public static String in(String col, List<? extends Serializable> objs) {
-        StringBuffer condition = new StringBuffer(col).append(" IN(");
+        if (objs.isEmpty()) {
+            return " 1 <> 1 ";
+        } else {
+            StringBuffer condition = new StringBuffer(col).append(" IN (");
+            for (Object obj : objs) {
+                if (obj instanceof Number) {
+                    condition.append(obj).append(",");
+                } else {
+                    condition.append("'").append(obj).append("'").append(",");
+                }
+            }
+            if (objs.size() > 0) {
+                condition.delete(condition.length() - 1, condition.length());
+            }
+            condition.append(")");
+            return condition.toString();
+        }
+    }
+
+    public static String notIn(String col, List<? extends Serializable> objs) {
+        StringBuffer condition = new StringBuffer(col).append(" NOT IN (");
         for (Object obj : objs) {
             if (obj instanceof Number) {
                 condition.append(obj).append(",");

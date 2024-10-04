@@ -31,16 +31,6 @@ public class SimpleUserAuthentication extends Authentification<Serializable> {
 	 */
 	private Serializable channel;
 
-	///**
-	// * User Identifer
-	// */
-	//private Serializable identifer;
-	//
-	///**
-	// * User Key
-	// */
-	//private Serializable key;
-
 	/**
 	 * User Identifer
 	 */
@@ -63,6 +53,7 @@ public class SimpleUserAuthentication extends Authentification<Serializable> {
 	 * 授权权限（该用户持有的权限，数据格式：[{Access.Method, Access.Url}...]）
 	 */
 	private List<AccessAuthority> authorities = new ArrayList<AccessAuthority>();
+
 	@Override
 	public Serializable getKey() {
 		return key;

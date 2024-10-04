@@ -1,7 +1,6 @@
 package com.blackdotan.elephant.utils;
 
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
@@ -14,12 +13,9 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 /**
- * Java Bean 拷贝工具
  * Created by wmw on 16/11/17.
- * @see JBeanUtils
  */
-@Deprecated
-public class DataUtils {
+public class JBeanUtils {
 
     /**
      * 拷贝K类型 到 新T乐行
@@ -33,7 +29,7 @@ public class DataUtils {
     public static <T, K> T copyProperties(K k, Class<T> clazz){
         try {
             T instance = clazz.newInstance();
-            BeanUtils.copyProperties(k, instance);
+            org.springframework.beans.BeanUtils.copyProperties(k, instance);
             return instance;
         }catch (Exception e){
             return null;
@@ -54,7 +50,7 @@ public class DataUtils {
         List<T> ts = ks instanceof PageList ?new PageList<T>( ((PageList)ks).getPaginator() ): new ArrayList<T>();
         for(K k : ks){
             T instance = clazz.newInstance();
-            BeanUtils.copyProperties(k, instance);
+            org.springframework.beans.BeanUtils.copyProperties(k, instance);
             ts.add(instance);
         }
         return ts;
@@ -72,7 +68,7 @@ public class DataUtils {
     public static <T,K> T copyPropertiesIgnoreNull(K k, Class<T> clazz){
         try {
             T instance = clazz.newInstance();
-            BeanUtils.copyProperties(k, instance, getNullPropertyNames(k));
+            org.springframework.beans.BeanUtils.copyProperties(k, instance, getNullPropertyNames(k));
             return instance;
         }catch (Exception e){
             return null;
@@ -105,7 +101,7 @@ public class DataUtils {
      * @param <K> 泛型T
      */
     public static <T,K> void copyPropertiesIgnoreNull(K k, T t){
-        BeanUtils.copyProperties(k, t, getNullPropertyNames(k));
+        org.springframework.beans.BeanUtils.copyProperties(k, t, getNullPropertyNames(k));
     }
 
     /**
@@ -115,10 +111,10 @@ public class DataUtils {
      */
     public static String[] getNullPropertyNames (Object source) {
         final BeanWrapper src = new BeanWrapperImpl(source);
-        java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();
+        PropertyDescriptor[] pds = src.getPropertyDescriptors();
 
         Set<String> emptyNames = new HashSet<String>();
-        for(java.beans.PropertyDescriptor pd : pds) {
+        for(PropertyDescriptor pd : pds) {
             Object srcValue = src.getPropertyValue(pd.getName());
             if (srcValue == null) emptyNames.add(pd.getName());
         }

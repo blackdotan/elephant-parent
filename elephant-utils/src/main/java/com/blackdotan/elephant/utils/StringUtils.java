@@ -12,6 +12,14 @@ import java.util.regex.Pattern;
  */
 public class StringUtils {
     /**
+     * 判断字符是否为空
+     * @param str
+     * @return
+     */
+    public static boolean isEmpty(String str) {
+        return org.apache.commons.lang.StringUtils.isEmpty(str);
+    }
+    /**
      * 字符拼接
      * @param text
      * @param arg

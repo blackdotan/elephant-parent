@@ -15,7 +15,6 @@ public class DateUtils {
 
     public static TimeZone tz = TimeZone.getTimeZone("GMT+8");
 
-
     /**
      * 获取当前时间
      * @return 时间
@@ -167,6 +166,7 @@ public class DateUtils {
     }
 
     /**
+     * 根据日期，获取 Day 开始时间
      * @param date
      * @return
      */
@@ -181,6 +181,7 @@ public class DateUtils {
     }
 
     /**
+     * 根据日期，获取 Day 结束时间
      * @param date
      * @return
      */
@@ -193,6 +194,97 @@ public class DateUtils {
         calendar.set(Calendar.MILLISECOND, 999);
         return calendar.getTime();
     }
+
+    /**
+     * 根据日期，获取 Day 开始时间
+     * @param date
+     * @return
+     */
+    public static Date obtainDayBeginOfDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    }
+
+    /**
+     * 根据当前日期，获取 Day 开始时间
+     * @return
+     */
+    public static Date obtainDayBegin() {
+        return daybegin(DateUtils.now());
+    }
+
+    /**
+     * 根据日期，获取 Day 结束时间
+     * @param date
+     * @return
+     */
+    public static Date obtainDayEndOfDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        return calendar.getTime();
+    }
+
+    /**
+     * 根据当前日期，获取 Day 结束时间
+     * @return
+     */
+    public static Date obtainDayEnd() {
+        return dayend(DateUtils.now());
+    }
+
+    /**
+     * 根据日期，获取 Month 开始时间
+     * @param date
+     * @return
+     */
+    public static Date obtainMonthBeginOfDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        return calendar.getTime();
+    }
+
+    /**
+     * 根据日期，获取 Month 结束时间
+     * @param date
+     * @return
+     */
+    public static Date obtainMonthEndOfDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        int lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        calendar.set(Calendar.DAY_OF_MONTH, lastDay);
+        return calendar.getTime();
+    }
+
+//    /**
+//     * 根据日期，获取 Month 开始 - 结束时间
+//     * @param date
+//     * @return
+//     */
+//    public static Pair<Date, Date> obtainMonthRangeOfDate(Date date) {
+//        Date begin = obtainMonthBeginOfDate(date);
+//        Date end = obtainMonthEndOfDate(date);
+//        return new Pair<Date, Date>(begin, end);
+//    }
 
 
     /**
